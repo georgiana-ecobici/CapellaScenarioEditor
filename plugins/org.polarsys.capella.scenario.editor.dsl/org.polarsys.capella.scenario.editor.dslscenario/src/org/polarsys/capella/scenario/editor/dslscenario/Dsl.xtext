@@ -4,8 +4,9 @@ generate dsl "http://www.polarsys.org/capella/scenario/editor/dslscenario/Dsl"
 
 Model:
        'scenario' scenarioType=ScenarioTypeAndParticipants 
+       '{'
         (messages+=Message)* 
-        'end' 'scenario';
+        '}';
  
 ScenarioTypeAndParticipants: 
 	  'System' ('IS'|'ES')  name=STRING (participants += Actor)*

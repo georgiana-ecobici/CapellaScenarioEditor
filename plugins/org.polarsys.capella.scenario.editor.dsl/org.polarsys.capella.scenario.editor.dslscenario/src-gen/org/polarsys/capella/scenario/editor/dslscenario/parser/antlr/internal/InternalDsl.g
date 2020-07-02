@@ -99,12 +99,16 @@ ruleModel returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_2='{'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_2());
+		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getModelAccess().getMessagesMessageParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getModelAccess().getMessagesMessageParserRuleCall_3_0());
 				}
-				lv_messages_2_0=ruleMessage
+				lv_messages_3_0=ruleMessage
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getModelRule());
@@ -112,19 +116,15 @@ ruleModel returns [EObject current=null]
 					add(
 						$current,
 						"messages",
-						lv_messages_2_0,
+						lv_messages_3_0,
 						"org.polarsys.capella.scenario.editor.dslscenario.Dsl.Message");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_3='end'
+		otherlv_4='}'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getModelAccess().getEndKeyword_3());
-		}
-		otherlv_4='scenario'
-		{
-			newLeafNode(otherlv_4, grammarAccess.getModelAccess().getScenarioKeyword_4());
+			newLeafNode(otherlv_4, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_4());
 		}
 	)
 ;
