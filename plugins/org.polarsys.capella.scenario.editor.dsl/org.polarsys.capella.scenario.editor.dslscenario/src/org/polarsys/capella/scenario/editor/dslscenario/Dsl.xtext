@@ -50,6 +50,36 @@ Entity:
 Role: 
 	'role' name=STRING 'as' id=ID
 ;
+
 Message:
-       name1=ID '->' name2=ID ":" name=STRING 
+    SequenceMessageType | ArmTimerMessage | ParticipantDeactivation
+;
+
+SequenceMessageType:
+	(SequenceMessage | CreateMessage | DeleteMessage)
+	(return=ReturnMessage)?
+;
+
+SequenceMessage:
+	source=ID '->' target=ID ':' name=ID 
+;
+
+CreateMessage:
+	source=ID '->+' target=ID ':' name=ID 
+;
+
+DeleteMessage:
+	source=ID '->x' target=ID ':' name=ID 
+;
+
+ReturnMessage:
+	target=ID '<--' source=ID ':' name=ID
+;
+
+ArmTimerMessage:
+	"->>" participant=ID ':' name=ID
+;
+
+ParticipantDeactivation:
+    'deactivate' name=ID	
 ;
