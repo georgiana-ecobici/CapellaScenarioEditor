@@ -633,9 +633,9 @@ rule__Model__Group__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getModelAccess().getMessagesAssignment_2()); }
-	(rule__Model__MessagesAssignment_2)*
-	{ after(grammarAccess.getModelAccess().getMessagesAssignment_2()); }
+	{ before(grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_2()); }
+	'{'
+	{ after(grammarAccess.getModelAccess().getLeftCurlyBracketKeyword_2()); }
 )
 ;
 finally {
@@ -660,9 +660,9 @@ rule__Model__Group__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getModelAccess().getEndKeyword_3()); }
-	'end'
-	{ after(grammarAccess.getModelAccess().getEndKeyword_3()); }
+	{ before(grammarAccess.getModelAccess().getMessagesAssignment_3()); }
+	(rule__Model__MessagesAssignment_3)*
+	{ after(grammarAccess.getModelAccess().getMessagesAssignment_3()); }
 )
 ;
 finally {
@@ -686,9 +686,9 @@ rule__Model__Group__4__Impl
 	}
 :
 (
-	{ before(grammarAccess.getModelAccess().getScenarioKeyword_4()); }
-	'scenario'
-	{ after(grammarAccess.getModelAccess().getScenarioKeyword_4()); }
+	{ before(grammarAccess.getModelAccess().getRightCurlyBracketKeyword_4()); }
+	'}'
+	{ after(grammarAccess.getModelAccess().getRightCurlyBracketKeyword_4()); }
 )
 ;
 finally {
@@ -2358,15 +2358,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Model__MessagesAssignment_2
+rule__Model__MessagesAssignment_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getModelAccess().getMessagesMessageParserRuleCall_2_0()); }
+		{ before(grammarAccess.getModelAccess().getMessagesMessageParserRuleCall_3_0()); }
 		ruleMessage
-		{ after(grammarAccess.getModelAccess().getMessagesMessageParserRuleCall_2_0()); }
+		{ after(grammarAccess.getModelAccess().getMessagesMessageParserRuleCall_3_0()); }
 	)
 ;
 finally {

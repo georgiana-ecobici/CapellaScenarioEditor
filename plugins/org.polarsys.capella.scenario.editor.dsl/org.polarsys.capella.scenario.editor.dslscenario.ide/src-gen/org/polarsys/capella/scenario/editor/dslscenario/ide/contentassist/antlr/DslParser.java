@@ -58,7 +58,7 @@ public class DslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getRoleAccess().getGroup(), "rule__Role__Group__0");
 			builder.put(grammarAccess.getMessageAccess().getGroup(), "rule__Message__Group__0");
 			builder.put(grammarAccess.getModelAccess().getScenarioTypeAssignment_1(), "rule__Model__ScenarioTypeAssignment_1");
-			builder.put(grammarAccess.getModelAccess().getMessagesAssignment_2(), "rule__Model__MessagesAssignment_2");
+			builder.put(grammarAccess.getModelAccess().getMessagesAssignment_3(), "rule__Model__MessagesAssignment_3");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_0_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_0_2");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_0_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_0_3");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_1_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_1_2");

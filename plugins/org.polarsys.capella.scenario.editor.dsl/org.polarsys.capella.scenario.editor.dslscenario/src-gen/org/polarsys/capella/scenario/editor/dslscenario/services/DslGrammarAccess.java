@@ -28,18 +28,19 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cScenarioKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cScenarioTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cScenarioTypeScenarioTypeAndParticipantsParserRuleCall_1_0 = (RuleCall)cScenarioTypeAssignment_1.eContents().get(0);
-		private final Assignment cMessagesAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cMessagesMessageParserRuleCall_2_0 = (RuleCall)cMessagesAssignment_2.eContents().get(0);
-		private final Keyword cEndKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Keyword cScenarioKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cMessagesAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cMessagesMessageParserRuleCall_3_0 = (RuleCall)cMessagesAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Model:
 		//	'scenario' scenarioType=ScenarioTypeAndParticipants
+		//	'{'
 		//	messages+=Message*
-		//	'end' 'scenario';
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'scenario' scenarioType=ScenarioTypeAndParticipants messages+=Message* 'end' 'scenario'
+		//'scenario' scenarioType=ScenarioTypeAndParticipants '{' messages+=Message* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'scenario'
@@ -51,17 +52,17 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//ScenarioTypeAndParticipants
 		public RuleCall getScenarioTypeScenarioTypeAndParticipantsParserRuleCall_1_0() { return cScenarioTypeScenarioTypeAndParticipantsParserRuleCall_1_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
 		//messages+=Message*
-		public Assignment getMessagesAssignment_2() { return cMessagesAssignment_2; }
+		public Assignment getMessagesAssignment_3() { return cMessagesAssignment_3; }
 		
 		//Message
-		public RuleCall getMessagesMessageParserRuleCall_2_0() { return cMessagesMessageParserRuleCall_2_0; }
+		public RuleCall getMessagesMessageParserRuleCall_3_0() { return cMessagesMessageParserRuleCall_3_0; }
 		
-		//'end'
-		public Keyword getEndKeyword_3() { return cEndKeyword_3; }
-		
-		//'scenario'
-		public Keyword getScenarioKeyword_4() { return cScenarioKeyword_4; }
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 	}
 	public class ScenarioTypeAndParticipantsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.ScenarioTypeAndParticipants");
@@ -723,8 +724,9 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Model:
 	//	'scenario' scenarioType=ScenarioTypeAndParticipants
+	//	'{'
 	//	messages+=Message*
-	//	'end' 'scenario';
+	//	'}';
 	public ModelElements getModelAccess() {
 		return pModel;
 	}
