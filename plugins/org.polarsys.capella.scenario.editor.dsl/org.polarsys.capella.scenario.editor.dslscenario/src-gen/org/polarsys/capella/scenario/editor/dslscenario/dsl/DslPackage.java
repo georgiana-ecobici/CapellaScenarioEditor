@@ -77,13 +77,13 @@ public interface DslPackage extends EPackage
   int MODEL__SCENARIO_TYPE = 0;
 
   /**
-   * The feature id for the '<em><b>Messages</b></em>' containment reference list.
+   * The feature id for the '<em><b>Messages Or References</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL__MESSAGES = 1;
+  int MODEL__MESSAGES_OR_REFERENCES = 1;
 
   /**
    * The number of structural features of the '<em>Model</em>' class.
@@ -438,31 +438,13 @@ public interface DslPackage extends EPackage
   int MESSAGE = 10;
 
   /**
-   * The feature id for the '<em><b>Name1</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MESSAGE__NAME1 = 0;
-
-  /**
-   * The feature id for the '<em><b>Name2</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MESSAGE__NAME2 = 1;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MESSAGE__NAME = 2;
+  int MESSAGE__NAME = 0;
 
   /**
    * The number of structural features of the '<em>Message</em>' class.
@@ -471,7 +453,375 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MESSAGE_FEATURE_COUNT = 3;
+  int MESSAGE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageTypeImpl <em>Sequence Message Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageTypeImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getSequenceMessageType()
+   * @generated
+   */
+  int SEQUENCE_MESSAGE_TYPE = 11;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE_TYPE__NAME = MESSAGE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Return</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE_TYPE__RETURN = MESSAGE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Source</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE_TYPE__SOURCE = MESSAGE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE_TYPE__TARGET = MESSAGE_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Sequence Message Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE_TYPE_FEATURE_COUNT = MESSAGE_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageImpl <em>Sequence Message</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getSequenceMessage()
+   * @generated
+   */
+  int SEQUENCE_MESSAGE = 12;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE__NAME = SEQUENCE_MESSAGE_TYPE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Return</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE__RETURN = SEQUENCE_MESSAGE_TYPE__RETURN;
+
+  /**
+   * The feature id for the '<em><b>Source</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE__SOURCE = SEQUENCE_MESSAGE_TYPE__SOURCE;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE__TARGET = SEQUENCE_MESSAGE_TYPE__TARGET;
+
+  /**
+   * The number of structural features of the '<em>Sequence Message</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SEQUENCE_MESSAGE_FEATURE_COUNT = SEQUENCE_MESSAGE_TYPE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.CreateMessageImpl <em>Create Message</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.CreateMessageImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getCreateMessage()
+   * @generated
+   */
+  int CREATE_MESSAGE = 13;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CREATE_MESSAGE__NAME = SEQUENCE_MESSAGE_TYPE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Return</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CREATE_MESSAGE__RETURN = SEQUENCE_MESSAGE_TYPE__RETURN;
+
+  /**
+   * The feature id for the '<em><b>Source</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CREATE_MESSAGE__SOURCE = SEQUENCE_MESSAGE_TYPE__SOURCE;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CREATE_MESSAGE__TARGET = SEQUENCE_MESSAGE_TYPE__TARGET;
+
+  /**
+   * The number of structural features of the '<em>Create Message</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CREATE_MESSAGE_FEATURE_COUNT = SEQUENCE_MESSAGE_TYPE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DeleteMessageImpl <em>Delete Message</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DeleteMessageImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getDeleteMessage()
+   * @generated
+   */
+  int DELETE_MESSAGE = 14;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELETE_MESSAGE__NAME = SEQUENCE_MESSAGE_TYPE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Return</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELETE_MESSAGE__RETURN = SEQUENCE_MESSAGE_TYPE__RETURN;
+
+  /**
+   * The feature id for the '<em><b>Source</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELETE_MESSAGE__SOURCE = SEQUENCE_MESSAGE_TYPE__SOURCE;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELETE_MESSAGE__TARGET = SEQUENCE_MESSAGE_TYPE__TARGET;
+
+  /**
+   * The number of structural features of the '<em>Delete Message</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELETE_MESSAGE_FEATURE_COUNT = SEQUENCE_MESSAGE_TYPE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReturnMessageImpl <em>Return Message</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReturnMessageImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getReturnMessage()
+   * @generated
+   */
+  int RETURN_MESSAGE = 15;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_MESSAGE__TARGET = 0;
+
+  /**
+   * The feature id for the '<em><b>Source</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_MESSAGE__SOURCE = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_MESSAGE__NAME = 2;
+
+  /**
+   * The number of structural features of the '<em>Return Message</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RETURN_MESSAGE_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ArmTimerMessageImpl <em>Arm Timer Message</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ArmTimerMessageImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getArmTimerMessage()
+   * @generated
+   */
+  int ARM_TIMER_MESSAGE = 16;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARM_TIMER_MESSAGE__NAME = MESSAGE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Participant</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARM_TIMER_MESSAGE__PARTICIPANT = MESSAGE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Arm Timer Message</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARM_TIMER_MESSAGE_FEATURE_COUNT = MESSAGE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantDeactivationImpl <em>Participant Deactivation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantDeactivationImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getParticipantDeactivation()
+   * @generated
+   */
+  int PARTICIPANT_DEACTIVATION = 17;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTICIPANT_DEACTIVATION__NAME = MESSAGE__NAME;
+
+  /**
+   * The number of structural features of the '<em>Participant Deactivation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTICIPANT_DEACTIVATION_FEATURE_COUNT = MESSAGE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl <em>Reference</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getReference()
+   * @generated
+   */
+  int REFERENCE = 18;
+
+  /**
+   * The feature id for the '<em><b>Timelines</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REFERENCE__TIMELINES = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REFERENCE__NAME = 1;
+
+  /**
+   * The number of structural features of the '<em>Reference</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REFERENCE_FEATURE_COUNT = 2;
 
 
   /**
@@ -496,15 +846,15 @@ public interface DslPackage extends EPackage
   EReference getModel_ScenarioType();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessages <em>Messages</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessagesOrReferences <em>Messages Or References</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Messages</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessages()
+   * @return the meta object for the containment reference list '<em>Messages Or References</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessagesOrReferences()
    * @see #getModel()
    * @generated
    */
-  EReference getModel_Messages();
+  EReference getModel_MessagesOrReferences();
 
   /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants <em>Scenario Type And Participants</em>}'.
@@ -805,28 +1155,6 @@ public interface DslPackage extends EPackage
   EClass getMessage();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName1 <em>Name1</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name1</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName1()
-   * @see #getMessage()
-   * @generated
-   */
-  EAttribute getMessage_Name1();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName2 <em>Name2</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name2</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName2()
-   * @see #getMessage()
-   * @generated
-   */
-  EAttribute getMessage_Name2();
-
-  /**
    * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -836,6 +1164,185 @@ public interface DslPackage extends EPackage
    * @generated
    */
   EAttribute getMessage_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType <em>Sequence Message Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Sequence Message Type</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType
+   * @generated
+   */
+  EClass getSequenceMessageType();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType#getReturn <em>Return</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Return</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType#getReturn()
+   * @see #getSequenceMessageType()
+   * @generated
+   */
+  EReference getSequenceMessageType_Return();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType#getSource <em>Source</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Source</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType#getSource()
+   * @see #getSequenceMessageType()
+   * @generated
+   */
+  EAttribute getSequenceMessageType_Source();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType#getTarget <em>Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Target</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType#getTarget()
+   * @see #getSequenceMessageType()
+   * @generated
+   */
+  EAttribute getSequenceMessageType_Target();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage <em>Sequence Message</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Sequence Message</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
+   * @generated
+   */
+  EClass getSequenceMessage();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage <em>Create Message</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Create Message</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage
+   * @generated
+   */
+  EClass getCreateMessage();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage <em>Delete Message</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Delete Message</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage
+   * @generated
+   */
+  EClass getDeleteMessage();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage <em>Return Message</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Return Message</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage
+   * @generated
+   */
+  EClass getReturnMessage();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage#getTarget <em>Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Target</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage#getTarget()
+   * @see #getReturnMessage()
+   * @generated
+   */
+  EAttribute getReturnMessage_Target();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage#getSource <em>Source</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Source</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage#getSource()
+   * @see #getReturnMessage()
+   * @generated
+   */
+  EAttribute getReturnMessage_Source();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage#getName()
+   * @see #getReturnMessage()
+   * @generated
+   */
+  EAttribute getReturnMessage_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage <em>Arm Timer Message</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Arm Timer Message</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage
+   * @generated
+   */
+  EClass getArmTimerMessage();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage#getParticipant <em>Participant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Participant</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage#getParticipant()
+   * @see #getArmTimerMessage()
+   * @generated
+   */
+  EAttribute getArmTimerMessage_Participant();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation <em>Participant Deactivation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Participant Deactivation</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation
+   * @generated
+   */
+  EClass getParticipantDeactivation();
+
+  /**
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference <em>Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Reference</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference
+   * @generated
+   */
+  EClass getReference();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getTimelines <em>Timelines</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Timelines</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getTimelines()
+   * @see #getReference()
+   * @generated
+   */
+  EAttribute getReference_Timelines();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getName()
+   * @see #getReference()
+   * @generated
+   */
+  EAttribute getReference_Name();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -879,12 +1386,12 @@ public interface DslPackage extends EPackage
     EReference MODEL__SCENARIO_TYPE = eINSTANCE.getModel_ScenarioType();
 
     /**
-     * The meta object literal for the '<em><b>Messages</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Messages Or References</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__MESSAGES = eINSTANCE.getModel_Messages();
+    EReference MODEL__MESSAGES_OR_REFERENCES = eINSTANCE.getModel_MessagesOrReferences();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ScenarioTypeAndParticipantsImpl <em>Scenario Type And Participants</em>}' class.
@@ -1131,20 +1638,102 @@ public interface DslPackage extends EPackage
     EClass MESSAGE = eINSTANCE.getMessage();
 
     /**
-     * The meta object literal for the '<em><b>Name1</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MESSAGE__NAME1 = eINSTANCE.getMessage_Name1();
+    EAttribute MESSAGE__NAME = eINSTANCE.getMessage_Name();
 
     /**
-     * The meta object literal for the '<em><b>Name2</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageTypeImpl <em>Sequence Message Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageTypeImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getSequenceMessageType()
+     * @generated
+     */
+    EClass SEQUENCE_MESSAGE_TYPE = eINSTANCE.getSequenceMessageType();
+
+    /**
+     * The meta object literal for the '<em><b>Return</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MESSAGE__NAME2 = eINSTANCE.getMessage_Name2();
+    EReference SEQUENCE_MESSAGE_TYPE__RETURN = eINSTANCE.getSequenceMessageType_Return();
+
+    /**
+     * The meta object literal for the '<em><b>Source</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SEQUENCE_MESSAGE_TYPE__SOURCE = eINSTANCE.getSequenceMessageType_Source();
+
+    /**
+     * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SEQUENCE_MESSAGE_TYPE__TARGET = eINSTANCE.getSequenceMessageType_Target();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageImpl <em>Sequence Message</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.SequenceMessageImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getSequenceMessage()
+     * @generated
+     */
+    EClass SEQUENCE_MESSAGE = eINSTANCE.getSequenceMessage();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.CreateMessageImpl <em>Create Message</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.CreateMessageImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getCreateMessage()
+     * @generated
+     */
+    EClass CREATE_MESSAGE = eINSTANCE.getCreateMessage();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DeleteMessageImpl <em>Delete Message</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DeleteMessageImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getDeleteMessage()
+     * @generated
+     */
+    EClass DELETE_MESSAGE = eINSTANCE.getDeleteMessage();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReturnMessageImpl <em>Return Message</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReturnMessageImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getReturnMessage()
+     * @generated
+     */
+    EClass RETURN_MESSAGE = eINSTANCE.getReturnMessage();
+
+    /**
+     * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RETURN_MESSAGE__TARGET = eINSTANCE.getReturnMessage_Target();
+
+    /**
+     * The meta object literal for the '<em><b>Source</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RETURN_MESSAGE__SOURCE = eINSTANCE.getReturnMessage_Source();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1152,7 +1741,61 @@ public interface DslPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MESSAGE__NAME = eINSTANCE.getMessage_Name();
+    EAttribute RETURN_MESSAGE__NAME = eINSTANCE.getReturnMessage_Name();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ArmTimerMessageImpl <em>Arm Timer Message</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ArmTimerMessageImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getArmTimerMessage()
+     * @generated
+     */
+    EClass ARM_TIMER_MESSAGE = eINSTANCE.getArmTimerMessage();
+
+    /**
+     * The meta object literal for the '<em><b>Participant</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ARM_TIMER_MESSAGE__PARTICIPANT = eINSTANCE.getArmTimerMessage_Participant();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantDeactivationImpl <em>Participant Deactivation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantDeactivationImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getParticipantDeactivation()
+     * @generated
+     */
+    EClass PARTICIPANT_DEACTIVATION = eINSTANCE.getParticipantDeactivation();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl <em>Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getReference()
+     * @generated
+     */
+    EClass REFERENCE = eINSTANCE.getReference();
+
+    /**
+     * The meta object literal for the '<em><b>Timelines</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REFERENCE__TIMELINES = eINSTANCE.getReference_Timelines();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REFERENCE__NAME = eINSTANCE.getReference_Name();
 
   }
 

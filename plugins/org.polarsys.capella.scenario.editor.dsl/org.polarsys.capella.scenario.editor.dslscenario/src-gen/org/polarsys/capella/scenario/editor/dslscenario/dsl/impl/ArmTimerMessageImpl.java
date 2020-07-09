@@ -8,52 +8,51 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Message</b></em>'.
+ * An implementation of the model object '<em><b>Arm Timer Message</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.MessageImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ArmTimerMessageImpl#getParticipant <em>Participant</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MessageImpl extends MinimalEObjectImpl.Container implements Message
+public class ArmTimerMessageImpl extends MessageImpl implements ArmTimerMessage
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #getParticipant() <em>Participant</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getParticipant()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String PARTICIPANT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getParticipant() <em>Participant</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getParticipant()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected String participant = PARTICIPANT_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected MessageImpl()
+  protected ArmTimerMessageImpl()
   {
     super();
   }
@@ -66,7 +65,7 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   @Override
   protected EClass eStaticClass()
   {
-    return DslPackage.Literals.MESSAGE;
+    return DslPackage.Literals.ARM_TIMER_MESSAGE;
   }
 
   /**
@@ -75,9 +74,9 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
    * @generated
    */
   @Override
-  public String getName()
+  public String getParticipant()
   {
-    return name;
+    return participant;
   }
 
   /**
@@ -86,12 +85,12 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
    * @generated
    */
   @Override
-  public void setName(String newName)
+  public void setParticipant(String newParticipant)
   {
-    String oldName = name;
-    name = newName;
+    String oldParticipant = participant;
+    participant = newParticipant;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.MESSAGE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.ARM_TIMER_MESSAGE__PARTICIPANT, oldParticipant, participant));
   }
 
   /**
@@ -104,8 +103,8 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
-        return getName();
+      case DslPackage.ARM_TIMER_MESSAGE__PARTICIPANT:
+        return getParticipant();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -120,8 +119,8 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
-        setName((String)newValue);
+      case DslPackage.ARM_TIMER_MESSAGE__PARTICIPANT:
+        setParticipant((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -137,8 +136,8 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
-        setName(NAME_EDEFAULT);
+      case DslPackage.ARM_TIMER_MESSAGE__PARTICIPANT:
+        setParticipant(PARTICIPANT_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -154,8 +153,8 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case DslPackage.ARM_TIMER_MESSAGE__PARTICIPANT:
+        return PARTICIPANT_EDEFAULT == null ? participant != null : !PARTICIPANT_EDEFAULT.equals(participant);
     }
     return super.eIsSet(featureID);
   }
@@ -171,10 +170,10 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (participant: ");
+    result.append(participant);
     result.append(')');
     return result.toString();
   }
 
-} //MessageImpl
+} //ArmTimerMessageImpl

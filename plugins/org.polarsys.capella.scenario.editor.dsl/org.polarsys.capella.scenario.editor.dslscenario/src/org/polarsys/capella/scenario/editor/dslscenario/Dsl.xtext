@@ -4,18 +4,18 @@ generate dsl "http://www.polarsys.org/capella/scenario/editor/dslscenario/Dsl"
 
 Model:
        'scenario' scenarioType=ScenarioTypeAndParticipants 
-       '{'
-        (messages+=Message)* 
+       
+        (messagesOrReferences+=(Message|Reference))* 
         '}';
  
 ScenarioTypeAndParticipants: 
-	  'System' ('IS'|'ES')  name=STRING (participants += Actor)*
-	| 'Logical' ('IS'|'ES') name=STRING (participants += (Actor | Component))*
-	| 'Physical' ('IS'| 'ES') name=STRING (participant += (Actor | PhysicalComponent))*
-	| ('System' | 'Logical' | 'Physical') 'FS'  name=STRING (participants += Function)*
-	| 'EPBS' 'IS' name=STRING (participants += ConfigurationItem)*
-	| 'OAS' name=STRING (participants += Activity)*
-	| 'OES' name=STRING (participants += (Entity | Actor | Role))*
+	  'System' ('IS'|'ES')  name=STRING '{' (participants += Actor)*
+	| 'Logical' ('IS'|'ES') name=STRING '{' (participants += (Actor | Component))*
+	| 'Physical' ('IS'| 'ES') name=STRING '{' (participant += (Actor | PhysicalComponent))*
+	| ('System' | 'Logical' | 'Physical') 'FS'  name=STRING '{' (participants += Function)*
+	| 'EPBS' 'IS' name=STRING '{' (participants += ConfigurationItem)*
+	| 'OAS' name=STRING '{' (participants += Activity)*
+	| 'OES' name=STRING '{' (participants += (Entity | Actor | Role))*
 	
 ; 
 
@@ -61,25 +61,30 @@ SequenceMessageType:
 ;
 
 SequenceMessage:
-	source=ID '->' target=ID ':' name=ID 
+	source=ID '->' target=ID ':' name=STRING 
 ;
 
 CreateMessage:
-	source=ID '->+' target=ID ':' name=ID 
+	source=ID '->+' target=ID ':' name=STRING 
 ;
 
 DeleteMessage:
-	source=ID '->x' target=ID ':' name=ID 
+	source=ID '->x' target=ID ':' name=STRING 
 ;
 
 ReturnMessage:
-	target=ID '<--' source=ID ':' name=ID
+	target=ID '<--' source=ID ':' name=STRING
 ;
 
 ArmTimerMessage:
-	"->>" participant=ID ':' name=ID
+	"->>" participant=ID ':' name=STRING
 ;
 
 ParticipantDeactivation:
     'deactivate' name=ID	
+;
+
+Reference: 
+	'ref' 'over' (timelines+=ID)+ name=STRING
+	
 ;

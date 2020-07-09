@@ -3,6 +3,12 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist;
 
+import java.util.Arrays;
+import java.util.List;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist.AbstractDslProposalProvider;
 
 /**
@@ -11,4 +17,15 @@ import org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist.Abstrac
  */
 @SuppressWarnings("all")
 public class DslProposalProvider extends AbstractDslProposalProvider {
+  @Override
+  public void completeActor_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    List<String> _propose = this.getPropose();
+    for (final String el : _propose) {
+      acceptor.accept(this.createCompletionProposal(el, el, null, context));
+    }
+  }
+  
+  public List<String> getPropose() {
+    return Arrays.<String>asList("Hello", "World!", "How", "Are", "You");
+  }
 }

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getScenarioType <em>Scenario Type</em>}</li>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessages <em>Messages</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessagesOrReferences <em>Messages Or References</em>}</li>
  * </ul>
  *
  * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getModel()
@@ -49,15 +49,15 @@ public interface Model extends EObject
   void setScenarioType(ScenarioTypeAndParticipants value);
 
   /**
-   * Returns the value of the '<em><b>Messages</b></em>' containment reference list.
-   * The list contents are of type {@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message}.
+   * Returns the value of the '<em><b>Messages Or References</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Messages</em>' containment reference list.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getModel_Messages()
+   * @return the value of the '<em>Messages Or References</em>' containment reference list.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getModel_MessagesOrReferences()
    * @model containment="true"
    * @generated
    */
-  EList<Message> getMessages();
+  EList<EObject> getMessagesOrReferences();
 
 } // Model

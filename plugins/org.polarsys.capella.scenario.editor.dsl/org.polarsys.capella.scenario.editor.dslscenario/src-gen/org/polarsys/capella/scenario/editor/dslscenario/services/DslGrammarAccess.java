@@ -28,19 +28,19 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cScenarioKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cScenarioTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cScenarioTypeScenarioTypeAndParticipantsParserRuleCall_1_0 = (RuleCall)cScenarioTypeAssignment_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cMessagesAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cMessagesMessageParserRuleCall_3_0 = (RuleCall)cMessagesAssignment_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cMessagesOrReferencesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Alternatives cMessagesOrReferencesAlternatives_2_0 = (Alternatives)cMessagesOrReferencesAssignment_2.eContents().get(0);
+		private final RuleCall cMessagesOrReferencesMessageParserRuleCall_2_0_0 = (RuleCall)cMessagesOrReferencesAlternatives_2_0.eContents().get(0);
+		private final RuleCall cMessagesOrReferencesReferenceParserRuleCall_2_0_1 = (RuleCall)cMessagesOrReferencesAlternatives_2_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//Model:
 		//	'scenario' scenarioType=ScenarioTypeAndParticipants
-		//	'{'
-		//	messages+=Message*
+		//	messagesOrReferences+=(Message | Reference)*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'scenario' scenarioType=ScenarioTypeAndParticipants '{' messages+=Message* '}'
+		//'scenario' scenarioType=ScenarioTypeAndParticipants messagesOrReferences+=(Message | Reference)* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'scenario'
@@ -52,17 +52,20 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//ScenarioTypeAndParticipants
 		public RuleCall getScenarioTypeScenarioTypeAndParticipantsParserRuleCall_1_0() { return cScenarioTypeScenarioTypeAndParticipantsParserRuleCall_1_0; }
 		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		//messagesOrReferences+=(Message | Reference)*
+		public Assignment getMessagesOrReferencesAssignment_2() { return cMessagesOrReferencesAssignment_2; }
 		
-		//messages+=Message*
-		public Assignment getMessagesAssignment_3() { return cMessagesAssignment_3; }
+		//(Message | Reference)
+		public Alternatives getMessagesOrReferencesAlternatives_2_0() { return cMessagesOrReferencesAlternatives_2_0; }
 		
 		//Message
-		public RuleCall getMessagesMessageParserRuleCall_3_0() { return cMessagesMessageParserRuleCall_3_0; }
+		public RuleCall getMessagesOrReferencesMessageParserRuleCall_2_0_0() { return cMessagesOrReferencesMessageParserRuleCall_2_0_0; }
+		
+		//Reference
+		public RuleCall getMessagesOrReferencesReferenceParserRuleCall_2_0_1() { return cMessagesOrReferencesReferenceParserRuleCall_2_0_1; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 	public class ScenarioTypeAndParticipantsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.ScenarioTypeAndParticipants");
@@ -74,8 +77,9 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cESKeyword_0_1_1 = (Keyword)cAlternatives_0_1.eContents().get(1);
 		private final Assignment cNameAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cNameSTRINGTerminalRuleCall_0_2_0 = (RuleCall)cNameAssignment_0_2.eContents().get(0);
-		private final Assignment cParticipantsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cParticipantsActorParserRuleCall_0_3_0 = (RuleCall)cParticipantsAssignment_0_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
+		private final Assignment cParticipantsAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
+		private final RuleCall cParticipantsActorParserRuleCall_0_4_0 = (RuleCall)cParticipantsAssignment_0_4.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Keyword cLogicalKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Alternatives cAlternatives_1_1 = (Alternatives)cGroup_1.eContents().get(1);
@@ -83,10 +87,11 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cESKeyword_1_1_1 = (Keyword)cAlternatives_1_1.eContents().get(1);
 		private final Assignment cNameAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cNameSTRINGTerminalRuleCall_1_2_0 = (RuleCall)cNameAssignment_1_2.eContents().get(0);
-		private final Assignment cParticipantsAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final Alternatives cParticipantsAlternatives_1_3_0 = (Alternatives)cParticipantsAssignment_1_3.eContents().get(0);
-		private final RuleCall cParticipantsActorParserRuleCall_1_3_0_0 = (RuleCall)cParticipantsAlternatives_1_3_0.eContents().get(0);
-		private final RuleCall cParticipantsComponentParserRuleCall_1_3_0_1 = (RuleCall)cParticipantsAlternatives_1_3_0.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Assignment cParticipantsAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
+		private final Alternatives cParticipantsAlternatives_1_4_0 = (Alternatives)cParticipantsAssignment_1_4.eContents().get(0);
+		private final RuleCall cParticipantsActorParserRuleCall_1_4_0_0 = (RuleCall)cParticipantsAlternatives_1_4_0.eContents().get(0);
+		private final RuleCall cParticipantsComponentParserRuleCall_1_4_0_1 = (RuleCall)cParticipantsAlternatives_1_4_0.eContents().get(1);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
 		private final Keyword cPhysicalKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
@@ -94,10 +99,11 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cESKeyword_2_1_1 = (Keyword)cAlternatives_2_1.eContents().get(1);
 		private final Assignment cNameAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cNameSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cNameAssignment_2_2.eContents().get(0);
-		private final Assignment cParticipantAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
-		private final Alternatives cParticipantAlternatives_2_3_0 = (Alternatives)cParticipantAssignment_2_3.eContents().get(0);
-		private final RuleCall cParticipantActorParserRuleCall_2_3_0_0 = (RuleCall)cParticipantAlternatives_2_3_0.eContents().get(0);
-		private final RuleCall cParticipantPhysicalComponentParserRuleCall_2_3_0_1 = (RuleCall)cParticipantAlternatives_2_3_0.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Assignment cParticipantAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
+		private final Alternatives cParticipantAlternatives_2_4_0 = (Alternatives)cParticipantAssignment_2_4.eContents().get(0);
+		private final RuleCall cParticipantActorParserRuleCall_2_4_0_0 = (RuleCall)cParticipantAlternatives_2_4_0.eContents().get(0);
+		private final RuleCall cParticipantPhysicalComponentParserRuleCall_2_4_0_1 = (RuleCall)cParticipantAlternatives_2_4_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
 		private final Alternatives cAlternatives_3_0 = (Alternatives)cGroup_3.eContents().get(0);
 		private final Keyword cSystemKeyword_3_0_0 = (Keyword)cAlternatives_3_0.eContents().get(0);
@@ -106,48 +112,53 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFSKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
 		private final Assignment cNameAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
 		private final RuleCall cNameSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cNameAssignment_3_2.eContents().get(0);
-		private final Assignment cParticipantsAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
-		private final RuleCall cParticipantsFunctionParserRuleCall_3_3_0 = (RuleCall)cParticipantsAssignment_3_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Assignment cParticipantsAssignment_3_4 = (Assignment)cGroup_3.eContents().get(4);
+		private final RuleCall cParticipantsFunctionParserRuleCall_3_4_0 = (RuleCall)cParticipantsAssignment_3_4.eContents().get(0);
 		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
 		private final Keyword cEPBSKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Keyword cISKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
 		private final Assignment cNameAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
 		private final RuleCall cNameSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cNameAssignment_4_2.eContents().get(0);
-		private final Assignment cParticipantsAssignment_4_3 = (Assignment)cGroup_4.eContents().get(3);
-		private final RuleCall cParticipantsConfigurationItemParserRuleCall_4_3_0 = (RuleCall)cParticipantsAssignment_4_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		private final Assignment cParticipantsAssignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
+		private final RuleCall cParticipantsConfigurationItemParserRuleCall_4_4_0 = (RuleCall)cParticipantsAssignment_4_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Keyword cOASKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cNameAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cNameSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cNameAssignment_5_1.eContents().get(0);
-		private final Assignment cParticipantsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cParticipantsActivityParserRuleCall_5_2_0 = (RuleCall)cParticipantsAssignment_5_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final Assignment cParticipantsAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
+		private final RuleCall cParticipantsActivityParserRuleCall_5_3_0 = (RuleCall)cParticipantsAssignment_5_3.eContents().get(0);
 		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
 		private final Keyword cOESKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Assignment cNameAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cNameSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cNameAssignment_6_1.eContents().get(0);
-		private final Assignment cParticipantsAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
-		private final Alternatives cParticipantsAlternatives_6_2_0 = (Alternatives)cParticipantsAssignment_6_2.eContents().get(0);
-		private final RuleCall cParticipantsEntityParserRuleCall_6_2_0_0 = (RuleCall)cParticipantsAlternatives_6_2_0.eContents().get(0);
-		private final RuleCall cParticipantsActorParserRuleCall_6_2_0_1 = (RuleCall)cParticipantsAlternatives_6_2_0.eContents().get(1);
-		private final RuleCall cParticipantsRoleParserRuleCall_6_2_0_2 = (RuleCall)cParticipantsAlternatives_6_2_0.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final Assignment cParticipantsAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
+		private final Alternatives cParticipantsAlternatives_6_3_0 = (Alternatives)cParticipantsAssignment_6_3.eContents().get(0);
+		private final RuleCall cParticipantsEntityParserRuleCall_6_3_0_0 = (RuleCall)cParticipantsAlternatives_6_3_0.eContents().get(0);
+		private final RuleCall cParticipantsActorParserRuleCall_6_3_0_1 = (RuleCall)cParticipantsAlternatives_6_3_0.eContents().get(1);
+		private final RuleCall cParticipantsRoleParserRuleCall_6_3_0_2 = (RuleCall)cParticipantsAlternatives_6_3_0.eContents().get(2);
 		
 		//ScenarioTypeAndParticipants:
-		//	'System' ('IS' | 'ES') name=STRING participants+=Actor*
-		//	| 'Logical' ('IS' | 'ES') name=STRING participants+=(Actor | Component)*
-		//	| 'Physical' ('IS' | 'ES') name=STRING participant+=(Actor | PhysicalComponent)*
-		//	| ('System' | 'Logical' | 'Physical') 'FS' name=STRING participants+=Function*
-		//	| 'EPBS' 'IS' name=STRING participants+=ConfigurationItem*
-		//	| 'OAS' name=STRING participants+=Activity*
-		//	| 'OES' name=STRING participants+=(Entity | Actor | Role)*;
+		//	'System' ('IS' | 'ES') name=STRING '{' participants+=Actor*
+		//	| 'Logical' ('IS' | 'ES') name=STRING '{' participants+=(Actor | Component)*
+		//	| 'Physical' ('IS' | 'ES') name=STRING '{' participant+=(Actor | PhysicalComponent)*
+		//	| ('System' | 'Logical' | 'Physical') 'FS' name=STRING '{' participants+=Function*
+		//	| 'EPBS' 'IS' name=STRING '{' participants+=ConfigurationItem*
+		//	| 'OAS' name=STRING '{' participants+=Activity*
+		//	| 'OES' name=STRING '{' participants+=(Entity | Actor | Role)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'System' ('IS' | 'ES') name=STRING participants+=Actor* | 'Logical' ('IS' | 'ES') name=STRING participants+=(Actor |
-		//Component)* | 'Physical' ('IS' | 'ES') name=STRING participant+=(Actor | PhysicalComponent)* | ('System' | 'Logical' |
-		//'Physical') 'FS' name=STRING participants+=Function* | 'EPBS' 'IS' name=STRING participants+=ConfigurationItem* |
-		//'OAS' name=STRING participants+=Activity* | 'OES' name=STRING participants+=(Entity | Actor | Role)*
+		//'System' ('IS' | 'ES') name=STRING '{' participants+=Actor* | 'Logical' ('IS' | 'ES') name=STRING '{'
+		//participants+=(Actor | Component)* | 'Physical' ('IS' | 'ES') name=STRING '{' participant+=(Actor |
+		//PhysicalComponent)* | ('System' | 'Logical' | 'Physical') 'FS' name=STRING '{' participants+=Function* | 'EPBS' 'IS'
+		//name=STRING '{' participants+=ConfigurationItem* | 'OAS' name=STRING '{' participants+=Activity* | 'OES' name=STRING
+		//'{' participants+=(Entity | Actor | Role)*
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'System' ('IS' | 'ES') name=STRING participants+=Actor*
+		//'System' ('IS' | 'ES') name=STRING '{' participants+=Actor*
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//'System'
@@ -168,13 +179,16 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_0_2_0() { return cNameSTRINGTerminalRuleCall_0_2_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_0_3() { return cLeftCurlyBracketKeyword_0_3; }
+		
 		//participants+=Actor*
-		public Assignment getParticipantsAssignment_0_3() { return cParticipantsAssignment_0_3; }
+		public Assignment getParticipantsAssignment_0_4() { return cParticipantsAssignment_0_4; }
 		
 		//Actor
-		public RuleCall getParticipantsActorParserRuleCall_0_3_0() { return cParticipantsActorParserRuleCall_0_3_0; }
+		public RuleCall getParticipantsActorParserRuleCall_0_4_0() { return cParticipantsActorParserRuleCall_0_4_0; }
 		
-		//'Logical' ('IS' | 'ES') name=STRING participants+=(Actor | Component)*
+		//'Logical' ('IS' | 'ES') name=STRING '{' participants+=(Actor | Component)*
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'Logical'
@@ -195,19 +209,22 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_1_2_0() { return cNameSTRINGTerminalRuleCall_1_2_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1_3() { return cLeftCurlyBracketKeyword_1_3; }
+		
 		//participants+=(Actor | Component)*
-		public Assignment getParticipantsAssignment_1_3() { return cParticipantsAssignment_1_3; }
+		public Assignment getParticipantsAssignment_1_4() { return cParticipantsAssignment_1_4; }
 		
 		//(Actor | Component)
-		public Alternatives getParticipantsAlternatives_1_3_0() { return cParticipantsAlternatives_1_3_0; }
+		public Alternatives getParticipantsAlternatives_1_4_0() { return cParticipantsAlternatives_1_4_0; }
 		
 		//Actor
-		public RuleCall getParticipantsActorParserRuleCall_1_3_0_0() { return cParticipantsActorParserRuleCall_1_3_0_0; }
+		public RuleCall getParticipantsActorParserRuleCall_1_4_0_0() { return cParticipantsActorParserRuleCall_1_4_0_0; }
 		
 		//Component
-		public RuleCall getParticipantsComponentParserRuleCall_1_3_0_1() { return cParticipantsComponentParserRuleCall_1_3_0_1; }
+		public RuleCall getParticipantsComponentParserRuleCall_1_4_0_1() { return cParticipantsComponentParserRuleCall_1_4_0_1; }
 		
-		//'Physical' ('IS' | 'ES') name=STRING participant+=(Actor | PhysicalComponent)*
+		//'Physical' ('IS' | 'ES') name=STRING '{' participant+=(Actor | PhysicalComponent)*
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'Physical'
@@ -228,19 +245,22 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_2_2_0() { return cNameSTRINGTerminalRuleCall_2_2_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2_3() { return cLeftCurlyBracketKeyword_2_3; }
+		
 		//participant+=(Actor | PhysicalComponent)*
-		public Assignment getParticipantAssignment_2_3() { return cParticipantAssignment_2_3; }
+		public Assignment getParticipantAssignment_2_4() { return cParticipantAssignment_2_4; }
 		
 		//(Actor | PhysicalComponent)
-		public Alternatives getParticipantAlternatives_2_3_0() { return cParticipantAlternatives_2_3_0; }
+		public Alternatives getParticipantAlternatives_2_4_0() { return cParticipantAlternatives_2_4_0; }
 		
 		//Actor
-		public RuleCall getParticipantActorParserRuleCall_2_3_0_0() { return cParticipantActorParserRuleCall_2_3_0_0; }
+		public RuleCall getParticipantActorParserRuleCall_2_4_0_0() { return cParticipantActorParserRuleCall_2_4_0_0; }
 		
 		//PhysicalComponent
-		public RuleCall getParticipantPhysicalComponentParserRuleCall_2_3_0_1() { return cParticipantPhysicalComponentParserRuleCall_2_3_0_1; }
+		public RuleCall getParticipantPhysicalComponentParserRuleCall_2_4_0_1() { return cParticipantPhysicalComponentParserRuleCall_2_4_0_1; }
 		
-		//('System' | 'Logical' | 'Physical') 'FS' name=STRING participants+=Function*
+		//('System' | 'Logical' | 'Physical') 'FS' name=STRING '{' participants+=Function*
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'System' | 'Logical' | 'Physical'
@@ -264,13 +284,16 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_3_2_0() { return cNameSTRINGTerminalRuleCall_3_2_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3_3() { return cLeftCurlyBracketKeyword_3_3; }
+		
 		//participants+=Function*
-		public Assignment getParticipantsAssignment_3_3() { return cParticipantsAssignment_3_3; }
+		public Assignment getParticipantsAssignment_3_4() { return cParticipantsAssignment_3_4; }
 		
 		//Function
-		public RuleCall getParticipantsFunctionParserRuleCall_3_3_0() { return cParticipantsFunctionParserRuleCall_3_3_0; }
+		public RuleCall getParticipantsFunctionParserRuleCall_3_4_0() { return cParticipantsFunctionParserRuleCall_3_4_0; }
 		
-		//'EPBS' 'IS' name=STRING participants+=ConfigurationItem*
+		//'EPBS' 'IS' name=STRING '{' participants+=ConfigurationItem*
 		public Group getGroup_4() { return cGroup_4; }
 		
 		//'EPBS'
@@ -285,13 +308,16 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_4_2_0() { return cNameSTRINGTerminalRuleCall_4_2_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_4_3() { return cLeftCurlyBracketKeyword_4_3; }
+		
 		//participants+=ConfigurationItem*
-		public Assignment getParticipantsAssignment_4_3() { return cParticipantsAssignment_4_3; }
+		public Assignment getParticipantsAssignment_4_4() { return cParticipantsAssignment_4_4; }
 		
 		//ConfigurationItem
-		public RuleCall getParticipantsConfigurationItemParserRuleCall_4_3_0() { return cParticipantsConfigurationItemParserRuleCall_4_3_0; }
+		public RuleCall getParticipantsConfigurationItemParserRuleCall_4_4_0() { return cParticipantsConfigurationItemParserRuleCall_4_4_0; }
 		
-		//'OAS' name=STRING participants+=Activity*
+		//'OAS' name=STRING '{' participants+=Activity*
 		public Group getGroup_5() { return cGroup_5; }
 		
 		//'OAS'
@@ -303,13 +329,16 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_5_1_0() { return cNameSTRINGTerminalRuleCall_5_1_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_5_2() { return cLeftCurlyBracketKeyword_5_2; }
+		
 		//participants+=Activity*
-		public Assignment getParticipantsAssignment_5_2() { return cParticipantsAssignment_5_2; }
+		public Assignment getParticipantsAssignment_5_3() { return cParticipantsAssignment_5_3; }
 		
 		//Activity
-		public RuleCall getParticipantsActivityParserRuleCall_5_2_0() { return cParticipantsActivityParserRuleCall_5_2_0; }
+		public RuleCall getParticipantsActivityParserRuleCall_5_3_0() { return cParticipantsActivityParserRuleCall_5_3_0; }
 		
-		//'OES' name=STRING participants+=(Entity | Actor | Role)*
+		//'OES' name=STRING '{' participants+=(Entity | Actor | Role)*
 		public Group getGroup_6() { return cGroup_6; }
 		
 		//'OES'
@@ -321,20 +350,23 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_6_1_0() { return cNameSTRINGTerminalRuleCall_6_1_0; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_6_2() { return cLeftCurlyBracketKeyword_6_2; }
+		
 		//participants+=(Entity | Actor | Role)*
-		public Assignment getParticipantsAssignment_6_2() { return cParticipantsAssignment_6_2; }
+		public Assignment getParticipantsAssignment_6_3() { return cParticipantsAssignment_6_3; }
 		
 		//(Entity | Actor | Role)
-		public Alternatives getParticipantsAlternatives_6_2_0() { return cParticipantsAlternatives_6_2_0; }
+		public Alternatives getParticipantsAlternatives_6_3_0() { return cParticipantsAlternatives_6_3_0; }
 		
 		//Entity
-		public RuleCall getParticipantsEntityParserRuleCall_6_2_0_0() { return cParticipantsEntityParserRuleCall_6_2_0_0; }
+		public RuleCall getParticipantsEntityParserRuleCall_6_3_0_0() { return cParticipantsEntityParserRuleCall_6_3_0_0; }
 		
 		//Actor
-		public RuleCall getParticipantsActorParserRuleCall_6_2_0_1() { return cParticipantsActorParserRuleCall_6_2_0_1; }
+		public RuleCall getParticipantsActorParserRuleCall_6_3_0_1() { return cParticipantsActorParserRuleCall_6_3_0_1; }
 		
 		//Role
-		public RuleCall getParticipantsRoleParserRuleCall_6_2_0_2() { return cParticipantsRoleParserRuleCall_6_2_0_2; }
+		public RuleCall getParticipantsRoleParserRuleCall_6_3_0_2() { return cParticipantsRoleParserRuleCall_6_3_0_2; }
 	}
 	public class ActorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.Actor");
@@ -618,39 +650,97 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class MessageElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.Message");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSequenceMessageTypeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cArmTimerMessageParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cParticipantDeactivationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Message:
+		//	SequenceMessageType | ArmTimerMessage | ParticipantDeactivation;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//SequenceMessageType | ArmTimerMessage | ParticipantDeactivation
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//SequenceMessageType
+		public RuleCall getSequenceMessageTypeParserRuleCall_0() { return cSequenceMessageTypeParserRuleCall_0; }
+		
+		//ArmTimerMessage
+		public RuleCall getArmTimerMessageParserRuleCall_1() { return cArmTimerMessageParserRuleCall_1; }
+		
+		//ParticipantDeactivation
+		public RuleCall getParticipantDeactivationParserRuleCall_2() { return cParticipantDeactivationParserRuleCall_2; }
+	}
+	public class SequenceMessageTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.SequenceMessageType");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cName1Assignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cName1IDTerminalRuleCall_0_0 = (RuleCall)cName1Assignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cSequenceMessageParserRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cCreateMessageParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final RuleCall cDeleteMessageParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
+		private final Assignment cReturnAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cReturnReturnMessageParserRuleCall_1_0 = (RuleCall)cReturnAssignment_1.eContents().get(0);
+		
+		//SequenceMessageType:
+		//	(SequenceMessage | CreateMessage | DeleteMessage) return=ReturnMessage?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//(SequenceMessage | CreateMessage | DeleteMessage) return=ReturnMessage?
+		public Group getGroup() { return cGroup; }
+		
+		//SequenceMessage | CreateMessage | DeleteMessage
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//SequenceMessage
+		public RuleCall getSequenceMessageParserRuleCall_0_0() { return cSequenceMessageParserRuleCall_0_0; }
+		
+		//CreateMessage
+		public RuleCall getCreateMessageParserRuleCall_0_1() { return cCreateMessageParserRuleCall_0_1; }
+		
+		//DeleteMessage
+		public RuleCall getDeleteMessageParserRuleCall_0_2() { return cDeleteMessageParserRuleCall_0_2; }
+		
+		//return=ReturnMessage?
+		public Assignment getReturnAssignment_1() { return cReturnAssignment_1; }
+		
+		//ReturnMessage
+		public RuleCall getReturnReturnMessageParserRuleCall_1_0() { return cReturnReturnMessageParserRuleCall_1_0; }
+	}
+	public class SequenceMessageElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.SequenceMessage");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSourceAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cSourceIDTerminalRuleCall_0_0 = (RuleCall)cSourceAssignment_0.eContents().get(0);
 		private final Keyword cHyphenMinusGreaterThanSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cName2Assignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cName2IDTerminalRuleCall_2_0 = (RuleCall)cName2Assignment_2.eContents().get(0);
+		private final Assignment cTargetAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTargetIDTerminalRuleCall_2_0 = (RuleCall)cTargetAssignment_2.eContents().get(0);
 		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cNameSTRINGTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
 		
-		//Message:
-		//	name1=ID '->' name2=ID ":" name=STRING;
+		//SequenceMessage:
+		//	source=ID '->' target=ID ':' name=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name1=ID '->' name2=ID ":" name=STRING
+		//source=ID '->' target=ID ':' name=STRING
 		public Group getGroup() { return cGroup; }
 		
-		//name1=ID
-		public Assignment getName1Assignment_0() { return cName1Assignment_0; }
+		//source=ID
+		public Assignment getSourceAssignment_0() { return cSourceAssignment_0; }
 		
 		//ID
-		public RuleCall getName1IDTerminalRuleCall_0_0() { return cName1IDTerminalRuleCall_0_0; }
+		public RuleCall getSourceIDTerminalRuleCall_0_0() { return cSourceIDTerminalRuleCall_0_0; }
 		
 		//'->'
 		public Keyword getHyphenMinusGreaterThanSignKeyword_1() { return cHyphenMinusGreaterThanSignKeyword_1; }
 		
-		//name2=ID
-		public Assignment getName2Assignment_2() { return cName2Assignment_2; }
+		//target=ID
+		public Assignment getTargetAssignment_2() { return cTargetAssignment_2; }
 		
 		//ID
-		public RuleCall getName2IDTerminalRuleCall_2_0() { return cName2IDTerminalRuleCall_2_0; }
+		public RuleCall getTargetIDTerminalRuleCall_2_0() { return cTargetIDTerminalRuleCall_2_0; }
 		
-		//":"
+		//':'
 		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
 		
 		//name=STRING
@@ -658,6 +748,228 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_4_0() { return cNameSTRINGTerminalRuleCall_4_0; }
+	}
+	public class CreateMessageElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.CreateMessage");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSourceAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cSourceIDTerminalRuleCall_0_0 = (RuleCall)cSourceAssignment_0.eContents().get(0);
+		private final Keyword cHyphenMinusGreaterThanSignPlusSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTargetAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTargetIDTerminalRuleCall_2_0 = (RuleCall)cTargetAssignment_2.eContents().get(0);
+		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cNameSTRINGTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		
+		//CreateMessage:
+		//	source=ID '->+' target=ID ':' name=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//source=ID '->+' target=ID ':' name=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//source=ID
+		public Assignment getSourceAssignment_0() { return cSourceAssignment_0; }
+		
+		//ID
+		public RuleCall getSourceIDTerminalRuleCall_0_0() { return cSourceIDTerminalRuleCall_0_0; }
+		
+		//'->+'
+		public Keyword getHyphenMinusGreaterThanSignPlusSignKeyword_1() { return cHyphenMinusGreaterThanSignPlusSignKeyword_1; }
+		
+		//target=ID
+		public Assignment getTargetAssignment_2() { return cTargetAssignment_2; }
+		
+		//ID
+		public RuleCall getTargetIDTerminalRuleCall_2_0() { return cTargetIDTerminalRuleCall_2_0; }
+		
+		//':'
+		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
+		
+		//name=STRING
+		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+		
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_4_0() { return cNameSTRINGTerminalRuleCall_4_0; }
+	}
+	public class DeleteMessageElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.DeleteMessage");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cSourceAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cSourceIDTerminalRuleCall_0_0 = (RuleCall)cSourceAssignment_0.eContents().get(0);
+		private final Keyword cXKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTargetAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTargetIDTerminalRuleCall_2_0 = (RuleCall)cTargetAssignment_2.eContents().get(0);
+		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cNameSTRINGTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		
+		//DeleteMessage:
+		//	source=ID '->x' target=ID ':' name=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//source=ID '->x' target=ID ':' name=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//source=ID
+		public Assignment getSourceAssignment_0() { return cSourceAssignment_0; }
+		
+		//ID
+		public RuleCall getSourceIDTerminalRuleCall_0_0() { return cSourceIDTerminalRuleCall_0_0; }
+		
+		//'->x'
+		public Keyword getXKeyword_1() { return cXKeyword_1; }
+		
+		//target=ID
+		public Assignment getTargetAssignment_2() { return cTargetAssignment_2; }
+		
+		//ID
+		public RuleCall getTargetIDTerminalRuleCall_2_0() { return cTargetIDTerminalRuleCall_2_0; }
+		
+		//':'
+		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
+		
+		//name=STRING
+		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+		
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_4_0() { return cNameSTRINGTerminalRuleCall_4_0; }
+	}
+	public class ReturnMessageElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.ReturnMessage");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cTargetAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cTargetIDTerminalRuleCall_0_0 = (RuleCall)cTargetAssignment_0.eContents().get(0);
+		private final Keyword cLessThanSignHyphenMinusHyphenMinusKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cSourceAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cSourceIDTerminalRuleCall_2_0 = (RuleCall)cSourceAssignment_2.eContents().get(0);
+		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cNameSTRINGTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		
+		//ReturnMessage:
+		//	target=ID '<--' source=ID ':' name=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//target=ID '<--' source=ID ':' name=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//target=ID
+		public Assignment getTargetAssignment_0() { return cTargetAssignment_0; }
+		
+		//ID
+		public RuleCall getTargetIDTerminalRuleCall_0_0() { return cTargetIDTerminalRuleCall_0_0; }
+		
+		//'<--'
+		public Keyword getLessThanSignHyphenMinusHyphenMinusKeyword_1() { return cLessThanSignHyphenMinusHyphenMinusKeyword_1; }
+		
+		//source=ID
+		public Assignment getSourceAssignment_2() { return cSourceAssignment_2; }
+		
+		//ID
+		public RuleCall getSourceIDTerminalRuleCall_2_0() { return cSourceIDTerminalRuleCall_2_0; }
+		
+		//':'
+		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
+		
+		//name=STRING
+		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+		
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_4_0() { return cNameSTRINGTerminalRuleCall_4_0; }
+	}
+	public class ArmTimerMessageElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.ArmTimerMessage");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cParticipantAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cParticipantIDTerminalRuleCall_1_0 = (RuleCall)cParticipantAssignment_1.eContents().get(0);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameSTRINGTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		
+		//ArmTimerMessage:
+		//	"->>" participant=ID ':' name=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//"->>" participant=ID ':' name=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//"->>"
+		public Keyword getHyphenMinusGreaterThanSignGreaterThanSignKeyword_0() { return cHyphenMinusGreaterThanSignGreaterThanSignKeyword_0; }
+		
+		//participant=ID
+		public Assignment getParticipantAssignment_1() { return cParticipantAssignment_1; }
+		
+		//ID
+		public RuleCall getParticipantIDTerminalRuleCall_1_0() { return cParticipantIDTerminalRuleCall_1_0; }
+		
+		//':'
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+		
+		//name=STRING
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
+		
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_3_0() { return cNameSTRINGTerminalRuleCall_3_0; }
+	}
+	public class ParticipantDeactivationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.ParticipantDeactivation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cDeactivateKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//ParticipantDeactivation:
+		//	'deactivate' name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'deactivate' name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//'deactivate'
+		public Keyword getDeactivateKeyword_0() { return cDeactivateKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+	}
+	public class ReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.Reference");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRefKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cOverKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTimelinesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTimelinesIDTerminalRuleCall_2_0 = (RuleCall)cTimelinesAssignment_2.eContents().get(0);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameSTRINGTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		
+		//Reference:
+		//	'ref' 'over' timelines+=ID+ name=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'ref' 'over' timelines+=ID+ name=STRING
+		public Group getGroup() { return cGroup; }
+		
+		//'ref'
+		public Keyword getRefKeyword_0() { return cRefKeyword_0; }
+		
+		//'over'
+		public Keyword getOverKeyword_1() { return cOverKeyword_1; }
+		
+		//timelines+=ID+
+		public Assignment getTimelinesAssignment_2() { return cTimelinesAssignment_2; }
+		
+		//ID
+		public RuleCall getTimelinesIDTerminalRuleCall_2_0() { return cTimelinesIDTerminalRuleCall_2_0; }
+		
+		//name=STRING
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
+		
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_3_0() { return cNameSTRINGTerminalRuleCall_3_0; }
 	}
 	
 	
@@ -672,6 +984,14 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	private final EntityElements pEntity;
 	private final RoleElements pRole;
 	private final MessageElements pMessage;
+	private final SequenceMessageTypeElements pSequenceMessageType;
+	private final SequenceMessageElements pSequenceMessage;
+	private final CreateMessageElements pCreateMessage;
+	private final DeleteMessageElements pDeleteMessage;
+	private final ReturnMessageElements pReturnMessage;
+	private final ArmTimerMessageElements pArmTimerMessage;
+	private final ParticipantDeactivationElements pParticipantDeactivation;
+	private final ReferenceElements pReference;
 	
 	private final Grammar grammar;
 	
@@ -693,6 +1013,14 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pEntity = new EntityElements();
 		this.pRole = new RoleElements();
 		this.pMessage = new MessageElements();
+		this.pSequenceMessageType = new SequenceMessageTypeElements();
+		this.pSequenceMessage = new SequenceMessageElements();
+		this.pCreateMessage = new CreateMessageElements();
+		this.pDeleteMessage = new DeleteMessageElements();
+		this.pReturnMessage = new ReturnMessageElements();
+		this.pArmTimerMessage = new ArmTimerMessageElements();
+		this.pParticipantDeactivation = new ParticipantDeactivationElements();
+		this.pReference = new ReferenceElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -724,8 +1052,7 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Model:
 	//	'scenario' scenarioType=ScenarioTypeAndParticipants
-	//	'{'
-	//	messages+=Message*
+	//	messagesOrReferences+=(Message | Reference)*
 	//	'}';
 	public ModelElements getModelAccess() {
 		return pModel;
@@ -736,13 +1063,13 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ScenarioTypeAndParticipants:
-	//	'System' ('IS' | 'ES') name=STRING participants+=Actor*
-	//	| 'Logical' ('IS' | 'ES') name=STRING participants+=(Actor | Component)*
-	//	| 'Physical' ('IS' | 'ES') name=STRING participant+=(Actor | PhysicalComponent)*
-	//	| ('System' | 'Logical' | 'Physical') 'FS' name=STRING participants+=Function*
-	//	| 'EPBS' 'IS' name=STRING participants+=ConfigurationItem*
-	//	| 'OAS' name=STRING participants+=Activity*
-	//	| 'OES' name=STRING participants+=(Entity | Actor | Role)*;
+	//	'System' ('IS' | 'ES') name=STRING '{' participants+=Actor*
+	//	| 'Logical' ('IS' | 'ES') name=STRING '{' participants+=(Actor | Component)*
+	//	| 'Physical' ('IS' | 'ES') name=STRING '{' participant+=(Actor | PhysicalComponent)*
+	//	| ('System' | 'Logical' | 'Physical') 'FS' name=STRING '{' participants+=Function*
+	//	| 'EPBS' 'IS' name=STRING '{' participants+=ConfigurationItem*
+	//	| 'OAS' name=STRING '{' participants+=Activity*
+	//	| 'OES' name=STRING '{' participants+=(Entity | Actor | Role)*;
 	public ScenarioTypeAndParticipantsElements getScenarioTypeAndParticipantsAccess() {
 		return pScenarioTypeAndParticipants;
 	}
@@ -832,13 +1159,93 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Message:
-	//	name1=ID '->' name2=ID ":" name=STRING;
+	//	SequenceMessageType | ArmTimerMessage | ParticipantDeactivation;
 	public MessageElements getMessageAccess() {
 		return pMessage;
 	}
 	
 	public ParserRule getMessageRule() {
 		return getMessageAccess().getRule();
+	}
+	
+	//SequenceMessageType:
+	//	(SequenceMessage | CreateMessage | DeleteMessage) return=ReturnMessage?;
+	public SequenceMessageTypeElements getSequenceMessageTypeAccess() {
+		return pSequenceMessageType;
+	}
+	
+	public ParserRule getSequenceMessageTypeRule() {
+		return getSequenceMessageTypeAccess().getRule();
+	}
+	
+	//SequenceMessage:
+	//	source=ID '->' target=ID ':' name=STRING;
+	public SequenceMessageElements getSequenceMessageAccess() {
+		return pSequenceMessage;
+	}
+	
+	public ParserRule getSequenceMessageRule() {
+		return getSequenceMessageAccess().getRule();
+	}
+	
+	//CreateMessage:
+	//	source=ID '->+' target=ID ':' name=STRING;
+	public CreateMessageElements getCreateMessageAccess() {
+		return pCreateMessage;
+	}
+	
+	public ParserRule getCreateMessageRule() {
+		return getCreateMessageAccess().getRule();
+	}
+	
+	//DeleteMessage:
+	//	source=ID '->x' target=ID ':' name=STRING;
+	public DeleteMessageElements getDeleteMessageAccess() {
+		return pDeleteMessage;
+	}
+	
+	public ParserRule getDeleteMessageRule() {
+		return getDeleteMessageAccess().getRule();
+	}
+	
+	//ReturnMessage:
+	//	target=ID '<--' source=ID ':' name=STRING;
+	public ReturnMessageElements getReturnMessageAccess() {
+		return pReturnMessage;
+	}
+	
+	public ParserRule getReturnMessageRule() {
+		return getReturnMessageAccess().getRule();
+	}
+	
+	//ArmTimerMessage:
+	//	"->>" participant=ID ':' name=STRING;
+	public ArmTimerMessageElements getArmTimerMessageAccess() {
+		return pArmTimerMessage;
+	}
+	
+	public ParserRule getArmTimerMessageRule() {
+		return getArmTimerMessageAccess().getRule();
+	}
+	
+	//ParticipantDeactivation:
+	//	'deactivate' name=ID;
+	public ParticipantDeactivationElements getParticipantDeactivationAccess() {
+		return pParticipantDeactivation;
+	}
+	
+	public ParserRule getParticipantDeactivationRule() {
+		return getParticipantDeactivationAccess().getRule();
+	}
+	
+	//Reference:
+	//	'ref' 'over' timelines+=ID+ name=STRING;
+	public ReferenceElements getReferenceAccess() {
+		return pReference;
+	}
+	
+	public ParserRule getReferenceRule() {
+		return getReferenceAccess().getRule();
 	}
 	
 	//terminal ID:

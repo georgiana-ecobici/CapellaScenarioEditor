@@ -12,17 +12,25 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Component;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslFactory;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Role;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,6 +116,62 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   private EClass messageEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sequenceMessageTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sequenceMessageEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass createMessageEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass deleteMessageEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass returnMessageEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass armTimerMessageEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass participantDeactivationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass referenceEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -200,7 +264,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EReference getModel_Messages()
+  public EReference getModel_MessagesOrReferences()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(1);
   }
@@ -519,7 +583,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getMessage_Name1()
+  public EAttribute getMessage_Name()
   {
     return (EAttribute)messageEClass.getEStructuralFeatures().get(0);
   }
@@ -530,9 +594,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getMessage_Name2()
+  public EClass getSequenceMessageType()
   {
-    return (EAttribute)messageEClass.getEStructuralFeatures().get(1);
+    return sequenceMessageTypeEClass;
   }
 
   /**
@@ -541,9 +605,174 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getMessage_Name()
+  public EReference getSequenceMessageType_Return()
   {
-    return (EAttribute)messageEClass.getEStructuralFeatures().get(2);
+    return (EReference)sequenceMessageTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getSequenceMessageType_Source()
+  {
+    return (EAttribute)sequenceMessageTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getSequenceMessageType_Target()
+  {
+    return (EAttribute)sequenceMessageTypeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getSequenceMessage()
+  {
+    return sequenceMessageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getCreateMessage()
+  {
+    return createMessageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getDeleteMessage()
+  {
+    return deleteMessageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getReturnMessage()
+  {
+    return returnMessageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getReturnMessage_Target()
+  {
+    return (EAttribute)returnMessageEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getReturnMessage_Source()
+  {
+    return (EAttribute)returnMessageEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getReturnMessage_Name()
+  {
+    return (EAttribute)returnMessageEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getArmTimerMessage()
+  {
+    return armTimerMessageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getArmTimerMessage_Participant()
+  {
+    return (EAttribute)armTimerMessageEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getParticipantDeactivation()
+  {
+    return participantDeactivationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getReference()
+  {
+    return referenceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getReference_Timelines()
+  {
+    return (EAttribute)referenceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getReference_Name()
+  {
+    return (EAttribute)referenceEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -579,7 +808,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     // Create classes and their features
     modelEClass = createEClass(MODEL);
     createEReference(modelEClass, MODEL__SCENARIO_TYPE);
-    createEReference(modelEClass, MODEL__MESSAGES);
+    createEReference(modelEClass, MODEL__MESSAGES_OR_REFERENCES);
 
     scenarioTypeAndParticipantsEClass = createEClass(SCENARIO_TYPE_AND_PARTICIPANTS);
     createEAttribute(scenarioTypeAndParticipantsEClass, SCENARIO_TYPE_AND_PARTICIPANTS__NAME);
@@ -618,9 +847,32 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     createEAttribute(roleEClass, ROLE__ID);
 
     messageEClass = createEClass(MESSAGE);
-    createEAttribute(messageEClass, MESSAGE__NAME1);
-    createEAttribute(messageEClass, MESSAGE__NAME2);
     createEAttribute(messageEClass, MESSAGE__NAME);
+
+    sequenceMessageTypeEClass = createEClass(SEQUENCE_MESSAGE_TYPE);
+    createEReference(sequenceMessageTypeEClass, SEQUENCE_MESSAGE_TYPE__RETURN);
+    createEAttribute(sequenceMessageTypeEClass, SEQUENCE_MESSAGE_TYPE__SOURCE);
+    createEAttribute(sequenceMessageTypeEClass, SEQUENCE_MESSAGE_TYPE__TARGET);
+
+    sequenceMessageEClass = createEClass(SEQUENCE_MESSAGE);
+
+    createMessageEClass = createEClass(CREATE_MESSAGE);
+
+    deleteMessageEClass = createEClass(DELETE_MESSAGE);
+
+    returnMessageEClass = createEClass(RETURN_MESSAGE);
+    createEAttribute(returnMessageEClass, RETURN_MESSAGE__TARGET);
+    createEAttribute(returnMessageEClass, RETURN_MESSAGE__SOURCE);
+    createEAttribute(returnMessageEClass, RETURN_MESSAGE__NAME);
+
+    armTimerMessageEClass = createEClass(ARM_TIMER_MESSAGE);
+    createEAttribute(armTimerMessageEClass, ARM_TIMER_MESSAGE__PARTICIPANT);
+
+    participantDeactivationEClass = createEClass(PARTICIPANT_DEACTIVATION);
+
+    referenceEClass = createEClass(REFERENCE);
+    createEAttribute(referenceEClass, REFERENCE__TIMELINES);
+    createEAttribute(referenceEClass, REFERENCE__NAME);
   }
 
   /**
@@ -652,11 +904,17 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    sequenceMessageTypeEClass.getESuperTypes().add(this.getMessage());
+    sequenceMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
+    createMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
+    deleteMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
+    armTimerMessageEClass.getESuperTypes().add(this.getMessage());
+    participantDeactivationEClass.getESuperTypes().add(this.getMessage());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getModel_ScenarioType(), this.getScenarioTypeAndParticipants(), null, "scenarioType", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModel_Messages(), this.getMessage(), null, "messages", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_MessagesOrReferences(), ecorePackage.getEObject(), null, "messagesOrReferences", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scenarioTypeAndParticipantsEClass, ScenarioTypeAndParticipants.class, "ScenarioTypeAndParticipants", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScenarioTypeAndParticipants_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScenarioTypeAndParticipants.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -695,9 +953,32 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     initEAttribute(getRole_Id(), ecorePackage.getEString(), "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMessage_Name1(), ecorePackage.getEString(), "name1", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMessage_Name2(), ecorePackage.getEString(), "name2", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMessage_Name(), ecorePackage.getEString(), "name", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sequenceMessageTypeEClass, SequenceMessageType.class, "SequenceMessageType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSequenceMessageType_Return(), this.getReturnMessage(), null, "return", null, 0, 1, SequenceMessageType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSequenceMessageType_Source(), ecorePackage.getEString(), "source", null, 0, 1, SequenceMessageType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSequenceMessageType_Target(), ecorePackage.getEString(), "target", null, 0, 1, SequenceMessageType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sequenceMessageEClass, SequenceMessage.class, "SequenceMessage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(createMessageEClass, CreateMessage.class, "CreateMessage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(deleteMessageEClass, DeleteMessage.class, "DeleteMessage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(returnMessageEClass, ReturnMessage.class, "ReturnMessage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getReturnMessage_Target(), ecorePackage.getEString(), "target", null, 0, 1, ReturnMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReturnMessage_Source(), ecorePackage.getEString(), "source", null, 0, 1, ReturnMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReturnMessage_Name(), ecorePackage.getEString(), "name", null, 0, 1, ReturnMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(armTimerMessageEClass, ArmTimerMessage.class, "ArmTimerMessage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getArmTimerMessage_Participant(), ecorePackage.getEString(), "participant", null, 0, 1, ArmTimerMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(participantDeactivationEClass, ParticipantDeactivation.class, "ParticipantDeactivation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(referenceEClass, Reference.class, "Reference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getReference_Timelines(), ecorePackage.getEString(), "timelines", null, 0, -1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

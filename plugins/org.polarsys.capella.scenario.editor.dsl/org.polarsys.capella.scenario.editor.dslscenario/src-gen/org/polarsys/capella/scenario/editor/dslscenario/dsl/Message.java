@@ -14,8 +14,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName1 <em>Name1</em>}</li>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName2 <em>Name2</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -25,50 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Message extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Name1</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name1</em>' attribute.
-   * @see #setName1(String)
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getMessage_Name1()
-   * @model
-   * @generated
-   */
-  String getName1();
-
-  /**
-   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName1 <em>Name1</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name1</em>' attribute.
-   * @see #getName1()
-   * @generated
-   */
-  void setName1(String value);
-
-  /**
-   * Returns the value of the '<em><b>Name2</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name2</em>' attribute.
-   * @see #setName2(String)
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getMessage_Name2()
-   * @model
-   * @generated
-   */
-  String getName2();
-
-  /**
-   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message#getName2 <em>Name2</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name2</em>' attribute.
-   * @see #getName2()
-   * @generated
-   */
-  void setName2(String value);
-
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
