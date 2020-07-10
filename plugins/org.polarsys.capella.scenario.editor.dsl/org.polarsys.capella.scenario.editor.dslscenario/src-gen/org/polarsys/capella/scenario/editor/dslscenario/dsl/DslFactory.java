@@ -123,6 +123,78 @@ public interface DslFactory extends EFactory
   Message createMessage();
 
   /**
+   * Returns a new object of class '<em>Sequence Message Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sequence Message Type</em>'.
+   * @generated
+   */
+  SequenceMessageType createSequenceMessageType();
+
+  /**
+   * Returns a new object of class '<em>Sequence Message</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sequence Message</em>'.
+   * @generated
+   */
+  SequenceMessage createSequenceMessage();
+
+  /**
+   * Returns a new object of class '<em>Create Message</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Create Message</em>'.
+   * @generated
+   */
+  CreateMessage createCreateMessage();
+
+  /**
+   * Returns a new object of class '<em>Delete Message</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Delete Message</em>'.
+   * @generated
+   */
+  DeleteMessage createDeleteMessage();
+
+  /**
+   * Returns a new object of class '<em>Return Message</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Return Message</em>'.
+   * @generated
+   */
+  ReturnMessage createReturnMessage();
+
+  /**
+   * Returns a new object of class '<em>Arm Timer Message</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Arm Timer Message</em>'.
+   * @generated
+   */
+  ArmTimerMessage createArmTimerMessage();
+
+  /**
+   * Returns a new object of class '<em>Participant Deactivation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Participant Deactivation</em>'.
+   * @generated
+   */
+  ParticipantDeactivation createParticipantDeactivation();
+
+  /**
+   * Returns a new object of class '<em>Reference</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Reference</em>'.
+   * @generated
+   */
+  Reference createReference();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

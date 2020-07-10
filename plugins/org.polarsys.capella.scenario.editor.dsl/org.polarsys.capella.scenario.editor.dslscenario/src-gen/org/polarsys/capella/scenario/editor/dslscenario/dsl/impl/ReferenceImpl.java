@@ -3,31 +3,48 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.dsl.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
+
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Message</b></em>'.
+ * An implementation of the model object '<em><b>Reference</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.MessageImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl#getTimelines <em>Timelines</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MessageImpl extends MinimalEObjectImpl.Container implements Message
+public class ReferenceImpl extends MinimalEObjectImpl.Container implements Reference
 {
+  /**
+   * The cached value of the '{@link #getTimelines() <em>Timelines</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTimelines()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> timelines;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -53,7 +70,7 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
    * <!-- end-user-doc -->
    * @generated
    */
-  protected MessageImpl()
+  protected ReferenceImpl()
   {
     super();
   }
@@ -66,7 +83,22 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   @Override
   protected EClass eStaticClass()
   {
-    return DslPackage.Literals.MESSAGE;
+    return DslPackage.Literals.REFERENCE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<String> getTimelines()
+  {
+    if (timelines == null)
+    {
+      timelines = new EDataTypeEList<String>(String.class, this, DslPackage.REFERENCE__TIMELINES);
+    }
+    return timelines;
   }
 
   /**
@@ -91,7 +123,7 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.MESSAGE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.REFERENCE__NAME, oldName, name));
   }
 
   /**
@@ -104,7 +136,9 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
+      case DslPackage.REFERENCE__TIMELINES:
+        return getTimelines();
+      case DslPackage.REFERENCE__NAME:
         return getName();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -115,12 +149,17 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
+      case DslPackage.REFERENCE__TIMELINES:
+        getTimelines().clear();
+        getTimelines().addAll((Collection<? extends String>)newValue);
+        return;
+      case DslPackage.REFERENCE__NAME:
         setName((String)newValue);
         return;
     }
@@ -137,7 +176,10 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
+      case DslPackage.REFERENCE__TIMELINES:
+        getTimelines().clear();
+        return;
+      case DslPackage.REFERENCE__NAME:
         setName(NAME_EDEFAULT);
         return;
     }
@@ -154,7 +196,9 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
   {
     switch (featureID)
     {
-      case DslPackage.MESSAGE__NAME:
+      case DslPackage.REFERENCE__TIMELINES:
+        return timelines != null && !timelines.isEmpty();
+      case DslPackage.REFERENCE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
@@ -171,10 +215,12 @@ public class MessageImpl extends MinimalEObjectImpl.Container implements Message
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (timelines: ");
+    result.append(timelines);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();
   }
 
-} //MessageImpl
+} //ReferenceImpl

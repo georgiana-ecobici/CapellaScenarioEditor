@@ -131,6 +131,46 @@ public class DslAdapterFactory extends AdapterFactoryImpl
         return createMessageAdapter();
       }
       @Override
+      public Adapter caseSequenceMessageType(SequenceMessageType object)
+      {
+        return createSequenceMessageTypeAdapter();
+      }
+      @Override
+      public Adapter caseSequenceMessage(SequenceMessage object)
+      {
+        return createSequenceMessageAdapter();
+      }
+      @Override
+      public Adapter caseCreateMessage(CreateMessage object)
+      {
+        return createCreateMessageAdapter();
+      }
+      @Override
+      public Adapter caseDeleteMessage(DeleteMessage object)
+      {
+        return createDeleteMessageAdapter();
+      }
+      @Override
+      public Adapter caseReturnMessage(ReturnMessage object)
+      {
+        return createReturnMessageAdapter();
+      }
+      @Override
+      public Adapter caseArmTimerMessage(ArmTimerMessage object)
+      {
+        return createArmTimerMessageAdapter();
+      }
+      @Override
+      public Adapter caseParticipantDeactivation(ParticipantDeactivation object)
+      {
+        return createParticipantDeactivationAdapter();
+      }
+      @Override
+      public Adapter caseReference(Reference object)
+      {
+        return createReferenceAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -313,6 +353,126 @@ public class DslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createMessageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType <em>Sequence Message Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType
+   * @generated
+   */
+  public Adapter createSequenceMessageTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage <em>Sequence Message</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
+   * @generated
+   */
+  public Adapter createSequenceMessageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage <em>Create Message</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage
+   * @generated
+   */
+  public Adapter createCreateMessageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage <em>Delete Message</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage
+   * @generated
+   */
+  public Adapter createDeleteMessageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage <em>Return Message</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage
+   * @generated
+   */
+  public Adapter createReturnMessageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage <em>Arm Timer Message</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage
+   * @generated
+   */
+  public Adapter createArmTimerMessageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation <em>Participant Deactivation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation
+   * @generated
+   */
+  public Adapter createParticipantDeactivationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference <em>Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference
+   * @generated
+   */
+  public Adapter createReferenceAdapter()
   {
     return null;
   }

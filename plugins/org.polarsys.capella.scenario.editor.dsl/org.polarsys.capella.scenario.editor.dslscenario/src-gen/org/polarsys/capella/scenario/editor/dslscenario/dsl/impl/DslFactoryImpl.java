@@ -76,6 +76,14 @@ public class DslFactoryImpl extends EFactoryImpl implements DslFactory
       case DslPackage.ENTITY: return createEntity();
       case DslPackage.ROLE: return createRole();
       case DslPackage.MESSAGE: return createMessage();
+      case DslPackage.SEQUENCE_MESSAGE_TYPE: return createSequenceMessageType();
+      case DslPackage.SEQUENCE_MESSAGE: return createSequenceMessage();
+      case DslPackage.CREATE_MESSAGE: return createCreateMessage();
+      case DslPackage.DELETE_MESSAGE: return createDeleteMessage();
+      case DslPackage.RETURN_MESSAGE: return createReturnMessage();
+      case DslPackage.ARM_TIMER_MESSAGE: return createArmTimerMessage();
+      case DslPackage.PARTICIPANT_DEACTIVATION: return createParticipantDeactivation();
+      case DslPackage.REFERENCE: return createReference();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -211,6 +219,102 @@ public class DslFactoryImpl extends EFactoryImpl implements DslFactory
   {
     MessageImpl message = new MessageImpl();
     return message;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SequenceMessageType createSequenceMessageType()
+  {
+    SequenceMessageTypeImpl sequenceMessageType = new SequenceMessageTypeImpl();
+    return sequenceMessageType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SequenceMessage createSequenceMessage()
+  {
+    SequenceMessageImpl sequenceMessage = new SequenceMessageImpl();
+    return sequenceMessage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public CreateMessage createCreateMessage()
+  {
+    CreateMessageImpl createMessage = new CreateMessageImpl();
+    return createMessage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public DeleteMessage createDeleteMessage()
+  {
+    DeleteMessageImpl deleteMessage = new DeleteMessageImpl();
+    return deleteMessage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ReturnMessage createReturnMessage()
+  {
+    ReturnMessageImpl returnMessage = new ReturnMessageImpl();
+    return returnMessage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ArmTimerMessage createArmTimerMessage()
+  {
+    ArmTimerMessageImpl armTimerMessage = new ArmTimerMessageImpl();
+    return armTimerMessage;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ParticipantDeactivation createParticipantDeactivation()
+  {
+    ParticipantDeactivationImpl participantDeactivation = new ParticipantDeactivationImpl();
+    return participantDeactivation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Reference createReference()
+  {
+    ReferenceImpl reference = new ReferenceImpl();
+    return reference;
   }
 
   /**

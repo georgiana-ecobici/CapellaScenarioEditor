@@ -11,6 +11,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -20,7 +21,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
 
@@ -33,7 +33,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParti
  * </p>
  * <ul>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getScenarioType <em>Scenario Type</em>}</li>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getMessages <em>Messages</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getMessagesOrReferences <em>Messages Or References</em>}</li>
  * </ul>
  *
  * @generated
@@ -51,14 +51,14 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   protected ScenarioTypeAndParticipants scenarioType;
 
   /**
-   * The cached value of the '{@link #getMessages() <em>Messages</em>}' containment reference list.
+   * The cached value of the '{@link #getMessagesOrReferences() <em>Messages Or References</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMessages()
+   * @see #getMessagesOrReferences()
    * @generated
    * @ordered
    */
-  protected EList<Message> messages;
+  protected EList<EObject> messagesOrReferences;
 
   /**
    * <!-- begin-user-doc -->
@@ -137,13 +137,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    */
   @Override
-  public EList<Message> getMessages()
+  public EList<EObject> getMessagesOrReferences()
   {
-    if (messages == null)
+    if (messagesOrReferences == null)
     {
-      messages = new EObjectContainmentEList<Message>(Message.class, this, DslPackage.MODEL__MESSAGES);
+      messagesOrReferences = new EObjectContainmentEList<EObject>(EObject.class, this, DslPackage.MODEL__MESSAGES_OR_REFERENCES);
     }
-    return messages;
+    return messagesOrReferences;
   }
 
   /**
@@ -158,8 +158,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case DslPackage.MODEL__SCENARIO_TYPE:
         return basicSetScenarioType(null, msgs);
-      case DslPackage.MODEL__MESSAGES:
-        return ((InternalEList<?>)getMessages()).basicRemove(otherEnd, msgs);
+      case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
+        return ((InternalEList<?>)getMessagesOrReferences()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -176,8 +176,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case DslPackage.MODEL__SCENARIO_TYPE:
         return getScenarioType();
-      case DslPackage.MODEL__MESSAGES:
-        return getMessages();
+      case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
+        return getMessagesOrReferences();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -196,9 +196,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case DslPackage.MODEL__SCENARIO_TYPE:
         setScenarioType((ScenarioTypeAndParticipants)newValue);
         return;
-      case DslPackage.MODEL__MESSAGES:
-        getMessages().clear();
-        getMessages().addAll((Collection<? extends Message>)newValue);
+      case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
+        getMessagesOrReferences().clear();
+        getMessagesOrReferences().addAll((Collection<? extends EObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -217,8 +217,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case DslPackage.MODEL__SCENARIO_TYPE:
         setScenarioType((ScenarioTypeAndParticipants)null);
         return;
-      case DslPackage.MODEL__MESSAGES:
-        getMessages().clear();
+      case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
+        getMessagesOrReferences().clear();
         return;
     }
     super.eUnset(featureID);
@@ -236,8 +236,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case DslPackage.MODEL__SCENARIO_TYPE:
         return scenarioType != null;
-      case DslPackage.MODEL__MESSAGES:
-        return messages != null && !messages.isEmpty();
+      case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
+        return messagesOrReferences != null && !messagesOrReferences.isEmpty();
     }
     return super.eIsSet(featureID);
   }

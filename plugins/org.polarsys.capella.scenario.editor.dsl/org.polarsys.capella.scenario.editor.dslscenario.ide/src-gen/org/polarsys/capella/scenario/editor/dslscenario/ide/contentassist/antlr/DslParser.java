@@ -31,15 +31,18 @@ public class DslParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, DslGrammarAccess grammarAccess) {
+			builder.put(grammarAccess.getModelAccess().getMessagesOrReferencesAlternatives_2_0(), "rule__Model__MessagesOrReferencesAlternatives_2_0");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getAlternatives(), "rule__ScenarioTypeAndParticipants__Alternatives");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getAlternatives_0_1(), "rule__ScenarioTypeAndParticipants__Alternatives_0_1");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getAlternatives_1_1(), "rule__ScenarioTypeAndParticipants__Alternatives_1_1");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAlternatives_1_3_0(), "rule__ScenarioTypeAndParticipants__ParticipantsAlternatives_1_3_0");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAlternatives_1_4_0(), "rule__ScenarioTypeAndParticipants__ParticipantsAlternatives_1_4_0");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getAlternatives_2_1(), "rule__ScenarioTypeAndParticipants__Alternatives_2_1");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantAlternatives_2_3_0(), "rule__ScenarioTypeAndParticipants__ParticipantAlternatives_2_3_0");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantAlternatives_2_4_0(), "rule__ScenarioTypeAndParticipants__ParticipantAlternatives_2_4_0");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getAlternatives_3_0(), "rule__ScenarioTypeAndParticipants__Alternatives_3_0");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAlternatives_6_2_0(), "rule__ScenarioTypeAndParticipants__ParticipantsAlternatives_6_2_0");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAlternatives_6_3_0(), "rule__ScenarioTypeAndParticipants__ParticipantsAlternatives_6_3_0");
 			builder.put(grammarAccess.getPhysicalComponentAccess().getAlternatives_1(), "rule__PhysicalComponent__Alternatives_1");
+			builder.put(grammarAccess.getMessageAccess().getAlternatives(), "rule__Message__Alternatives");
+			builder.put(grammarAccess.getSequenceMessageTypeAccess().getAlternatives_0(), "rule__SequenceMessageType__Alternatives_0");
 			builder.put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getGroup_0(), "rule__ScenarioTypeAndParticipants__Group_0__0");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getGroup_1(), "rule__ScenarioTypeAndParticipants__Group_1__0");
@@ -56,23 +59,30 @@ public class DslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getActivityAccess().getGroup(), "rule__Activity__Group__0");
 			builder.put(grammarAccess.getEntityAccess().getGroup(), "rule__Entity__Group__0");
 			builder.put(grammarAccess.getRoleAccess().getGroup(), "rule__Role__Group__0");
-			builder.put(grammarAccess.getMessageAccess().getGroup(), "rule__Message__Group__0");
+			builder.put(grammarAccess.getSequenceMessageTypeAccess().getGroup(), "rule__SequenceMessageType__Group__0");
+			builder.put(grammarAccess.getSequenceMessageAccess().getGroup(), "rule__SequenceMessage__Group__0");
+			builder.put(grammarAccess.getCreateMessageAccess().getGroup(), "rule__CreateMessage__Group__0");
+			builder.put(grammarAccess.getDeleteMessageAccess().getGroup(), "rule__DeleteMessage__Group__0");
+			builder.put(grammarAccess.getReturnMessageAccess().getGroup(), "rule__ReturnMessage__Group__0");
+			builder.put(grammarAccess.getArmTimerMessageAccess().getGroup(), "rule__ArmTimerMessage__Group__0");
+			builder.put(grammarAccess.getParticipantDeactivationAccess().getGroup(), "rule__ParticipantDeactivation__Group__0");
+			builder.put(grammarAccess.getReferenceAccess().getGroup(), "rule__Reference__Group__0");
 			builder.put(grammarAccess.getModelAccess().getScenarioTypeAssignment_1(), "rule__Model__ScenarioTypeAssignment_1");
-			builder.put(grammarAccess.getModelAccess().getMessagesAssignment_3(), "rule__Model__MessagesAssignment_3");
+			builder.put(grammarAccess.getModelAccess().getMessagesOrReferencesAssignment_2(), "rule__Model__MessagesOrReferencesAssignment_2");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_0_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_0_2");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_0_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_0_3");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_0_4(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_0_4");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_1_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_1_2");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_1_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_1_3");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_1_4(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_1_4");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_2_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_2_2");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantAssignment_2_3(), "rule__ScenarioTypeAndParticipants__ParticipantAssignment_2_3");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantAssignment_2_4(), "rule__ScenarioTypeAndParticipants__ParticipantAssignment_2_4");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_3_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_3_2");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_3_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_3_3");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_3_4(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_3_4");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_4_2(), "rule__ScenarioTypeAndParticipants__NameAssignment_4_2");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_4_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_4_3");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_4_4(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_4_4");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_5_1(), "rule__ScenarioTypeAndParticipants__NameAssignment_5_1");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_5_2(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_5_2");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_5_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_5_3");
 			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getNameAssignment_6_1(), "rule__ScenarioTypeAndParticipants__NameAssignment_6_1");
-			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_6_2(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_6_2");
+			builder.put(grammarAccess.getScenarioTypeAndParticipantsAccess().getParticipantsAssignment_6_3(), "rule__ScenarioTypeAndParticipants__ParticipantsAssignment_6_3");
 			builder.put(grammarAccess.getActorAccess().getNameAssignment_1(), "rule__Actor__NameAssignment_1");
 			builder.put(grammarAccess.getActorAccess().getIdAssignment_3(), "rule__Actor__IdAssignment_3");
 			builder.put(grammarAccess.getComponentAccess().getNameAssignment_1(), "rule__Component__NameAssignment_1");
@@ -88,9 +98,24 @@ public class DslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEntityAccess().getIdAssignment_3(), "rule__Entity__IdAssignment_3");
 			builder.put(grammarAccess.getRoleAccess().getNameAssignment_1(), "rule__Role__NameAssignment_1");
 			builder.put(grammarAccess.getRoleAccess().getIdAssignment_3(), "rule__Role__IdAssignment_3");
-			builder.put(grammarAccess.getMessageAccess().getName1Assignment_0(), "rule__Message__Name1Assignment_0");
-			builder.put(grammarAccess.getMessageAccess().getName2Assignment_2(), "rule__Message__Name2Assignment_2");
-			builder.put(grammarAccess.getMessageAccess().getNameAssignment_4(), "rule__Message__NameAssignment_4");
+			builder.put(grammarAccess.getSequenceMessageTypeAccess().getReturnAssignment_1(), "rule__SequenceMessageType__ReturnAssignment_1");
+			builder.put(grammarAccess.getSequenceMessageAccess().getSourceAssignment_0(), "rule__SequenceMessage__SourceAssignment_0");
+			builder.put(grammarAccess.getSequenceMessageAccess().getTargetAssignment_2(), "rule__SequenceMessage__TargetAssignment_2");
+			builder.put(grammarAccess.getSequenceMessageAccess().getNameAssignment_4(), "rule__SequenceMessage__NameAssignment_4");
+			builder.put(grammarAccess.getCreateMessageAccess().getSourceAssignment_0(), "rule__CreateMessage__SourceAssignment_0");
+			builder.put(grammarAccess.getCreateMessageAccess().getTargetAssignment_2(), "rule__CreateMessage__TargetAssignment_2");
+			builder.put(grammarAccess.getCreateMessageAccess().getNameAssignment_4(), "rule__CreateMessage__NameAssignment_4");
+			builder.put(grammarAccess.getDeleteMessageAccess().getSourceAssignment_0(), "rule__DeleteMessage__SourceAssignment_0");
+			builder.put(grammarAccess.getDeleteMessageAccess().getTargetAssignment_2(), "rule__DeleteMessage__TargetAssignment_2");
+			builder.put(grammarAccess.getDeleteMessageAccess().getNameAssignment_4(), "rule__DeleteMessage__NameAssignment_4");
+			builder.put(grammarAccess.getReturnMessageAccess().getTargetAssignment_0(), "rule__ReturnMessage__TargetAssignment_0");
+			builder.put(grammarAccess.getReturnMessageAccess().getSourceAssignment_2(), "rule__ReturnMessage__SourceAssignment_2");
+			builder.put(grammarAccess.getReturnMessageAccess().getNameAssignment_4(), "rule__ReturnMessage__NameAssignment_4");
+			builder.put(grammarAccess.getArmTimerMessageAccess().getParticipantAssignment_1(), "rule__ArmTimerMessage__ParticipantAssignment_1");
+			builder.put(grammarAccess.getArmTimerMessageAccess().getNameAssignment_3(), "rule__ArmTimerMessage__NameAssignment_3");
+			builder.put(grammarAccess.getParticipantDeactivationAccess().getNameAssignment_1(), "rule__ParticipantDeactivation__NameAssignment_1");
+			builder.put(grammarAccess.getReferenceAccess().getTimelinesAssignment_2(), "rule__Reference__TimelinesAssignment_2");
+			builder.put(grammarAccess.getReferenceAccess().getNameAssignment_3(), "rule__Reference__NameAssignment_3");
 		}
 	}
 	

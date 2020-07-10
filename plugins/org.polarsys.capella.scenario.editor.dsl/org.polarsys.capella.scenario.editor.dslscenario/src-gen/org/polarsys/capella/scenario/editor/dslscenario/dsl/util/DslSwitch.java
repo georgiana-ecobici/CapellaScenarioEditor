@@ -150,6 +150,71 @@ public class DslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case DslPackage.SEQUENCE_MESSAGE_TYPE:
+      {
+        SequenceMessageType sequenceMessageType = (SequenceMessageType)theEObject;
+        T result = caseSequenceMessageType(sequenceMessageType);
+        if (result == null) result = caseMessage(sequenceMessageType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.SEQUENCE_MESSAGE:
+      {
+        SequenceMessage sequenceMessage = (SequenceMessage)theEObject;
+        T result = caseSequenceMessage(sequenceMessage);
+        if (result == null) result = caseSequenceMessageType(sequenceMessage);
+        if (result == null) result = caseMessage(sequenceMessage);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.CREATE_MESSAGE:
+      {
+        CreateMessage createMessage = (CreateMessage)theEObject;
+        T result = caseCreateMessage(createMessage);
+        if (result == null) result = caseSequenceMessageType(createMessage);
+        if (result == null) result = caseMessage(createMessage);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.DELETE_MESSAGE:
+      {
+        DeleteMessage deleteMessage = (DeleteMessage)theEObject;
+        T result = caseDeleteMessage(deleteMessage);
+        if (result == null) result = caseSequenceMessageType(deleteMessage);
+        if (result == null) result = caseMessage(deleteMessage);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.RETURN_MESSAGE:
+      {
+        ReturnMessage returnMessage = (ReturnMessage)theEObject;
+        T result = caseReturnMessage(returnMessage);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.ARM_TIMER_MESSAGE:
+      {
+        ArmTimerMessage armTimerMessage = (ArmTimerMessage)theEObject;
+        T result = caseArmTimerMessage(armTimerMessage);
+        if (result == null) result = caseMessage(armTimerMessage);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.PARTICIPANT_DEACTIVATION:
+      {
+        ParticipantDeactivation participantDeactivation = (ParticipantDeactivation)theEObject;
+        T result = caseParticipantDeactivation(participantDeactivation);
+        if (result == null) result = caseMessage(participantDeactivation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.REFERENCE:
+      {
+        Reference reference = (Reference)theEObject;
+        T result = caseReference(reference);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -326,6 +391,134 @@ public class DslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseMessage(Message object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Sequence Message Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Sequence Message Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSequenceMessageType(SequenceMessageType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Sequence Message</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Sequence Message</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSequenceMessage(SequenceMessage object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Create Message</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Create Message</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCreateMessage(CreateMessage object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Delete Message</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Delete Message</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeleteMessage(DeleteMessage object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Return Message</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Return Message</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseReturnMessage(ReturnMessage object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Arm Timer Message</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Arm Timer Message</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArmTimerMessage(ArmTimerMessage object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Participant Deactivation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Participant Deactivation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseParticipantDeactivation(ParticipantDeactivation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Reference</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Reference</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseReference(Reference object)
   {
     return null;
   }
