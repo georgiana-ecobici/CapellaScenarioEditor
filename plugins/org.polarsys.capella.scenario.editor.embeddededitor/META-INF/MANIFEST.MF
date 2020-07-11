@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Embeddededitor
+Bundle-SymbolicName: org.polarsys.capella.scenario.editor.embeddededitor;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.polarsys.capella.scenario.editor.dslscenario.ui,
+ com.google.inject,
+ org.eclipse.xtext.ui,
+ org.polarsys.capella.scenario.editor.dslscenario
+Automatic-Module-Name: org.eclipse.xtext.example.domainmodel.embeddededitor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

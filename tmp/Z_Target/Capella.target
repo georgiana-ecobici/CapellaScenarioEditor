@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform --><target name="Xtext Domainmodel Example - Eclipse 2019-12" sequenceNumber="1526502000">
+  <locations>
+	  <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+		  <repository location="http://download.eclipse.org/releases/2019-06"/>
+		  <unit id="org.eclipse.xtext.sdk.feature.group" version="2.18.0.v20190528-0716"/>
+	  </location>
+	  <location path="D:\Capella\targets\capella\eclipse" type="Directory"/>
+  </locations>
+</target>
