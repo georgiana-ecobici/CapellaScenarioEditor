@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xtext
+Bundle-SymbolicName: org.polarsys.capella.scenario.editor.capella.to.xtext;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ com.google.guava,
+ org.eclipse.xtend.lib,
+ org.polarsys.capella.core.data.gen,
+ org.polarsys.capella.core.data.gen.editor
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.polarsys.capella.scenario.editor.capella.to.xtext.ui.Activator
+Import-Package: org.apache.log4j;version="1.2.15"
+

@@ -6,7 +6,8 @@ Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.polarsys.capella.scenario.editor.dslscenario.ui,
  org.eclipse.xtext.ui,
  org.polarsys.capella.scenario.editor.dslscenario,
- org.eclipse.sirius.diagram.ui,
+ org.eclipse.xtext.ui,
  org.polarsys.capella.core.model.handler
 Automatic-Module-Name: org.eclipse.xtext.example.domainmodel.embeddededitor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.polarsys.capella.scenario.editor.embeddededitor.views

@@ -1,4 +1,4 @@
-package org.polarsys.capella.scenario.editor.embeddededitor.views;
+package org.polarsys.capella.scenario.editor;
 
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManagerListener;
@@ -9,29 +9,34 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
+import org.polarsys.capella.core.data.interaction.InstanceRole;
+import org.polarsys.capella.core.data.interaction.Scenario;
+import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
+import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
-import org.polarsys.capella.core.data.interaction.InstanceRole;
-import org.polarsys.capella.core.data.interaction.Scenario;
-import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl;
-import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 
 /**
  * 
  */
 public class EmbeddedEditorSessionListener implements SessionManagerListener {
 	private ISelectionListener selectionListener;
+	private static List<InstanceRole> instanceRoleList;
 
 	@Override
 	public void notify(Session session, int notification) {
-		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		activePage.addSelectionListener(getSelectionListener());
+		if (PlatformUI.getWorkbench() != null && PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null) {
+			IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			if (activePage != null)
+				activePage.addSelectionListener(getSelectionListener());
+		}
 	}
 
 	public ISelectionListener getSelectionListener() {
@@ -77,18 +82,10 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
 						activePage.activate(eeView);
 
 						if (eeView != null) {
-							EList<InstanceRole> irs = sc.getOwnedInstanceRoles();
-							for (InstanceRole ir : irs) {
+							instanceRoleList = sc.getOwnedInstanceRoles();
+							for (InstanceRole ir : instanceRoleList) {
 								eeView.getModel().updateModel(ir.getName());
-
-//								Actor a = new ActorImpl();
-//								a.setName(ir.getName());
-//								a.setId(ir.getId());
 							}
-
-							DslscenarioProvider provider = eeView.getProvider();
-							XtextResource resource = provider.getResource();
-							EmbeddedEditorModelAccess model = eeView.getModel();
 
 							eeView.getModel().updateModel("scenario System " + sc.getKind() + " \"" + sc.getName()
 									+ "\" {actor \"a1\" as a1}");
@@ -100,6 +97,17 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
 				}
 			}
 		};
+	}
+
+	public static List<String> getInstanceRoleNameList() {
+		List<String> instRoleNameList = new ArrayList<String>();
+		for (InstanceRole inst : instanceRoleList) {
+			instRoleNameList.add(inst.getName());
+		}
+		if (instRoleNameList.isEmpty()) {
+			return null;
+		}
+		return instRoleNameList;
 	}
 
 	private EmbeddedEditorView getActiveEmbeddedEditorView() {
@@ -116,13 +124,11 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
 
 	@Override
 	public void notifyRemoveSession(Session removedSession) {
-		System.out.println("c");
 		// Do Nothing
 	}
 
 	@Override
 	public void viewpointSelected(Viewpoint selectedSirius) {
-		System.out.println("a");
 	}
 
 	@Override
