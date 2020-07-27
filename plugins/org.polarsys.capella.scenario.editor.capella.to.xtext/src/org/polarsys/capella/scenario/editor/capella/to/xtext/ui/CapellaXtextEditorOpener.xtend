@@ -32,6 +32,7 @@ class CapellaXtextEditorOpener extends LanguageSpecificURIEditorOpener {
 
 	override protected String getEditorId() {
 		return "org.polarsys.capella.core.data.capellamodeller.presentation.CapellamodellerEditorID"
+		
 		//"org.polarsys.capella.core.data.interaction.presentation.InteractionEditorID"
 		//"io.typefox.xtextxmi.tree.presentation.TreeEditorID"
 	}

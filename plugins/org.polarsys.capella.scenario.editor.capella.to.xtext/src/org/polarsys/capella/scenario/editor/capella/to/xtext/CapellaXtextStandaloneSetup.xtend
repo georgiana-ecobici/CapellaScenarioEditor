@@ -12,6 +12,7 @@ import com.google.inject.Inject
 import org.eclipse.xtext.ISetup
 import org.eclipse.xtext.resource.FileExtensionProvider
 import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.polarsys.capella.core.data.capellamodeller.CapellamodellerPackage
 
 class CapellaXtextStandaloneSetup implements ISetup {
 	
@@ -32,7 +33,7 @@ class CapellaXtextStandaloneSetup implements ISetup {
 
 		//todo
 		// the following implicitly registers the EPackage to the registry
-		//val treePackage = TreePackage.eINSTANCE
+		val treePackage = CapellamodellerPackage.eINSTANCE
 		
 		return injector
 	}
