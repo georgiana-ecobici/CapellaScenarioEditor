@@ -4,21 +4,38 @@ import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManagerListener;
 import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.xtext.serializer.ISerializer;
+import org.eclipse.xtext.serializer.impl.Serializer;
+import org.eclipse.xtext.ui.editor.DirtyStateEditorSupport;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
+import org.eclipse.xtext.ui.editor.utils.EditorUtils;
+import org.eclipse.xtext.util.CancelIndicator;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl;
+//import org.polarsys.capella.scenario.editor.embeddededitor.views.DslscenarioProvider;
 import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
+import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
@@ -82,14 +99,28 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
 						activePage.activate(eeView);
 
 						if (eeView != null) {
-							instanceRoleList = sc.getOwnedInstanceRoles();
-							for (InstanceRole ir : instanceRoleList) {
-								eeView.getModel().updateModel(ir.getName());
-							}
+							DslscenarioProvider p = eeView.getProvider();
+							XtextResource resource = p.getResource();
+							EList<EObject> content = resource.getContents();
+							if (content.size() > 0 && content.get(0) instanceof Model) {
+								Model domainModel = (Model) resource.getContents().get(0);
+								ScenarioTypeAndParticipants type = domainModel.getScenarioType();
+								if (type != null) {
+									type.setName("test");
+									ActorImpl a2 = new ActorImpl();
+									a2.setName("a2___");
+									a2.setId("a2___");
 
-							eeView.getModel().updateModel("scenario System " + sc.getKind() + " \"" + sc.getName()
-									+ "\" {actor \"a1\" as a1}");
+									type.getParticipants().add(a2);
+									String serialized = ((XtextResource) domainModel.eResource()).getSerializer()
+											.serialize(domainModel);
+									eeView.getModel().updateModel(serialized);
+								}
+							}
 						}
+						
+						//eeView.getModel().updateModel("scenario System " + sc.getKind() + " \"" + sc.getName()
+//						+ "\" {actor \"a1\" as a1}");
 
 					}
 				} else if (newInput instanceof InstanceRole) {

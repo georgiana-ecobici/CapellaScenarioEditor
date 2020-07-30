@@ -2,6 +2,7 @@ package org.polarsys.capella.scenario.editor.embeddededitor.views;
 
 import javax.inject.Inject;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -10,6 +11,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IMemento;
@@ -21,14 +23,16 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.internal.DslscenarioActivator;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
 
 import com.google.inject.Injector;
 
-public class EmbeddedEditorView extends ViewPart{
+public class EmbeddedEditorView extends ViewPart {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -42,7 +46,13 @@ public class EmbeddedEditorView extends ViewPart{
 	private Action action1;
 	DslscenarioProvider provider;
 	private EmbeddedEditorModelAccess model;
+	public static EmbeddedEditor eEditor;
 	Composite top;
+
+	public void reloadContent(String str) {
+		IXtextDocument document = eEditor.getDocument();
+		document.set(str);
+	}
 
 	@Override
 	public void saveState(IMemento memento) {
@@ -89,17 +99,20 @@ public class EmbeddedEditorView extends ViewPart{
 		EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
 
 		EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
-		model = editor.createPartialEditor("", "", "", false);
+		model = editor.createPartialEditor("", "", "", true);
+
+		eEditor = editor;
+
 	}
 
 	public EmbeddedEditorModelAccess getModel() {
 		return model;
 	}
-	
+
 	public DslscenarioProvider getProvider() {
 		return provider;
 	}
-	
+
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		fillLocalToolBar(bars.getToolBarManager());
@@ -125,6 +138,8 @@ public class EmbeddedEditorView extends ViewPart{
 		XtextResource resource = provider.getResource();
 		if (resource.getContents().get(0) instanceof Model) {
 			Model domainModel = (Model) resource.getContents().get(0);
+			ScenarioTypeAndParticipants sType = domainModel.getScenarioType();
+			sType.setName("new_NAME");
 		}
 	}
 
