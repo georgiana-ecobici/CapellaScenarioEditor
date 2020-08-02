@@ -27,6 +27,7 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.internal.DslscenarioActivator;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
+import org.polarsys.capella.scenario.editor.embeddededitor.actions.XtextEditorActionFactory;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
 
@@ -132,6 +133,9 @@ public class EmbeddedEditorView extends ViewPart {
 		action1.setToolTipText("Action 1 tooltip");
 		action1.setImageDescriptor(
 				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		XtextEditorActionFactory saveAction = new XtextEditorActionFactory();
+        saveAction.createAction(this);
+
 	}
 
 	private void showMessage(String message) {
