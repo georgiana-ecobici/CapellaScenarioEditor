@@ -4,30 +4,17 @@ import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManagerListener;
 import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.serializer.ISerializer;
-import org.eclipse.xtext.serializer.impl.Serializer;
-import org.eclipse.xtext.ui.editor.DirtyStateEditorSupport;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
-import org.eclipse.xtext.ui.editor.utils.EditorUtils;
-import org.eclipse.xtext.util.CancelIndicator;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl;
-//import org.polarsys.capella.scenario.editor.embeddededitor.views.DslscenarioProvider;
 import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 
@@ -107,11 +94,11 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
 								ScenarioTypeAndParticipants type = domainModel.getScenarioType();
 								if (type != null) {
 									type.setName("test");
-									ActorImpl a2 = new ActorImpl();
-									a2.setName("a2___");
-									a2.setId("a2___");
-
-									type.getParticipants().add(a2);
+//									ActorImpl a2 = new ActorImpl();
+//									a2.setName("a2___");
+//									a2.setId("a2___");
+//
+//									type.getParticipants().add(a2);
 									String serialized = ((XtextResource) domainModel.eResource()).getSerializer()
 											.serialize(domainModel);
 									eeView.getModel().updateModel(serialized);
