@@ -25,6 +25,7 @@ Export-Package: org.polarsys.capella.scenario.editor.dslscenario,
  org.polarsys.capella.scenario.editor.dslscenario.parser.antlr.internal,
  org.polarsys.capella.scenario.editor.dslscenario.dsl,
  org.polarsys.capella.scenario.editor.dslscenario.validation,
+ org.polarsys.capella.scenario.editor.dslscenario.formatter,
  org.polarsys.capella.scenario.editor.dslscenario.dsl.impl,
  org.polarsys.capella.scenario.editor.dslscenario.parser.antlr
 Import-Package: org.apache.log4j

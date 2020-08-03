@@ -9,12 +9,17 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.resource.XtextResource;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslFactory;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslFactoryImpl;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.util.DslAdapterFactory;
 import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 
@@ -33,6 +38,7 @@ import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
 public class EmbeddedEditorSessionListener implements SessionManagerListener {
 	private ISelectionListener selectionListener;
 	private static List<InstanceRole> instanceRoleList;
+	static int i;
 
 	@Override
 	public void notify(Session session, int notification) {
@@ -94,13 +100,16 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
 								ScenarioTypeAndParticipants type = domainModel.getScenarioType();
 								if (type != null) {
 									type.setName("test");
-//									ActorImpl a2 = new ActorImpl();
-//									a2.setName("a2___");
-//									a2.setId("a2___");
-//
-//									type.getParticipants().add(a2);
+									DslFactoryImpl factory = new DslFactoryImpl();
+									
+									Actor a2 = factory.createActor();
+									i++;
+									a2.setName("a2_" + i);
+									a2.setId("a2_" + i);
+									type.getParticipants().add(a2);
+									
 									String serialized = ((XtextResource) domainModel.eResource()).getSerializer()
-											.serialize(domainModel);
+											.serialize(domainModel);//, SaveOptions.newBuilder().format().getOptions());
 									eeView.getModel().updateModel(serialized);
 								}
 							}
