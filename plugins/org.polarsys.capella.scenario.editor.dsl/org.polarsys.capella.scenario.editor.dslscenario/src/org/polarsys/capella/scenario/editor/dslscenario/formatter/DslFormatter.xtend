@@ -10,21 +10,29 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage
 import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
 import org.polarsys.capella.scenario.editor.dslscenario.services.DslGrammarAccess
 import com.google.inject.Inject
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
 
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class DslFormatter extends AbstractFormatter2 {
-	@Inject extension DslGrammarAccess
-	
-	def dispatch void format(Model model,  extension IFormattableDocument document) { 
-		val actor = model.regionFor.feature(DslPackage.Literals.ACTOR__ID)
-		actor.append[newLine]
-		val open = model.regionFor.keyword("{") 
-		val close = model.regionFor.keyword("}")
-		open.append[newLine] 
-		interior(open, close)[indent] 
+	@Inject extension DslGrammarAccess // remove it if unused
+
+	def dispatch void format(Model it, extension IFormattableDocument document) {
+		val begin = regionFor.keyword("scenario")
+		val end = regionFor.keyword("}")
+		begin.prepend[noSpace]
+		interior(begin, end)[indent]
+		
+		// format actor lines
+		scenarioType.participants.forEach[format]
+	}
+
+	def dispatch void format(Actor actor, extension IFormattableDocument document) {
+		// each actor definition on a separate line
+		actor.regionFor.keyword("actor").prepend[oneSpace]
+		actor.regionFor.feature(DslPackage.Literals.ACTOR__ID).append[newLine]
 	}
 }

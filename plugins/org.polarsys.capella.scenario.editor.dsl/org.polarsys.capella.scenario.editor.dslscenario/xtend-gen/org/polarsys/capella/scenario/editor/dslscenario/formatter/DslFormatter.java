@@ -5,6 +5,7 @@ package org.polarsys.capella.scenario.editor.dslscenario.formatter;
 
 import com.google.inject.Inject;
 import java.util.Arrays;
+import java.util.function.Consumer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.formatting2.AbstractFormatter2;
 import org.eclipse.xtext.formatting2.IFormattableDocument;
@@ -13,6 +14,7 @@ import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.services.DslGrammarAccess;
@@ -28,43 +30,56 @@ public class DslFormatter extends AbstractFormatter2 {
   @Extension
   private DslGrammarAccess _dslGrammarAccess;
   
-  protected void _format(final Model model, @Extension final IFormattableDocument document) {
-    final ISemanticRegion actor = this.textRegionExtensions.regionFor(model).feature(DslPackage.Literals.ACTOR__ID);
-    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
-      it.newLine();
+  protected void _format(final Model it, @Extension final IFormattableDocument document) {
+    final ISemanticRegion begin = this.textRegionExtensions.regionFor(it).keyword("scenario");
+    final ISemanticRegion end = this.textRegionExtensions.regionFor(it).keyword("}");
+    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it_1) -> {
+      it_1.noSpace();
     };
-    document.append(actor, _function);
-    final ISemanticRegion open = this.textRegionExtensions.regionFor(model).keyword("{");
-    final ISemanticRegion close = this.textRegionExtensions.regionFor(model).keyword("}");
+    document.prepend(begin, _function);
+    final Procedure1<IHiddenRegionFormatter> _function_1 = (IHiddenRegionFormatter it_1) -> {
+      it_1.indent();
+    };
+    document.<ISemanticRegion, ISemanticRegion>interior(begin, end, _function_1);
+    final Consumer<EObject> _function_2 = (EObject it_1) -> {
+      document.<EObject>format(it_1);
+    };
+    it.getScenarioType().getParticipants().forEach(_function_2);
+  }
+  
+  protected void _format(final Actor actor, @Extension final IFormattableDocument document) {
+    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
+      it.oneSpace();
+    };
+    document.prepend(this.textRegionExtensions.regionFor(actor).keyword("actor"), _function);
     final Procedure1<IHiddenRegionFormatter> _function_1 = (IHiddenRegionFormatter it) -> {
       it.newLine();
     };
-    document.append(open, _function_1);
-    final Procedure1<IHiddenRegionFormatter> _function_2 = (IHiddenRegionFormatter it) -> {
-      it.indent();
-    };
-    document.<ISemanticRegion, ISemanticRegion>interior(open, close, _function_2);
+    document.append(this.textRegionExtensions.regionFor(actor).feature(DslPackage.Literals.ACTOR__ID), _function_1);
   }
   
-  public void format(final Object model, final IFormattableDocument document) {
-    if (model instanceof XtextResource) {
-      _format((XtextResource)model, document);
+  public void format(final Object actor, final IFormattableDocument document) {
+    if (actor instanceof XtextResource) {
+      _format((XtextResource)actor, document);
       return;
-    } else if (model instanceof Model) {
-      _format((Model)model, document);
+    } else if (actor instanceof Actor) {
+      _format((Actor)actor, document);
       return;
-    } else if (model instanceof EObject) {
-      _format((EObject)model, document);
+    } else if (actor instanceof Model) {
+      _format((Model)actor, document);
       return;
-    } else if (model == null) {
+    } else if (actor instanceof EObject) {
+      _format((EObject)actor, document);
+      return;
+    } else if (actor == null) {
       _format((Void)null, document);
       return;
-    } else if (model != null) {
-      _format(model, document);
+    } else if (actor != null) {
+      _format(actor, document);
       return;
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(model, document).toString());
+        Arrays.<Object>asList(actor, document).toString());
     }
   }
 }
