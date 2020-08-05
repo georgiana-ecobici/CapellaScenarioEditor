@@ -12,11 +12,17 @@
  *******************************************************************************/
 package org.polarsys.capella.scenario.editor.embeddededitor.commands;
 
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.resource.XtextResource;
+import org.polarsys.capella.core.data.interaction.InteractionFragment;
+import org.polarsys.capella.core.data.interaction.MessageEnd;
 import org.polarsys.capella.core.data.interaction.Scenario;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.core.data.interaction.SequenceMessage;
+import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslFactory;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslFactoryImpl;
@@ -40,32 +46,46 @@ public class XtextEditorCommands {
       DslscenarioProvider p = embeddedEditorViewPart.getProvider();
       XtextResource resource = p.getResource();
       EList<EObject> content = resource.getContents();
-      String begin = "scenario System " + " IS " + " \"" + scenario.getName() + "\"{";
-
-      if (content.isEmpty() || !(content.get(0) instanceof Model)) {
-        embeddedEditorViewPart.eEditor.getDocument().set(begin + "}");
-      }
-
-      if (!content.isEmpty() && content.get(0) instanceof Model) {
-        Model domainModel = (Model) resource.getContents().get(0);
-        ScenarioTypeAndParticipants type = domainModel.getScenarioType();
-        // todo fill with task that reads real data
-        if (type != null) {
-          type.setName(scenario.getName());
-          DslFactoryImpl factory = new DslFactoryImpl();
-
-          Actor a2 = factory.createActor();
-          a2.setName("aNew");
-          a2.setId("aNew");
-          type.getParticipants().add(a2);
-
-          String serialized = ((XtextResource) domainModel.eResource()).getSerializer().serialize(domainModel);// ,
-                                                                                                               // SaveOptions.newBuilder().format().getOptions());
-
-          // embeddedEditorViewPart.getModel().updateModel(serialized);
-          embeddedEditorViewPart.eEditor.getDocument().set(serialized);
-        }
-      }
+      
+	    DslFactoryImpl factory = new DslFactoryImpl();
+	    Model domainModel = factory.createModel(); 
+	    ScenarioTypeAndParticipants scenarioType = factory.createScenarioTypeAndParticipants();
+	    scenarioType.setName(scenario.getName());
+	    domainModel.setScenarioType(scenarioType);
+		
+      //TODO - Generate Participants
+	    //....
+	  
+	    //Generate Sequence Messages
+	    generateSequenceMessages(domainModel, scenario, factory);
+	    
+	    content.add(domainModel);
+		
+	    String serialized = ((XtextResource) domainModel.eResource()).getSerializer()
+		    .serialize(domainModel);
+	    embeddedEditorViewPart.eEditor.getDocument().set(serialized);
     }
+  }
+  
+  private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
+    EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
+    
+    List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
+    Object[] ends = fragments.stream().filter(fragment -> fragment instanceof MessageEnd).toArray();
+    
+    for (int i = 0; i < ends.length; i = i + 2) {
+      org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = copySequenceMessageFromMsgEnd(ends[i], factory);
+      messagesOrReferences.add(seqMessage);
+    }
+  }
+
+  private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(Object object, DslFactory factory) {
+    org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = factory.createSequenceMessage();
+    MessageEnd end = (MessageEnd) object;
+    SequenceMessage sequenceMessage = end.getMessage();
+    seqMessage.setName(sequenceMessage.getName());
+    seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+    return seqMessage;
   }
 }
