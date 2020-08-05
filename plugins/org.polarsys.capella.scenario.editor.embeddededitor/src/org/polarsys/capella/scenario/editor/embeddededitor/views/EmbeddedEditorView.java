@@ -1,155 +1,136 @@
+/*******************************************************************************
+ * Copyright (c) 2020 THALES GLOBAL SERVICES.
+ * 
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ * 
+ * SPDX-License-Identifier: EPL-2.0
+ * 
+ * Contributors:
+ *    Thales - initial API and implementation
+ *******************************************************************************/
 package org.polarsys.capella.scenario.editor.embeddededitor.views;
 
 import javax.inject.Inject;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.internal.DslscenarioActivator;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 import org.polarsys.capella.scenario.editor.embeddededitor.actions.XtextEditorActionFactory;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
 
 import com.google.inject.Injector;
 
 public class EmbeddedEditorView extends ViewPart {
 
-	/**
-	 * The ID of the view as specified by the extension.
-	 */
-	public static final String ID = "org.eclipse.xtext.example.domainmodel.embeddededitor.views.EmbeddedEditorView";
+  /**
+   * The ID of the view as specified by the extension.
+   */
+  public static final String ID = "org.eclipse.xtext.example.domainmodel.embeddededitor.views.EmbeddedEditorView";
 
-	@Inject
-	IWorkbench workbench;
+  @Inject
+  IWorkbench workbench;
 
-	private TableViewer viewer;
-	private Action action1;
-	DslscenarioProvider provider;
-	private EmbeddedEditorModelAccess model;
-	public static EmbeddedEditor eEditor;
-	Composite top;
+  private TableViewer viewer;
+  DslscenarioProvider provider;
+  private EmbeddedEditorModelAccess model;
+  public static EmbeddedEditor eEditor;
+  private Scenario associatedScenarioDiagram;
+  Composite top;
 
-	public void reloadContent(String str) {
-		IXtextDocument document = eEditor.getDocument();
-		document.set(str);
-	}
+  public void reloadContent(String str) {
+    IXtextDocument document = eEditor.getDocument();
+    document.set(str);
+  }
 
-	@Override
-	public void saveState(IMemento memento) {
-		// do nothing
-		DslscenarioActivator activator = DslscenarioActivator.getInstance();
-		Injector injector = activator
-				.getInjector(DslscenarioActivator.ORG_POLARSYS_CAPELLA_SCENARIO_EDITOR_DSLSCENARIO_DSL);
+  @Override
+  public void saveState(IMemento memento) {
+    // do nothing
+    DslscenarioActivator activator = DslscenarioActivator.getInstance();
+    Injector injector = activator
+        .getInjector(DslscenarioActivator.ORG_POLARSYS_CAPELLA_SCENARIO_EDITOR_DSLSCENARIO_DSL);
 
-		EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
+    EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
 
-		EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
-	}
+    EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
+  }
 
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-		@Override
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
+  class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
+    @Override
+    public String getColumnText(Object obj, int index) {
+      return getText(obj);
+    }
 
-		@Override
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
+    @Override
+    public Image getColumnImage(Object obj, int index) {
+      return getImage(obj);
+    }
 
-		@Override
-		public Image getImage(Object obj) {
-			return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
-	}
+    @Override
+    public Image getImage(Object obj) {
+      return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
+    }
+  }
 
-	@Override
-	public void createPartControl(Composite parent) {
-		makeActions();
-		contributeToActionBars();
+  @Override
+  public void createPartControl(Composite parent) {
+    makeActions();
 
-		top = new Composite(parent, SWT.NONE);
-		top.setLayout(new GridLayout());
+    top = new Composite(parent, SWT.NONE);
+    top.setLayout(new GridLayout());
 
-		DslscenarioActivator activator = DslscenarioActivator.getInstance();
-		Injector injector = activator
-				.getInjector(DslscenarioActivator.ORG_POLARSYS_CAPELLA_SCENARIO_EDITOR_DSLSCENARIO_DSL);
+    DslscenarioActivator activator = DslscenarioActivator.getInstance();
+    Injector injector = activator
+        .getInjector(DslscenarioActivator.ORG_POLARSYS_CAPELLA_SCENARIO_EDITOR_DSLSCENARIO_DSL);
 
-		provider = injector.getInstance(DslscenarioProvider.class);
-		EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
+    provider = injector.getInstance(DslscenarioProvider.class);
+    EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
 
-		EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
-		model = editor.createPartialEditor("", "", "", true);
+    EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
+    model = editor.createPartialEditor("", "", "", true);
 
-		eEditor = editor;
+    eEditor = editor;
 
-	}
+  }
 
-	public EmbeddedEditorModelAccess getModel() {
-		return model;
-	}
+  public EmbeddedEditorModelAccess getModel() {
+    return model;
+  }
 
-	public DslscenarioProvider getProvider() {
-		return provider;
-	}
+  public DslscenarioProvider getProvider() {
+    return provider;
+  }
 
-	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalToolBar(bars.getToolBarManager());
-	}
+  private void makeActions() {
+    XtextEditorActionFactory saveAction = new XtextEditorActionFactory();
+    saveAction.createSaveAction(this);
+  }
 
-	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
-	}
+  @Override
+  public void setFocus() {
+    // TODO Auto-generated method stub
+  }
 
-	private void makeActions() {
-		action1 = new Action() {
-			public void run() {
-				showMessage("Action 1 executed");
-			}
-		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(
-				PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		XtextEditorActionFactory saveAction = new XtextEditorActionFactory();
-        saveAction.createAction(this);
+  public Scenario getAssociatedScenarioDiagram() {
+    return associatedScenarioDiagram;
+  }
 
-	}
-
-	private void showMessage(String message) {
-		XtextResource resource = provider.getResource();
-		if (resource.getContents().get(0) instanceof Model) {
-			Model domainModel = (Model) resource.getContents().get(0);
-			ScenarioTypeAndParticipants sType = domainModel.getScenarioType();
-			sType.setName("new_NAME");
-		}
-	}
-
-	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
-	}
-
+  public void setAssociatedScenarioDiagram(Scenario scenario) {
+    this.associatedScenarioDiagram = scenario;
+  }
 }
