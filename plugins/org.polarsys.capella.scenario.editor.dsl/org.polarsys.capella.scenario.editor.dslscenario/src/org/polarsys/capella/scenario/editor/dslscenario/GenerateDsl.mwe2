@@ -33,6 +33,11 @@ Workflow {
 			name = "org.polarsys.capella.scenario.editor.dslscenario.Dsl"
 			fileExtensions = "sc"
 
+			formatter = { 
+				generateStub = true
+				generateXtendStub = true
+			}
+
 			serializer = {
 				generateStub = false
 			}
@@ -44,7 +49,6 @@ Workflow {
 			junitSupport = {
 				junitVersion = "5"
 			}
-			formatter = { generateStub = true  generateXtendStub = true }
 		}
 	}
 }
