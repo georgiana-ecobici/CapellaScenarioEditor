@@ -7,7 +7,10 @@ Require-Bundle: org.polarsys.capella.scenario.editor.dslscenario.ui,
  org.eclipse.xtext.ui,
  org.polarsys.capella.scenario.editor.dslscenario,
  org.eclipse.xtext.ui,
- org.polarsys.capella.core.model.handler
+ org.polarsys.capella.core.model.handler,
+ org.eclipse.sirius.diagram.ui
 Automatic-Module-Name: org.eclipse.xtext.example.domainmodel.embeddededitor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.polarsys.capella.scenario.editor.embeddededitor.views
+Export-Package: org.polarsys.capella.scenario.editor.embeddededitor.commands,
+ org.polarsys.capella.scenario.editor.embeddededitor.helper,
+ org.polarsys.capella.scenario.editor.embeddededitor.views
