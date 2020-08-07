@@ -33,92 +33,105 @@ import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorV
 
 public class XtextEditorCommands {
 
-	public static void xtextToDiagram(Scenario scenario, EmbeddedEditorView embeddedEditorViewPart) {
-	}
+  public static void xtextToDiagram(Scenario scenario, EmbeddedEditorView embeddedEditorViewPart) {
+    // todo
+  }
 
-	/**
-	 * updates the xtext editor with data from the Capella model
-	 * 
-	 * @param scenario
-	 * @param embeddedEditorViewPart
-	 * @return
-	 */
-	public static void diagramToXtext(Scenario scenario, EmbeddedEditorView embeddedEditorViewPart) {
-		if (embeddedEditorViewPart != null) {
-			DslscenarioProvider p = embeddedEditorViewPart.getProvider();
-			XtextResource resource = p.getResource();
-			EList<EObject> content = resource.getContents();
+  /**
+   * updates the xtext editor with data from the Capella model
+   * 
+   * @param scenario
+   * @param embeddedEditorViewPart
+   * @return
+   */
+  public static void diagramToXtext(Scenario scenario, EmbeddedEditorView embeddedEditorViewPart) {
+    if (embeddedEditorViewPart != null) {
+      DslscenarioProvider p = embeddedEditorViewPart.getProvider();
+      XtextResource resource = p.getResource();
+      EList<EObject> content = resource.getContents();
 
-			DslFactoryImpl factory = new DslFactoryImpl();
-			Model domainModel = factory.createModel();
-			ScenarioTypeAndParticipants scenarioType = factory.createScenarioTypeAndParticipants();
-			scenarioType.setName(scenario.getName());
-			domainModel.setScenarioType(scenarioType);
+      DslFactory factory = new DslFactoryImpl();
+      Model domainModel = getModel(embeddedEditorViewPart, factory, scenario.getName());
 
-			// Generate Participants
-			generateActors(domainModel, scenario, factory);
-			
-			// Generate Sequence Messages
-			generateSequenceMessages(domainModel, scenario, factory);
+      // Generate Participants
+      generateActors(domainModel, scenario, factory);
 
-			content.add(domainModel);
+      // Generate Sequence Messages
+      generateSequenceMessages(domainModel, scenario, factory);
 
-			String serialized = ((XtextResource) domainModel.eResource()).getSerializer().serialize(domainModel);
-			embeddedEditorViewPart.eEditor.getDocument().set(serialized);
-		}
-	}
+      content.add(domainModel);
 
-	private static void generateActors(Model domainModel, Scenario scenario, DslFactory factory) {
-		// get all instance roles (actors) from diagram
-		EList<InstanceRole> instanceRoleList = scenario.getOwnedInstanceRoles();
+      String serialized = ((XtextResource) domainModel.eResource()).getSerializer().serialize(domainModel);
+      embeddedEditorViewPart.eEditor.getDocument().set(serialized);
+    }
+  }
 
-		ScenarioTypeAndParticipants type = domainModel.getScenarioType();
-		try {
-			// get all participants/actors from editor
-			EList<EObject> participants = type.getParticipants();
+  private static void generateActors(Model domainModel, Scenario scenario, DslFactory factory) {
+    // get all instance roles (actors) from diagram
+    EList<InstanceRole> instanceRoleList = scenario.getOwnedInstanceRoles();
 
-			// TODO - create a copy of participants for roll-back in case of any error
-			// ...
-			
-			// remove all participants
-			participants.clear();
-			// recreate the list of participants
-			for (InstanceRole a : instanceRoleList) {
-				String id = "a" + a.getId().replace("-", "").substring(0, 5);
-				Actor actor = factory.createActor();
-				actor.setName(a.getName());
-				actor.setId(id);
-				participants.add(actor);
-			}
-		} catch (Error e) {
-			
-		}
-			
-		
-	}
+    ScenarioTypeAndParticipants type = domainModel.getScenarioType();
+    try {
+      // get all participants/actors from editor
+      EList<EObject> participants = type.getParticipants();
 
-	private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
-		EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
+      // TODO - create a copy of participants for roll-back in case of any error
+      // ...
 
-		List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
-		Object[] ends = fragments.stream().filter(fragment -> fragment instanceof MessageEnd).toArray();
+      // remove all participants
+      participants.clear();
+      // recreate the list of participants
+      for (InstanceRole a : instanceRoleList) {
+        String id = "a" + a.getId().replace("-", "").substring(0, 5);
+        Actor actor = factory.createActor();
+        actor.setName(a.getName());
+        actor.setId(id);
+        participants.add(actor);
+      }
+    } catch (Error e) {
 
-		for (int i = 0; i < ends.length; i = i + 2) {
-			org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = copySequenceMessageFromMsgEnd(
-					ends[i], factory);
-			messagesOrReferences.add(seqMessage);
-		}
-	}
+    }
 
-	private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(
-			Object object, DslFactory factory) {
-		org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = factory
-				.createSequenceMessage();
-		MessageEnd end = (MessageEnd) object;
-		SequenceMessage sequenceMessage = end.getMessage();
-		seqMessage.setName(sequenceMessage.getName());
-		seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-		seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
-		return seqMessage;
-	}
+  }
+
+  private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
+    EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
+
+    List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
+    Object[] ends = fragments.stream().filter(fragment -> fragment instanceof MessageEnd).toArray();
+
+    messagesOrReferences.clear();
+    for (int i = 0; i < ends.length; i = i + 2) {
+      org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = copySequenceMessageFromMsgEnd(
+          ends[i], factory);
+      messagesOrReferences.add(seqMessage);
+    }
+  }
+
+  private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(
+      Object object, DslFactory factory) {
+    org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = factory.createSequenceMessage();
+    MessageEnd end = (MessageEnd) object;
+    SequenceMessage sequenceMessage = end.getMessage();
+    seqMessage.setName(sequenceMessage.getName());
+    seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
+    return seqMessage;
+  }
+
+  private static Model getModel(EmbeddedEditorView embeddedEditorViewPart, DslFactory factory, String scenarioName) {
+    DslscenarioProvider p = embeddedEditorViewPart.getProvider();
+    XtextResource resource = p.getResource();
+    EList<EObject> content = resource.getContents();
+    Model domainModel = null;
+    if (!content.isEmpty() && content.get(0) instanceof Model) {
+      domainModel = (Model) resource.getContents().get(0);
+    } else {
+      domainModel = factory.createModel();
+      ScenarioTypeAndParticipants scenarioType = factory.createScenarioTypeAndParticipants();
+      scenarioType.setName(scenarioName);
+      domainModel.setScenarioType(scenarioType);
+    }
+    return domainModel;
+  }
 }

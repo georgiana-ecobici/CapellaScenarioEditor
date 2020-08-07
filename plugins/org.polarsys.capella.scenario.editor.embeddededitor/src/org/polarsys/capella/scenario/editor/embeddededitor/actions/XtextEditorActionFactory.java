@@ -25,6 +25,11 @@ public class XtextEditorActionFactory {
     getToolBarManager(embeddedEditorViewPart).add(saveAction);
   }
 
+  public void createRefreshAction(EmbeddedEditorView embeddedEditorViewPart) {
+    Action refreshAction = new RefreshAction();
+    getToolBarManager(embeddedEditorViewPart).add(refreshAction);
+  }
+
   private IToolBarManager getToolBarManager(EmbeddedEditorView semanticBrowserViewPart) {
     IViewSite viewSite = semanticBrowserViewPart.getViewSite();
     IActionBars actionBars = viewSite.getActionBars();

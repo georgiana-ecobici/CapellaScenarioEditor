@@ -11,6 +11,8 @@ import org.eclipse.xtext.formatting2.regionaccess.ISemanticRegion
 import org.polarsys.capella.scenario.editor.dslscenario.services.DslGrammarAccess
 import com.google.inject.Inject
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants
 
 /**
  * This class contains custom validation rules. 
@@ -26,7 +28,13 @@ public class DslFormatter extends AbstractFormatter2 {
 		begin.prepend[noSpace]
 		interior(begin, end)[indent]
 		
-		// format actor lines
+		scenarioType.format
+		messagesOrReferences.forEach[ element | element.format ]
+	}
+
+	def dispatch void format(ScenarioTypeAndParticipants scenarioType, extension IFormattableDocument document) {
+		// format ScenarioTypeAndParticipants area
+		scenarioType.regionFor.keyword("{").append[newLine]
 		scenarioType.participants.forEach[format]
 	}
 
@@ -34,5 +42,10 @@ public class DslFormatter extends AbstractFormatter2 {
 		// each actor definition on a separate line
 		actor.regionFor.keyword("actor").prepend[oneSpace]
 		actor.regionFor.feature(DslPackage.Literals.ACTOR__ID).append[newLine]
+	}
+	
+	def dispatch void format(SequenceMessage message, extension IFormattableDocument document) {
+		// each sequence messages definition on a separate line
+		message.regionFor.feature(DslPackage.Literals.MESSAGE__NAME).append[newLine]
 	}
 }
