@@ -17,6 +17,8 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.services.DslGrammarAccess;
 
 /**
@@ -41,10 +43,22 @@ public class DslFormatter extends AbstractFormatter2 {
       it_1.indent();
     };
     document.<ISemanticRegion, ISemanticRegion>interior(begin, end, _function_1);
-    final Consumer<EObject> _function_2 = (EObject it_1) -> {
-      document.<EObject>format(it_1);
+    document.<ScenarioTypeAndParticipants>format(it.getScenarioType());
+    final Consumer<EObject> _function_2 = (EObject element) -> {
+      document.<EObject>format(element);
     };
-    it.getScenarioType().getParticipants().forEach(_function_2);
+    it.getMessagesOrReferences().forEach(_function_2);
+  }
+  
+  protected void _format(final ScenarioTypeAndParticipants scenarioType, @Extension final IFormattableDocument document) {
+    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
+      it.newLine();
+    };
+    document.append(this.textRegionExtensions.regionFor(scenarioType).keyword("{"), _function);
+    final Consumer<EObject> _function_1 = (EObject it) -> {
+      document.<EObject>format(it);
+    };
+    scenarioType.getParticipants().forEach(_function_1);
   }
   
   protected void _format(final Actor actor, @Extension final IFormattableDocument document) {
@@ -58,28 +72,41 @@ public class DslFormatter extends AbstractFormatter2 {
     document.append(this.textRegionExtensions.regionFor(actor).feature(DslPackage.Literals.ACTOR__ID), _function_1);
   }
   
-  public void format(final Object actor, final IFormattableDocument document) {
-    if (actor instanceof XtextResource) {
-      _format((XtextResource)actor, document);
+  protected void _format(final SequenceMessage message, @Extension final IFormattableDocument document) {
+    final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
+      it.newLine();
+    };
+    document.append(this.textRegionExtensions.regionFor(message).feature(DslPackage.Literals.MESSAGE__NAME), _function);
+  }
+  
+  public void format(final Object message, final IFormattableDocument document) {
+    if (message instanceof XtextResource) {
+      _format((XtextResource)message, document);
       return;
-    } else if (actor instanceof Actor) {
-      _format((Actor)actor, document);
+    } else if (message instanceof SequenceMessage) {
+      _format((SequenceMessage)message, document);
       return;
-    } else if (actor instanceof Model) {
-      _format((Model)actor, document);
+    } else if (message instanceof Actor) {
+      _format((Actor)message, document);
       return;
-    } else if (actor instanceof EObject) {
-      _format((EObject)actor, document);
+    } else if (message instanceof Model) {
+      _format((Model)message, document);
       return;
-    } else if (actor == null) {
+    } else if (message instanceof ScenarioTypeAndParticipants) {
+      _format((ScenarioTypeAndParticipants)message, document);
+      return;
+    } else if (message instanceof EObject) {
+      _format((EObject)message, document);
+      return;
+    } else if (message == null) {
       _format((Void)null, document);
       return;
-    } else if (actor != null) {
-      _format(actor, document);
+    } else if (message != null) {
+      _format(message, document);
       return;
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(actor, document).toString());
+        Arrays.<Object>asList(message, document).toString());
     }
   }
 }

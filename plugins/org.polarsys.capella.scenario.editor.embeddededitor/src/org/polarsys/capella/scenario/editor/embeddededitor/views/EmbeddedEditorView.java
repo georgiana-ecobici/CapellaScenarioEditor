@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -51,6 +52,7 @@ public class EmbeddedEditorView extends ViewPart {
   private EmbeddedEditorModelAccess model;
   public static EmbeddedEditor eEditor;
   private Scenario associatedScenarioDiagram;
+  private DDiagram associatedDiagram;
   Composite top;
 
   public void reloadContent(String str) {
@@ -117,8 +119,9 @@ public class EmbeddedEditorView extends ViewPart {
   }
 
   private void makeActions() {
-    XtextEditorActionFactory saveAction = new XtextEditorActionFactory();
-    saveAction.createSaveAction(this);
+    XtextEditorActionFactory actionsFactory = new XtextEditorActionFactory();
+    actionsFactory.createRefreshAction(this);
+    actionsFactory.createSaveAction(this);
   }
 
   @Override
@@ -132,5 +135,9 @@ public class EmbeddedEditorView extends ViewPart {
 
   public void setAssociatedScenarioDiagram(Scenario scenario) {
     this.associatedScenarioDiagram = scenario;
+  }
+
+  public void setAssociatedDiagram(DDiagram diagram) {
+    this.associatedDiagram = diagram;
   }
 }

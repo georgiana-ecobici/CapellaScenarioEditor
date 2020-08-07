@@ -96,6 +96,7 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
                 activePage.activate(eeView);
               }
               eeView.setAssociatedScenarioDiagram(sc);
+              eeView.setAssociatedDiagram(diagram);
               XtextEditorCommands.diagramToXtext(sc, eeView);
             }
           }

@@ -13,18 +13,21 @@
 package org.polarsys.capella.scenario.editor.embeddededitor.actions;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.scenario.editor.embeddededitor.commands.XtextEditorCommands;
 import org.polarsys.capella.scenario.editor.embeddededitor.helper.XtextEditorHelper;
 import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
 
-public class SaveAction extends Action {
-  public SaveAction() {
-    setToolTipText("Save text changes to diagram");
-    setImageDescriptor(
-        PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_ETOOL_SAVE_EDIT));
+public class RefreshAction extends Action {
+  public static final String IMG_REFRESH = "icons/refresh.gif";
+  public static final String PLUGIN_ID = "org.polarsys.capella.scenario.editor.embeddededitor";
+
+  public RefreshAction() {
+    setToolTipText("Refresh scenario text from diagram");
+    ImageDescriptor imageDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, IMG_REFRESH);
+    setImageDescriptor(imageDescriptor);
   }
 
   @Override
@@ -32,6 +35,6 @@ public class SaveAction extends Action {
     EmbeddedEditorView eeView = XtextEditorHelper.getActiveEmbeddedEditorView();
     Scenario scenarioDiagram = eeView.getAssociatedScenarioDiagram();
 
-    XtextEditorCommands.xtextToDiagram(scenarioDiagram, eeView);
+    XtextEditorCommands.diagramToXtext(scenarioDiagram, eeView);
   }
 }
