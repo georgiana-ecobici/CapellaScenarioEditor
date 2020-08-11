@@ -10,7 +10,7 @@
  * Contributors:
  *    Thales - initial API and implementation
  *******************************************************************************/
-package org.polarsys.capella.scenario.editor;
+package org.polarsys.capella.scenario.editor.embeddededitor.listener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,7 @@ import org.eclipse.ui.PlatformUI;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
+import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 import org.polarsys.capella.scenario.editor.embeddededitor.commands.XtextEditorCommands;
 import org.polarsys.capella.scenario.editor.embeddededitor.helper.XtextEditorHelper;
 import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
@@ -95,8 +96,8 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
                 }
                 activePage.activate(eeView);
               }
-              eeView.setAssociatedScenarioDiagram(sc);
-              eeView.setAssociatedDiagram(diagram);
+              EmbeddedEditorInstance.setAssociatedScenarioDiagram(sc);
+              EmbeddedEditorInstance.setAssociatedDiagram(diagram);
               XtextEditorCommands.diagramToXtext(sc, eeView);
             }
           }

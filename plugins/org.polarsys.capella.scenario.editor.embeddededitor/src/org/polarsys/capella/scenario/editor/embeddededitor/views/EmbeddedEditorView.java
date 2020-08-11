@@ -17,20 +17,16 @@ import javax.inject.Inject;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IMemento;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory;
-import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.polarsys.capella.core.data.interaction.Scenario;
+import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.internal.DslscenarioActivator;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.provider.DslscenarioProvider;
 import org.polarsys.capella.scenario.editor.embeddededitor.actions.XtextEditorActionFactory;
@@ -49,28 +45,7 @@ public class EmbeddedEditorView extends ViewPart {
 
   private TableViewer viewer;
   DslscenarioProvider provider;
-  private EmbeddedEditorModelAccess model;
-  public static EmbeddedEditor eEditor;
-  private Scenario associatedScenarioDiagram;
-  private DDiagram associatedDiagram;
   Composite top;
-
-  public void reloadContent(String str) {
-    IXtextDocument document = eEditor.getDocument();
-    document.set(str);
-  }
-
-  @Override
-  public void saveState(IMemento memento) {
-    // do nothing
-    DslscenarioActivator activator = DslscenarioActivator.getInstance();
-    Injector injector = activator
-        .getInjector(DslscenarioActivator.ORG_POLARSYS_CAPELLA_SCENARIO_EDITOR_DSLSCENARIO_DSL);
-
-    EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
-
-    EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
-  }
 
   class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
     @Override
@@ -104,14 +79,8 @@ public class EmbeddedEditorView extends ViewPart {
     EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
 
     EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
-    model = editor.createPartialEditor("", "", "", true);
-
-    eEditor = editor;
-
-  }
-
-  public EmbeddedEditorModelAccess getModel() {
-    return model;
+    EmbeddedEditorInstance.setModel(editor.createPartialEditor());
+    EmbeddedEditorInstance.seteEditor(editor);
   }
 
   public DslscenarioProvider getProvider() {
@@ -127,17 +96,5 @@ public class EmbeddedEditorView extends ViewPart {
   @Override
   public void setFocus() {
     // TODO Auto-generated method stub
-  }
-
-  public Scenario getAssociatedScenarioDiagram() {
-    return associatedScenarioDiagram;
-  }
-
-  public void setAssociatedScenarioDiagram(Scenario scenario) {
-    this.associatedScenarioDiagram = scenario;
-  }
-
-  public void setAssociatedDiagram(DDiagram diagram) {
-    this.associatedDiagram = diagram;
   }
 }

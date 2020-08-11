@@ -3,23 +3,24 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.validation
 
+import org.eclipse.xtext.validation.Check
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage
+import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class DslValidator extends AbstractDslValidator {
+
+	public static val INVALID_NAME = 'invalidName'
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					DslPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
-	
+	@Check
+	def checkActor(Actor actor) {
+		if (!EmbeddedEditorInstanceHelper.getAvailableInstanceRolesName().contains(actor.name)) {
+			error('Name does not exist', DslPackage.Literals.ACTOR__NAME, INVALID_NAME)
+		}
+	}
 }
