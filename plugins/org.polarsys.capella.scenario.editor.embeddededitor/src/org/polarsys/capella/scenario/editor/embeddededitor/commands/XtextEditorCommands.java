@@ -26,7 +26,6 @@ import org.polarsys.capella.core.data.cs.BlockArchitecture;
 import org.polarsys.capella.core.data.cs.ComponentArchitecture;
 import org.polarsys.capella.core.data.cs.CsFactory;
 import org.polarsys.capella.core.data.cs.Part;
-import org.polarsys.capella.core.data.cs.impl.CsFactoryImpl;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
 import org.polarsys.capella.core.data.ctx.SystemComponent;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
@@ -35,13 +34,13 @@ import org.polarsys.capella.core.data.interaction.InteractionFragment;
 import org.polarsys.capella.core.data.interaction.MessageEnd;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.SequenceMessage;
-import org.polarsys.capella.core.data.interaction.impl.InteractionFactoryImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt.Type;
 import org.polarsys.capella.core.model.helpers.ComponentExt;
 import org.polarsys.capella.core.model.helpers.PartExt;
 import org.polarsys.capella.core.model.helpers.ProjectExt;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
+import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslFactory;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
@@ -58,56 +57,55 @@ public class XtextEditorCommands {
       DslscenarioProvider p = embeddedEditorViewPart.getProvider();
       XtextResource resource = p.getResource();
       EList<EObject> content = resource.getContents();
-      
-      
+
       ModelImpl domainModel = (ModelImpl) content.get(0);
-      //get actors
+      // get actors
       EList<EObject> actors = domainModel.getScenarioType().getParticipants();
-      
-      //get messages
-      //TODO ...
-      
+
+      // get messages
+      // TODO ...
+
       Project project;
       BlockArchitecture blockArchitecture;
       project = ProjectExt.getProject(scenario);
       blockArchitecture = BlockArchitectureExt.getBlockArchitecture(Type.SA, project);
-      
+
       doEditingOnActors(scenario, blockArchitecture, actors);
     }
   }
-  
+
   private static void doEditingOnActors(Scenario scenario, BlockArchitecture blockArchitecture, EList<EObject> actors) {
- // Make sure your element is attached to a resource, otherwise this will return null
+    // Make sure your element is attached to a resource, otherwise this will return null
     TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(scenario);
     domain.getCommandStack().execute(new RecordingCommand(domain) {
-      
+
       @Override
       protected void doExecute() {
         // Implement your write operations here,
         // for example: set a new name
-        //element.eSet(element.eClass().getEStructuralFeature("name"), "aNewName");
-        
+        // element.eSet(element.eClass().getEStructuralFeature("name"), "aNewName");
+
         InstanceRole instanceRole;
         SystemComponent instance;
         EList<InstanceRole> instanceRoles = scenario.getOwnedInstanceRoles();
-        
+
         for (Iterator<EObject> iterator = actors.iterator(); iterator.hasNext();) {
           EObject actor = iterator.next();
-          instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();//factory.createInstanceRole();
-          instanceRole.setName(((Actor)actor).getName());
-          
-          //create Actor = SystemComponent
+          instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();// factory.createInstanceRole();
+          instanceRole.setName(((Actor) actor).getName());
+
+          // create Actor = SystemComponent
           instance = ComponentExt.createSystemActor();
-          instance.setName(((Actor)actor).getName());
+          instance.setName(((Actor) actor).getName());
 
           ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents().add(instance);
-          
-          Part part = CsFactory.eINSTANCE.createPart(); //csFactory.createPart();
+
+          Part part = CsFactory.eINSTANCE.createPart(); // csFactory.createPart();
           part.setAbstractType(instance);
           part.setName(instanceRole.getName());
           PartExt.addPart(instance, part, (ComponentArchitecture) blockArchitecture);
           instanceRole.setRepresentedInstance(part);
-          
+
           instanceRoles.add(instanceRole);
         }
       }
@@ -141,7 +139,7 @@ public class XtextEditorCommands {
       content.add(domainModel);
 
       String serialized = ((XtextResource) domainModel.eResource()).getSerializer().serialize(domainModel);
-      embeddedEditorViewPart.eEditor.getDocument().set(serialized);
+      EmbeddedEditorInstance.geteEditor().getDocument().set(serialized);
     }
   }
 
@@ -175,27 +173,29 @@ public class XtextEditorCommands {
 
   private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
     EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
-    
+
     List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
     Object[] ends = fragments.stream().filter(fragment -> fragment instanceof MessageEnd).toArray();
-    
+
     for (int i = 0; i < ends.length; i = i + 2) {
-      //org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = copySequenceMessageFromMsgEnd(ends[i], factory);
-      EObject seqMessage = copyMessageFromMsgEnd((EObject) ends[i], factory);
+      // org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage =
+      // copySequenceMessageFromMsgEnd(ends[i], factory);
+      EObject seqMessage = copyMessageFromMsgEnd(ends[i], factory);
       messagesOrReferences.add(seqMessage);
     }
   }
 
-  private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(Object object, DslFactory factory) {
+  private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(
+      Object object, DslFactory factory) {
     org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = factory.createSequenceMessage();
     MessageEnd end = (MessageEnd) object;
     SequenceMessage sequenceMessage = end.getMessage();
     seqMessage.setName(sequenceMessage.getName());
     seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
     return seqMessage;
   }
-  
+
   private static EObject copyMessageFromMsgEnd(Object object, DslFactory factory) {
     EObject seqMessage;// = factory.createSequenceMessage();
     MessageEnd end = (MessageEnd) object;
@@ -204,53 +204,73 @@ public class XtextEditorCommands {
     switch (sequenceMessage.getKind()) {
     case ASYNCHRONOUS_CALL:
       seqMessage = factory.createSequenceMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     case SYNCHRONOUS_CALL:
       seqMessage = factory.createSequenceMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     case CREATE:
       seqMessage = factory.createCreateMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage)seqMessage).setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage)seqMessage).setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage) seqMessage)
+          .setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.CreateMessage) seqMessage)
+          .setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     case DELETE:
       seqMessage = factory.createDeleteMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage)seqMessage).setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage)seqMessage).setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage) seqMessage)
+          .setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.DeleteMessage) seqMessage)
+          .setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     case REPLY:
       seqMessage = factory.createReturnMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage)seqMessage).setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage)seqMessage).setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage) seqMessage)
+          .setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage) seqMessage)
+          .setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     case TIMER:
       seqMessage = factory.createArmTimerMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage)seqMessage).setParticipant(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ArmTimerMessage) seqMessage)
+          .setParticipant(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     default:
       seqMessage = factory.createSequenceMessage();
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setName(sequenceMessage.getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage)seqMessage).setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setName(sequenceMessage.getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+      ((org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessage)
+          .setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
       break;
     }
-    
-//    seqMessage.setName(sequenceMessage.getName());
-//    seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-//    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName()); 
+
+    // seqMessage.setName(sequenceMessage.getName());
+    // seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
+    // seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
     return seqMessage;
   }
-  
+
   private static Model getModel(EmbeddedEditorView embeddedEditorViewPart, DslFactory factory, String scenarioName) {
     DslscenarioProvider p = embeddedEditorViewPart.getProvider();
     XtextResource resource = p.getResource();
@@ -266,9 +286,10 @@ public class XtextEditorCommands {
     }
     return domainModel;
   }
-  
+
   private static void clearModel(Model domainModel) {
-    if (domainModel != null && domainModel.getScenarioType() != null && domainModel.getScenarioType().getParticipant() != null) {
+    if (domainModel != null && domainModel.getScenarioType() != null
+        && domainModel.getScenarioType().getParticipant() != null) {
       domainModel.getScenarioType().getParticipants().clear();
     }
     if (domainModel != null && domainModel.getMessagesOrReferences() != null) {

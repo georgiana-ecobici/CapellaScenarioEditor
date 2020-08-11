@@ -3,7 +3,11 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.validation;
 
+import org.eclipse.xtext.validation.Check;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.validation.AbstractDslValidator;
+import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
 
 /**
  * This class contains custom validation rules.
@@ -12,4 +16,14 @@ import org.polarsys.capella.scenario.editor.dslscenario.validation.AbstractDslVa
  */
 @SuppressWarnings("all")
 public class DslValidator extends AbstractDslValidator {
+  public static final String INVALID_NAME = "invalidName";
+  
+  @Check
+  public void checkActor(final Actor actor) {
+    boolean _contains = EmbeddedEditorInstanceHelper.getAvailableInstanceRolesName().contains(actor.getName());
+    boolean _not = (!_contains);
+    if (_not) {
+      this.error("Instance role not exist", DslPackage.Literals.ACTOR__NAME, DslValidator.INVALID_NAME);
+    }
+  }
 }
