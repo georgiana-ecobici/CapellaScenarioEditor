@@ -173,31 +173,6 @@ public class XtextEditorCommands {
 
   }
 
-//  private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
-//    EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
-//
-//    List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
-//    Object[] ends = fragments.stream().filter(fragment -> fragment instanceof MessageEnd).toArray();
-//
-//    messagesOrReferences.clear();
-//    for (int i = 0; i < ends.length; i = i + 2) {
-//      org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = copySequenceMessageFromMsgEnd(
-//          ends[i], factory);
-//      messagesOrReferences.add(seqMessage);
-//    }
-//  }
-//
-//  private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(
-//      Object object, DslFactory factory) {
-//    org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = factory.createSequenceMessage();
-//    MessageEnd end = (MessageEnd) object;
-//    SequenceMessage sequenceMessage = end.getMessage();
-//    seqMessage.setName(sequenceMessage.getName());
-//    seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-//    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
-//    return seqMessage;
-//  }
-
   private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
     EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
     
