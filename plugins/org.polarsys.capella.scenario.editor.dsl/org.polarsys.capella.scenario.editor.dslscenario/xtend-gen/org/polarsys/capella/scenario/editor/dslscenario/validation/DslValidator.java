@@ -19,11 +19,11 @@ public class DslValidator extends AbstractDslValidator {
   public static final String INVALID_NAME = "invalidName";
   
   @Check
-  public void checkActor(final Actor actor) {
-    boolean _contains = EmbeddedEditorInstanceHelper.getAvailableInstanceRolesName().contains(actor.getName());
+  public void checkPartExists(final Actor actor) {
+    boolean _contains = EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(actor.getName());
     boolean _not = (!_contains);
     if (_not) {
-      this.error("Instance role not exist", DslPackage.Literals.ACTOR__NAME, DslValidator.INVALID_NAME);
+      this.error("Represented part does not exist", DslPackage.Literals.ACTOR__NAME, DslValidator.INVALID_NAME);
     }
   }
 }
