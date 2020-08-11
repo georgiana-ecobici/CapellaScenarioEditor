@@ -18,9 +18,9 @@ class DslValidator extends AbstractDslValidator {
 	public static val INVALID_NAME = 'invalidName'
 	
 	@Check
-	def checkActor(Actor actor) {
-		if (!EmbeddedEditorInstanceHelper.getAvailableInstanceRolesName().contains(actor.name)) {
-			error('Instance role not exist', DslPackage.Literals.ACTOR__NAME, INVALID_NAME)
+	def checkPartExists(Actor actor) {
+		if (!EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(actor.name)) {
+			error('Represented part does not exist', DslPackage.Literals.ACTOR__NAME, INVALID_NAME)
 		}
 	}
 }

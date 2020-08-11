@@ -9,7 +9,8 @@ Bundle-Localization: plugin
 Require-Bundle: org.polarsys.capella.core.model.handler,
  org.eclipse.sirius.diagram.ui,
  org.eclipse.xtext.ui,
- org.polarsys.capella.core.model.helpers
+ org.polarsys.capella.core.model.helpers,
+ org.polarsys.capella.core.sirius.analysis
 Import-Package: org.eclipse.xtext.ui.editor.embedded
 Export-Package: org.polarsys.capella.scenario.editor,
  org.polarsys.capella.scenario.editor.helper
