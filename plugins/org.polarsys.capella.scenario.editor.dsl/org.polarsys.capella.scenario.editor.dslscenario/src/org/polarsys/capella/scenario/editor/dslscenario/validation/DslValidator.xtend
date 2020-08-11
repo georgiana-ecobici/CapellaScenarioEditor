@@ -20,7 +20,7 @@ class DslValidator extends AbstractDslValidator {
 	@Check
 	def checkActor(Actor actor) {
 		if (!EmbeddedEditorInstanceHelper.getAvailableInstanceRolesName().contains(actor.name)) {
-			error('Name does not exist', DslPackage.Literals.ACTOR__NAME, INVALID_NAME)
+			error('Instance role not exist', DslPackage.Literals.ACTOR__NAME, INVALID_NAME)
 		}
 	}
 }

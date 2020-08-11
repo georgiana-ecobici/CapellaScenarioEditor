@@ -23,7 +23,7 @@ public class DslValidator extends AbstractDslValidator {
     boolean _contains = EmbeddedEditorInstanceHelper.getAvailableInstanceRolesName().contains(actor.getName());
     boolean _not = (!_contains);
     if (_not) {
-      this.error("Name does not exist", DslPackage.Literals.ACTOR__NAME, DslValidator.INVALID_NAME);
+      this.error("Instance role not exist", DslPackage.Literals.ACTOR__NAME, DslValidator.INVALID_NAME);
     }
   }
 }
