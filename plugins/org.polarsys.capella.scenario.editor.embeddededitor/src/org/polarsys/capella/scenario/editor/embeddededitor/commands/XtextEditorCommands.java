@@ -20,19 +20,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.sirius.diagram.AbstractDNode;
-import org.eclipse.sirius.diagram.DragAndDropTarget;
-import org.eclipse.sirius.diagram.business.api.helper.SiriusDiagramHelper;
 import org.eclipse.xtext.resource.XtextResource;
 import org.polarsys.capella.core.data.capellamodeller.Project;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
-import org.polarsys.capella.core.data.cs.Component;
+import org.polarsys.capella.core.data.cs.ComponentArchitecture;
+import org.polarsys.capella.core.data.cs.CsFactory;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.cs.impl.CsFactoryImpl;
-import org.polarsys.capella.core.data.ctx.Capability;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
 import org.polarsys.capella.core.data.ctx.SystemComponent;
-import org.polarsys.capella.core.data.information.InformationPackage;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.InteractionFactory;
 import org.polarsys.capella.core.data.interaction.InteractionFragment;
@@ -43,8 +39,8 @@ import org.polarsys.capella.core.data.interaction.impl.InteractionFactoryImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt.Type;
 import org.polarsys.capella.core.model.helpers.ComponentExt;
+import org.polarsys.capella.core.model.helpers.PartExt;
 import org.polarsys.capella.core.model.helpers.ProjectExt;
-import org.polarsys.capella.core.sirius.analysis.CsServices;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslFactory;
@@ -70,31 +66,18 @@ public class XtextEditorCommands {
       
       //get messages
       //TODO ...
-      InteractionFactory factory = new InteractionFactoryImpl();
-      InstanceRole instanceRole;
-      SystemComponent instance;
+      
       Project project;
       BlockArchitecture blockArchitecture;
+      project = ProjectExt.getProject(scenario);
+      blockArchitecture = BlockArchitectureExt.getBlockArchitecture(Type.SA, project);
       
-      for (Iterator iterator = actors.iterator(); iterator.hasNext();) {
-        EObject actor = (EObject) iterator.next();
-        instanceRole = factory.createInstanceRole();
-        instanceRole.setName(((Actor)actor).getName());
-        
-        //create Actor = SystemComponent
-        instance = ComponentExt.createSystemActor();
-        instance.setName(((Actor)actor).getName());
-        
-        project = ProjectExt.getProject(scenario);
-        blockArchitecture = BlockArchitectureExt.getBlockArchitecture(Type.SA, project);
-        
-        doEditing(scenario, instanceRole, blockArchitecture, instance);
-      }
+      doEditingOnActors(scenario, blockArchitecture, actors);
     }
   }
   
-  public static void doEditing(Scenario scenario, InstanceRole instanceRole, BlockArchitecture blockArchitecture, SystemComponent instance) {
-    // Make sure your element is attached to a resource, otherwise this will return null
+  private static void doEditingOnActors(Scenario scenario, BlockArchitecture blockArchitecture, EList<EObject> actors) {
+ // Make sure your element is attached to a resource, otherwise this will return null
     TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(scenario);
     domain.getCommandStack().execute(new RecordingCommand(domain) {
       
@@ -104,19 +87,29 @@ public class XtextEditorCommands {
         // for example: set a new name
         //element.eSet(element.eClass().getEStructuralFeature("name"), "aNewName");
         
-        ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents().add(instance);
+        InstanceRole instanceRole;
+        SystemComponent instance;
         EList<InstanceRole> instanceRoles = scenario.getOwnedInstanceRoles();
         
-        CsFactoryImpl csFactory = new CsFactoryImpl();
-        Part part = csFactory.createPart();
-        part.setAbstractType(instance);
-        part.setName(instanceRole.getName());
-        //part.eSet(InformationPackage.Literals.ABSTRACT_INSTANCE__REPRESENTING_INSTANCE_ROLES, instanceRole);
+        for (Iterator<EObject> iterator = actors.iterator(); iterator.hasNext();) {
+          EObject actor = iterator.next();
+          instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();//factory.createInstanceRole();
+          instanceRole.setName(((Actor)actor).getName());
+          
+          //create Actor = SystemComponent
+          instance = ComponentExt.createSystemActor();
+          instance.setName(((Actor)actor).getName());
 
-        instanceRole.setRepresentedInstance(part);
-        
-        instanceRoles.add(instanceRole);
-        //SiriusDiagramHelper.addNodeInContainer((DragAndDropTarget) instanceRole.eContainer(), false, (AbstractDNode) part);
+          ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents().add(instance);
+          
+          Part part = CsFactory.eINSTANCE.createPart(); //csFactory.createPart();
+          part.setAbstractType(instance);
+          part.setName(instanceRole.getName());
+          PartExt.addPart(instance, part, (ComponentArchitecture) blockArchitecture);
+          instanceRole.setRepresentedInstance(part);
+          
+          instanceRoles.add(instanceRole);
+        }
       }
     });
   }
@@ -136,6 +129,7 @@ public class XtextEditorCommands {
 
       DslFactory factory = new DslFactoryImpl();
       Model domainModel = getModel(embeddedEditorViewPart, factory, scenario.getName());
+      domainModel.getScenarioType().setName(scenario.getName());
       clearModel(domainModel);
 
       // Generate Participants
