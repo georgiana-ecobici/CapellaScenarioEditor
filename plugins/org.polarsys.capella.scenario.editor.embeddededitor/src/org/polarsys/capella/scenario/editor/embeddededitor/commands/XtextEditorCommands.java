@@ -24,11 +24,12 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.xtext.resource.XtextResource;
 import org.polarsys.capella.common.data.modellingcore.AbstractNamedElement;
 import org.polarsys.capella.core.data.capellacore.CapellaElement;
-import org.polarsys.capella.core.data.capellamodeller.Project;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
+import org.polarsys.capella.core.data.cs.Component;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
-import org.polarsys.capella.core.data.ctx.SystemComponent;
+import org.polarsys.capella.core.data.epbs.ConfigurationItem;
+import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.information.AbstractEventOperation;
 import org.polarsys.capella.core.data.interaction.EventReceiptOperation;
 import org.polarsys.capella.core.data.interaction.EventSentOperation;
@@ -43,9 +44,10 @@ import org.polarsys.capella.core.data.interaction.MessageKind;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.SequenceMessage;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
+import org.polarsys.capella.core.data.la.LogicalArchitecture;
+import org.polarsys.capella.core.data.oa.OperationalAnalysis;
+import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
-import org.polarsys.capella.core.model.helpers.BlockArchitectureExt.Type;
-import org.polarsys.capella.core.model.helpers.ProjectExt;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
@@ -74,10 +76,10 @@ public class XtextEditorCommands {
       //get messages
       EList<EObject> messages = domainModel.getMessagesOrReferences();
       
-      Project project;
+      //Project project;
       BlockArchitecture blockArchitecture;
-      project = ProjectExt.getProject(scenario);
-      blockArchitecture = BlockArchitectureExt.getBlockArchitecture(Type.SA, project);
+      //project = ProjectExt.getProject(scenario);
+      blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(scenario); //  getBlockArchitecture(Type.SA, project);
       
       doEditingOnActors(scenario, blockArchitecture, actors);
       
@@ -97,21 +99,57 @@ public class XtextEditorCommands {
         //element.eSet(element.eClass().getEStructuralFeature("name"), "aNewName");
         
         InstanceRole instanceRole;
-        SystemComponent instance;
+        Component instance;
         EList<InstanceRole> instanceRoles = scenario.getOwnedInstanceRoles();
         
         for (Iterator<EObject> iterator = actors.iterator(); iterator.hasNext();) {
           EObject actor = iterator.next();
           
-          String instanceName = ((Actor)actor).getName();
+          String instanceName = ((Actor) actor).getName();
           if (instanceRoles.stream().filter(ir -> ir.getName().equals(instanceName)).collect(Collectors.toList()).size() == 0) {
             instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();
-            instanceRole.setName(((Actor)actor).getName());
+            instanceRole.setName(instanceName);
             
             //search actor by name
-            List<SystemComponent> components = ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents()
-              .stream().filter(comp -> comp.getName().equals(((Actor) actor).getName())).collect(Collectors.toList());
-            instance = components.get(0);
+            List<Component> components;
+            
+            switch (BlockArchitectureExt.getBlockArchitectureType(blockArchitecture)) {
+            case SA:
+              components = ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents()
+                .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
+              break;
+            case PA:
+              components = ((PhysicalArchitecture) blockArchitecture).getOwnedPhysicalComponentPkg().getOwnedPhysicalComponents()
+                .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
+              break;
+            case LA:
+              components = ((LogicalArchitecture) blockArchitecture).getOwnedLogicalComponentPkg().getOwnedLogicalComponents()
+                .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
+              break;
+            case OA:
+              components = ((OperationalAnalysis) blockArchitecture).getOwnedEntityPkg().getOwnedEntities()
+                .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
+              break;
+            case EPBS:
+              components = ((EPBSArchitecture) blockArchitecture).getOwnedConfigurationItemPkg().getOwnedConfigurationItems()
+                .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
+              break;
+            default:
+              components = ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents()
+              .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
+              break;
+            }
+            
+            if (components.size() == 0) {
+              //this is a configuration item under EPBS level, which has to be found under the System configuration item, so one level down
+              components = ((EPBSArchitecture) blockArchitecture).getOwnedConfigurationItemPkg().getOwnedConfigurationItems()
+                  .stream().filter(comp -> comp.getName().equals("System")).collect(Collectors.toList());
+              instance = ((ConfigurationItem) components.get(0)).getOwnedConfigurationItems()
+                  .stream().filter(ci -> ci.getName().equals(instanceName)).collect(Collectors.toList()).get(0);
+            }
+            else {
+              instance = components.get(0);
+            }
             
             Part part = (Part) instance.getRepresentingParts().get(0);
             instanceRole.setRepresentedInstance(part);
