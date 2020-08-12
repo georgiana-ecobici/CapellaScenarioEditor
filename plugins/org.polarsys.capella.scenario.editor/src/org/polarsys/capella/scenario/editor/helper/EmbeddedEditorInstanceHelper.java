@@ -13,6 +13,7 @@
 package org.polarsys.capella.scenario.editor.helper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -40,5 +41,18 @@ public class EmbeddedEditorInstanceHelper {
     }
 
     return partNames;
+  }
+
+  public static InstanceRole getInstanceRole(String source) {
+    EList<InstanceRole> instanceRoles = getAvailableInstanceRoles();
+    InstanceRole instanceRole = null;
+    for (Iterator<InstanceRole> iterator = instanceRoles.iterator(); iterator.hasNext();) {
+      InstanceRole role = (InstanceRole) iterator.next();
+      if (role.getName().equals(source)) {
+        instanceRole = role;
+        break; 
+      }
+    }
+    return instanceRole;
   }
 }
