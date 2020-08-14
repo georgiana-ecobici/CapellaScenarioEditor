@@ -8,10 +8,15 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import java.util.Arrays
 import org.eclipse.xtext.Assignment
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
+import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.AbstractElement
+import com.google.common.collect.Sets
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.Keyword
+import org.eclipse.jface.text.contentassist.ICompletionProposal
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -19,43 +24,77 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
  */
 class DslProposalProvider extends AbstractDslProposalProvider {
 
-	override completeActor_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+	override completeKeyword(Keyword keyword, ContentAssistContext contentAssistContext,
+		ICompletionProposalAcceptor acceptor) {
+		var proposal = createCompletionProposal(keyword.getValue(), getKeywordDisplayString(keyword), getImage(keyword),
+			contentAssistContext) as ICompletionProposal
+		if (proposal.getDisplayString().equals("actor")) {
+			getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
+			acceptor.accept(proposal);
+		}
+	}
+
+	override void completeModel_Participants(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("test1", "test1", null, context));
+	}
+
+	override complete_Participant(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("test2", "test2", null, context));
+
+	}
+
+	override void complete_GenericComponent(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+		acceptor.accept(createCompletionProposal("test3", "test3", null, context));
+	}
+
+	override void complete_Component(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+		acceptor.accept(createCompletionProposal("test4", "test4", null, context));
+	}
+
+	override completeActor_Name(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
 		for (String el : getPropose()) {
 			acceptor.accept(createCompletionProposal(el, el, null, context));
-			}
-		}
-		
-	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		for (EObject el: variablesDefinedBefore2(model as Model)) {
-			//acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
 		}
 	}
-	
-	override completeSequenceMessage_Target(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		for (EObject el: variablesDefinedBefore3(model as SequenceMessage)) {
-			//acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
+
+	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		for (EObject el : variablesDefinedBefore2(model as Model)) {
+			// acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
 		}
 	}
-	
-	def getPropose(){
+
+	override completeSequenceMessage_Target(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
+			// acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
+		}
+	}
+
+	def getPropose() {
 		return Arrays.asList("Hello", "World!", "How", "Are", "You")
-			
+
 	}
-	
+
 	def variablesDefinedBefore(Participant sc) {
-		return sc		
-		
+		return sc
+
 	}
+
 	def variablesDefinedBefore2(Model m) {
-		return m.participants		
-		
+		return m.participants
+
 	}
-	
+
 	def variablesDefinedBefore3(SequenceMessage seq) {
 		return (seq.eContainer as Model).participants
 	}
-   
-	
+
 }
-
-

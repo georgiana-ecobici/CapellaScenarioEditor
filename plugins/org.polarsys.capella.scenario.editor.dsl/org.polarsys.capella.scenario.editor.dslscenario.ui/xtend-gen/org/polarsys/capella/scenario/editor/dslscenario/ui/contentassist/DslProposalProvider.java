@@ -7,7 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
@@ -21,6 +24,37 @@ import org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist.Abstrac
  */
 @SuppressWarnings("all")
 public class DslProposalProvider extends AbstractDslProposalProvider {
+  @Override
+  public void completeKeyword(final Keyword keyword, final ContentAssistContext contentAssistContext, final ICompletionProposalAcceptor acceptor) {
+    ICompletionProposal _createCompletionProposal = this.createCompletionProposal(keyword.getValue(), this.getKeywordDisplayString(keyword), this.getImage(keyword), contentAssistContext);
+    ICompletionProposal proposal = ((ICompletionProposal) _createCompletionProposal);
+    boolean _equals = proposal.getDisplayString().equals("actor");
+    if (_equals) {
+      this.getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
+      acceptor.accept(proposal);
+    }
+  }
+  
+  @Override
+  public void completeModel_Participants(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    acceptor.accept(this.createCompletionProposal("test1", "test1", null, context));
+  }
+  
+  @Override
+  public void complete_Participant(final EObject model, final RuleCall ruleCall, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    acceptor.accept(this.createCompletionProposal("test2", "test2", null, context));
+  }
+  
+  @Override
+  public void complete_GenericComponent(final EObject model, final RuleCall ruleCall, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    acceptor.accept(this.createCompletionProposal("test3", "test3", null, context));
+  }
+  
+  @Override
+  public void complete_Component(final EObject model, final RuleCall ruleCall, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    acceptor.accept(this.createCompletionProposal("test4", "test4", null, context));
+  }
+  
   @Override
   public void completeActor_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     List<String> _propose = this.getPropose();
