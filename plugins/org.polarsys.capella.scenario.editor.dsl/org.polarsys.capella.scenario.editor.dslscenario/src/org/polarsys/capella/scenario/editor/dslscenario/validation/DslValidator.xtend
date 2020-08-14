@@ -20,7 +20,7 @@ class DslValidator extends AbstractDslValidator {
 	@Check
 	def checkPartExists(Actor actor) {
 		if (!EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(actor.name)) {
-			error('Represented part does not exist', DslPackage.Literals.ACTOR__NAME, INVALID_NAME)
+			//error('Represented part does not exist', actor.name, INVALID_NAME)
 		}
 	}
 }

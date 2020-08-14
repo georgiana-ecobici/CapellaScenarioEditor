@@ -8,51 +8,52 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Component;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Component</b></em>'.
+ * An implementation of the model object '<em><b>Participant</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ComponentImpl#getNature <em>Nature</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ComponentImpl extends GenericComponentImpl implements Component
+public class ParticipantImpl extends MinimalEObjectImpl.Container implements Participant
 {
   /**
-   * The default value of the '{@link #getNature() <em>Nature</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNature()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String NATURE_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getNature() <em>Nature</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNature()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String nature = NATURE_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ComponentImpl()
+  protected ParticipantImpl()
   {
     super();
   }
@@ -65,7 +66,7 @@ public class ComponentImpl extends GenericComponentImpl implements Component
   @Override
   protected EClass eStaticClass()
   {
-    return DslPackage.Literals.COMPONENT;
+    return DslPackage.Literals.PARTICIPANT;
   }
 
   /**
@@ -74,9 +75,9 @@ public class ComponentImpl extends GenericComponentImpl implements Component
    * @generated
    */
   @Override
-  public String getNature()
+  public String getName()
   {
-    return nature;
+    return name;
   }
 
   /**
@@ -85,12 +86,12 @@ public class ComponentImpl extends GenericComponentImpl implements Component
    * @generated
    */
   @Override
-  public void setNature(String newNature)
+  public void setName(String newName)
   {
-    String oldNature = nature;
-    nature = newNature;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.COMPONENT__NATURE, oldNature, nature));
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.PARTICIPANT__NAME, oldName, name));
   }
 
   /**
@@ -103,8 +104,8 @@ public class ComponentImpl extends GenericComponentImpl implements Component
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NATURE:
-        return getNature();
+      case DslPackage.PARTICIPANT__NAME:
+        return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,8 +120,8 @@ public class ComponentImpl extends GenericComponentImpl implements Component
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NATURE:
-        setNature((String)newValue);
+      case DslPackage.PARTICIPANT__NAME:
+        setName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -136,8 +137,8 @@ public class ComponentImpl extends GenericComponentImpl implements Component
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NATURE:
-        setNature(NATURE_EDEFAULT);
+      case DslPackage.PARTICIPANT__NAME:
+        setName(NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -153,8 +154,8 @@ public class ComponentImpl extends GenericComponentImpl implements Component
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NATURE:
-        return NATURE_EDEFAULT == null ? nature != null : !NATURE_EDEFAULT.equals(nature);
+      case DslPackage.PARTICIPANT__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
   }
@@ -170,10 +171,10 @@ public class ComponentImpl extends GenericComponentImpl implements Component
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (nature: ");
-    result.append(nature);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }
 
-} //ComponentImpl
+} //ParticipantImpl

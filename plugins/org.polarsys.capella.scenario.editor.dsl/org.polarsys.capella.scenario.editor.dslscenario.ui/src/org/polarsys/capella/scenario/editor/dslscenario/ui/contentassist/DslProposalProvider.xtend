@@ -9,9 +9,9 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import java.util.Arrays
 import org.eclipse.xtext.Assignment
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -27,13 +27,13 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		
 	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		for (EObject el: variablesDefinedBefore2(model as Model)) {
-			acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
+			//acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
 		}
 	}
 	
 	override completeSequenceMessage_Target(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		for (EObject el: variablesDefinedBefore3(model as SequenceMessage)) {
-			acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
+			//acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
 		}
 	}
 	
@@ -42,17 +42,17 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 			
 	}
 	
-	def variablesDefinedBefore(ScenarioTypeAndParticipants sc) {
-		return sc.participants		
+	def variablesDefinedBefore(Participant sc) {
+		return sc		
 		
 	}
 	def variablesDefinedBefore2(Model m) {
-		return m.scenarioType.participants		
+		return m.participants		
 		
 	}
 	
 	def variablesDefinedBefore3(SequenceMessage seq) {
-		return (seq.eContainer as Model).scenarioType.participants
+		return (seq.eContainer as Model).participants
 	}
    
 	

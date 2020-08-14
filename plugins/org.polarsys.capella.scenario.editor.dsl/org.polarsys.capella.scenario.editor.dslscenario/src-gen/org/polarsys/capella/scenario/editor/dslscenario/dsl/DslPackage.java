@@ -68,50 +68,13 @@ public interface DslPackage extends EPackage
   int MODEL = 0;
 
   /**
-   * The feature id for the '<em><b>Scenario Type</b></em>' containment reference.
+   * The feature id for the '<em><b>Begin</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL__SCENARIO_TYPE = 0;
-
-  /**
-   * The feature id for the '<em><b>Messages Or References</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL__MESSAGES_OR_REFERENCES = 1;
-
-  /**
-   * The number of structural features of the '<em>Model</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ScenarioTypeAndParticipantsImpl <em>Scenario Type And Participants</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ScenarioTypeAndParticipantsImpl
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getScenarioTypeAndParticipants()
-   * @generated
-   */
-  int SCENARIO_TYPE_AND_PARTICIPANTS = 1;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCENARIO_TYPE_AND_PARTICIPANTS__NAME = 0;
+  int MODEL__BEGIN = 0;
 
   /**
    * The feature id for the '<em><b>Participants</b></em>' containment reference list.
@@ -120,25 +83,127 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCENARIO_TYPE_AND_PARTICIPANTS__PARTICIPANTS = 1;
+  int MODEL__PARTICIPANTS = 1;
 
   /**
-   * The feature id for the '<em><b>Participant</b></em>' containment reference list.
+   * The feature id for the '<em><b>Messages Or References</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCENARIO_TYPE_AND_PARTICIPANTS__PARTICIPANT = 2;
+  int MODEL__MESSAGES_OR_REFERENCES = 2;
 
   /**
-   * The number of structural features of the '<em>Scenario Type And Participants</em>' class.
+   * The feature id for the '<em><b>End</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCENARIO_TYPE_AND_PARTICIPANTS_FEATURE_COUNT = 3;
+  int MODEL__END = 3;
+
+  /**
+   * The number of structural features of the '<em>Model</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl <em>Participant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getParticipant()
+   * @generated
+   */
+  int PARTICIPANT = 1;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTICIPANT__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Participant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTICIPANT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericComponentImpl <em>Generic Component</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericComponentImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getGenericComponent()
+   * @generated
+   */
+  int GENERIC_COMPONENT = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_COMPONENT__NAME = PARTICIPANT__NAME;
+
+  /**
+   * The number of structural features of the '<em>Generic Component</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_COMPONENT_FEATURE_COUNT = PARTICIPANT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericFunctionImpl <em>Generic Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericFunctionImpl
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getGenericFunction()
+   * @generated
+   */
+  int GENERIC_FUNCTION = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_FUNCTION__NAME = PARTICIPANT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_FUNCTION__ID = PARTICIPANT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Generic Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_FUNCTION_FEATURE_COUNT = PARTICIPANT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl <em>Actor</em>}' class.
@@ -148,7 +213,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getActor()
    * @generated
    */
-  int ACTOR = 2;
+  int ACTOR = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -157,16 +222,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTOR__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTOR__ID = 1;
+  int ACTOR__NAME = GENERIC_COMPONENT__NAME;
 
   /**
    * The number of structural features of the '<em>Actor</em>' class.
@@ -175,7 +231,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTOR_FEATURE_COUNT = 2;
+  int ACTOR_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ComponentImpl <em>Component</em>}' class.
@@ -185,7 +241,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getComponent()
    * @generated
    */
-  int COMPONENT = 3;
+  int COMPONENT = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -194,16 +250,16 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT__NAME = 0;
+  int COMPONENT__NAME = GENERIC_COMPONENT__NAME;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The feature id for the '<em><b>Nature</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMPONENT__ID = 1;
+  int COMPONENT__NATURE = GENERIC_COMPONENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Component</em>' class.
@@ -212,35 +268,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMPONENT_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.PhysicalComponentImpl <em>Physical Component</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.PhysicalComponentImpl
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getPhysicalComponent()
-   * @generated
-   */
-  int PHYSICAL_COMPONENT = 4;
-
-  /**
-   * The feature id for the '<em><b>Component</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PHYSICAL_COMPONENT__COMPONENT = 0;
-
-  /**
-   * The number of structural features of the '<em>Physical Component</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PHYSICAL_COMPONENT_FEATURE_COUNT = 1;
+  int COMPONENT_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ConfigurationItemImpl <em>Configuration Item</em>}' class.
@@ -250,7 +278,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getConfigurationItem()
    * @generated
    */
-  int CONFIGURATION_ITEM = 5;
+  int CONFIGURATION_ITEM = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -259,16 +287,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION_ITEM__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONFIGURATION_ITEM__ID = 1;
+  int CONFIGURATION_ITEM__NAME = GENERIC_COMPONENT__NAME;
 
   /**
    * The number of structural features of the '<em>Configuration Item</em>' class.
@@ -277,7 +296,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION_ITEM_FEATURE_COUNT = 2;
+  int CONFIGURATION_ITEM_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.FunctionImpl <em>Function</em>}' class.
@@ -287,7 +306,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getFunction()
    * @generated
    */
-  int FUNCTION = 6;
+  int FUNCTION = 7;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -296,7 +315,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FUNCTION__NAME = 0;
+  int FUNCTION__NAME = GENERIC_FUNCTION__NAME;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -305,7 +324,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FUNCTION__ID = 1;
+  int FUNCTION__ID = GENERIC_FUNCTION__ID;
 
   /**
    * The number of structural features of the '<em>Function</em>' class.
@@ -314,7 +333,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FUNCTION_FEATURE_COUNT = 2;
+  int FUNCTION_FEATURE_COUNT = GENERIC_FUNCTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActivityImpl <em>Activity</em>}' class.
@@ -324,7 +343,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getActivity()
    * @generated
    */
-  int ACTIVITY = 7;
+  int ACTIVITY = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -333,7 +352,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTIVITY__NAME = 0;
+  int ACTIVITY__NAME = GENERIC_FUNCTION__NAME;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -342,7 +361,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTIVITY__ID = 1;
+  int ACTIVITY__ID = GENERIC_FUNCTION__ID;
 
   /**
    * The number of structural features of the '<em>Activity</em>' class.
@@ -351,7 +370,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTIVITY_FEATURE_COUNT = 2;
+  int ACTIVITY_FEATURE_COUNT = GENERIC_FUNCTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.EntityImpl <em>Entity</em>}' class.
@@ -361,7 +380,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getEntity()
    * @generated
    */
-  int ENTITY = 8;
+  int ENTITY = 9;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -370,7 +389,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENTITY__NAME = 0;
+  int ENTITY__NAME = GENERIC_COMPONENT__NAME;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -379,7 +398,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENTITY__ID = 1;
+  int ENTITY__ID = GENERIC_COMPONENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Entity</em>' class.
@@ -388,7 +407,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENTITY_FEATURE_COUNT = 2;
+  int ENTITY_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.RoleImpl <em>Role</em>}' class.
@@ -398,7 +417,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getRole()
    * @generated
    */
-  int ROLE = 9;
+  int ROLE = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -435,7 +454,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getMessage()
    * @generated
    */
-  int MESSAGE = 10;
+  int MESSAGE = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -463,7 +482,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getSequenceMessageType()
    * @generated
    */
-  int SEQUENCE_MESSAGE_TYPE = 11;
+  int SEQUENCE_MESSAGE_TYPE = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -518,7 +537,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getSequenceMessage()
    * @generated
    */
-  int SEQUENCE_MESSAGE = 12;
+  int SEQUENCE_MESSAGE = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -573,7 +592,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getCreateMessage()
    * @generated
    */
-  int CREATE_MESSAGE = 13;
+  int CREATE_MESSAGE = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -628,7 +647,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getDeleteMessage()
    * @generated
    */
-  int DELETE_MESSAGE = 14;
+  int DELETE_MESSAGE = 15;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -683,7 +702,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getReturnMessage()
    * @generated
    */
-  int RETURN_MESSAGE = 15;
+  int RETURN_MESSAGE = 16;
 
   /**
    * The feature id for the '<em><b>Target</b></em>' attribute.
@@ -729,7 +748,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getArmTimerMessage()
    * @generated
    */
-  int ARM_TIMER_MESSAGE = 16;
+  int ARM_TIMER_MESSAGE = 17;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -766,7 +785,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getParticipantDeactivation()
    * @generated
    */
-  int PARTICIPANT_DEACTIVATION = 17;
+  int PARTICIPANT_DEACTIVATION = 18;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -794,7 +813,7 @@ public interface DslPackage extends EPackage
    * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getReference()
    * @generated
    */
-  int REFERENCE = 18;
+  int REFERENCE = 19;
 
   /**
    * The feature id for the '<em><b>Timelines</b></em>' attribute list.
@@ -835,15 +854,26 @@ public interface DslPackage extends EPackage
   EClass getModel();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getScenarioType <em>Scenario Type</em>}'.
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getBegin <em>Begin</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Scenario Type</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getScenarioType()
+   * @return the meta object for the attribute '<em>Begin</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getBegin()
    * @see #getModel()
    * @generated
    */
-  EReference getModel_ScenarioType();
+  EAttribute getModel_Begin();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getParticipants <em>Participants</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Participants</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getParticipants()
+   * @see #getModel()
+   * @generated
+   */
+  EReference getModel_Participants();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getMessagesOrReferences <em>Messages Or References</em>}'.
@@ -857,47 +887,67 @@ public interface DslPackage extends EPackage
   EReference getModel_MessagesOrReferences();
 
   /**
-   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants <em>Scenario Type And Participants</em>}'.
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getEnd <em>End</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Scenario Type And Participants</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants
+   * @return the meta object for the attribute '<em>End</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Model#getEnd()
+   * @see #getModel()
    * @generated
    */
-  EClass getScenarioTypeAndParticipants();
+  EAttribute getModel_End();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants#getName <em>Name</em>}'.
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant <em>Participant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Participant</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
+   * @generated
+   */
+  EClass getParticipant();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants#getName()
-   * @see #getScenarioTypeAndParticipants()
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getName()
+   * @see #getParticipant()
    * @generated
    */
-  EAttribute getScenarioTypeAndParticipants_Name();
+  EAttribute getParticipant_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants#getParticipants <em>Participants</em>}'.
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericComponent <em>Generic Component</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Participants</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants#getParticipants()
-   * @see #getScenarioTypeAndParticipants()
+   * @return the meta object for class '<em>Generic Component</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericComponent
    * @generated
    */
-  EReference getScenarioTypeAndParticipants_Participants();
+  EClass getGenericComponent();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants#getParticipant <em>Participant</em>}'.
+   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction <em>Generic Function</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Participant</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants#getParticipant()
-   * @see #getScenarioTypeAndParticipants()
+   * @return the meta object for class '<em>Generic Function</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction
    * @generated
    */
-  EReference getScenarioTypeAndParticipants_Participant();
+  EClass getGenericFunction();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction#getId()
+   * @see #getGenericFunction()
+   * @generated
+   */
+  EAttribute getGenericFunction_Id();
 
   /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor <em>Actor</em>}'.
@@ -910,28 +960,6 @@ public interface DslPackage extends EPackage
   EClass getActor();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor#getName()
-   * @see #getActor()
-   * @generated
-   */
-  EAttribute getActor_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor#getId()
-   * @see #getActor()
-   * @generated
-   */
-  EAttribute getActor_Id();
-
-  /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component <em>Component</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -942,47 +970,15 @@ public interface DslPackage extends EPackage
   EClass getComponent();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getNature <em>Nature</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getName()
+   * @return the meta object for the attribute '<em>Nature</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getNature()
    * @see #getComponent()
    * @generated
    */
-  EAttribute getComponent_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getId()
-   * @see #getComponent()
-   * @generated
-   */
-  EAttribute getComponent_Id();
-
-  /**
-   * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent <em>Physical Component</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Physical Component</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent
-   * @generated
-   */
-  EClass getPhysicalComponent();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent#getComponent <em>Component</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Component</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent#getComponent()
-   * @see #getPhysicalComponent()
-   * @generated
-   */
-  EReference getPhysicalComponent_Component();
+  EAttribute getComponent_Nature();
 
   /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem <em>Configuration Item</em>}'.
@@ -995,28 +991,6 @@ public interface DslPackage extends EPackage
   EClass getConfigurationItem();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem#getName()
-   * @see #getConfigurationItem()
-   * @generated
-   */
-  EAttribute getConfigurationItem_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem#getId()
-   * @see #getConfigurationItem()
-   * @generated
-   */
-  EAttribute getConfigurationItem_Id();
-
-  /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Function <em>Function</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1025,28 +999,6 @@ public interface DslPackage extends EPackage
    * @generated
    */
   EClass getFunction();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Function#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Function#getName()
-   * @see #getFunction()
-   * @generated
-   */
-  EAttribute getFunction_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Function#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Function#getId()
-   * @see #getFunction()
-   * @generated
-   */
-  EAttribute getFunction_Id();
 
   /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity <em>Activity</em>}'.
@@ -1059,28 +1011,6 @@ public interface DslPackage extends EPackage
   EClass getActivity();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity#getName()
-   * @see #getActivity()
-   * @generated
-   */
-  EAttribute getActivity_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity#getId()
-   * @see #getActivity()
-   * @generated
-   */
-  EAttribute getActivity_Id();
-
-  /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity <em>Entity</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1089,17 +1019,6 @@ public interface DslPackage extends EPackage
    * @generated
    */
   EClass getEntity();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity#getName()
-   * @see #getEntity()
-   * @generated
-   */
-  EAttribute getEntity_Name();
 
   /**
    * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity#getId <em>Id</em>}'.
@@ -1378,12 +1297,20 @@ public interface DslPackage extends EPackage
     EClass MODEL = eINSTANCE.getModel();
 
     /**
-     * The meta object literal for the '<em><b>Scenario Type</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Begin</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__SCENARIO_TYPE = eINSTANCE.getModel_ScenarioType();
+    EAttribute MODEL__BEGIN = eINSTANCE.getModel_Begin();
+
+    /**
+     * The meta object literal for the '<em><b>Participants</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODEL__PARTICIPANTS = eINSTANCE.getModel_Participants();
 
     /**
      * The meta object literal for the '<em><b>Messages Or References</b></em>' containment reference list feature.
@@ -1394,14 +1321,22 @@ public interface DslPackage extends EPackage
     EReference MODEL__MESSAGES_OR_REFERENCES = eINSTANCE.getModel_MessagesOrReferences();
 
     /**
-     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ScenarioTypeAndParticipantsImpl <em>Scenario Type And Participants</em>}' class.
+     * The meta object literal for the '<em><b>End</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ScenarioTypeAndParticipantsImpl
-     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getScenarioTypeAndParticipants()
      * @generated
      */
-    EClass SCENARIO_TYPE_AND_PARTICIPANTS = eINSTANCE.getScenarioTypeAndParticipants();
+    EAttribute MODEL__END = eINSTANCE.getModel_End();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl <em>Participant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getParticipant()
+     * @generated
+     */
+    EClass PARTICIPANT = eINSTANCE.getParticipant();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1409,23 +1344,35 @@ public interface DslPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SCENARIO_TYPE_AND_PARTICIPANTS__NAME = eINSTANCE.getScenarioTypeAndParticipants_Name();
+    EAttribute PARTICIPANT__NAME = eINSTANCE.getParticipant_Name();
 
     /**
-     * The meta object literal for the '<em><b>Participants</b></em>' containment reference list feature.
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericComponentImpl <em>Generic Component</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericComponentImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getGenericComponent()
+     * @generated
+     */
+    EClass GENERIC_COMPONENT = eINSTANCE.getGenericComponent();
+
+    /**
+     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericFunctionImpl <em>Generic Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericFunctionImpl
+     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getGenericFunction()
+     * @generated
+     */
+    EClass GENERIC_FUNCTION = eINSTANCE.getGenericFunction();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SCENARIO_TYPE_AND_PARTICIPANTS__PARTICIPANTS = eINSTANCE.getScenarioTypeAndParticipants_Participants();
-
-    /**
-     * The meta object literal for the '<em><b>Participant</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SCENARIO_TYPE_AND_PARTICIPANTS__PARTICIPANT = eINSTANCE.getScenarioTypeAndParticipants_Participant();
+    EAttribute GENERIC_FUNCTION__ID = eINSTANCE.getGenericFunction_Id();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl <em>Actor</em>}' class.
@@ -1438,22 +1385,6 @@ public interface DslPackage extends EPackage
     EClass ACTOR = eINSTANCE.getActor();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTOR__NAME = eINSTANCE.getActor_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTOR__ID = eINSTANCE.getActor_Id();
-
-    /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ComponentImpl <em>Component</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1464,38 +1395,12 @@ public interface DslPackage extends EPackage
     EClass COMPONENT = eINSTANCE.getComponent();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Nature</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMPONENT__NAME = eINSTANCE.getComponent_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute COMPONENT__ID = eINSTANCE.getComponent_Id();
-
-    /**
-     * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.PhysicalComponentImpl <em>Physical Component</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.PhysicalComponentImpl
-     * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslPackageImpl#getPhysicalComponent()
-     * @generated
-     */
-    EClass PHYSICAL_COMPONENT = eINSTANCE.getPhysicalComponent();
-
-    /**
-     * The meta object literal for the '<em><b>Component</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PHYSICAL_COMPONENT__COMPONENT = eINSTANCE.getPhysicalComponent_Component();
+    EAttribute COMPONENT__NATURE = eINSTANCE.getComponent_Nature();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ConfigurationItemImpl <em>Configuration Item</em>}' class.
@@ -1508,22 +1413,6 @@ public interface DslPackage extends EPackage
     EClass CONFIGURATION_ITEM = eINSTANCE.getConfigurationItem();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONFIGURATION_ITEM__NAME = eINSTANCE.getConfigurationItem_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONFIGURATION_ITEM__ID = eINSTANCE.getConfigurationItem_Id();
-
-    /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.FunctionImpl <em>Function</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1532,22 +1421,6 @@ public interface DslPackage extends EPackage
      * @generated
      */
     EClass FUNCTION = eINSTANCE.getFunction();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute FUNCTION__NAME = eINSTANCE.getFunction_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute FUNCTION__ID = eINSTANCE.getFunction_Id();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActivityImpl <em>Activity</em>}' class.
@@ -1560,22 +1433,6 @@ public interface DslPackage extends EPackage
     EClass ACTIVITY = eINSTANCE.getActivity();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTIVITY__NAME = eINSTANCE.getActivity_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ACTIVITY__ID = eINSTANCE.getActivity_Id();
-
-    /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.EntityImpl <em>Entity</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1584,14 +1441,6 @@ public interface DslPackage extends EPackage
      * @generated
      */
     EClass ENTITY = eINSTANCE.getEntity();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ENTITY__NAME = eINSTANCE.getEntity_Name();
 
     /**
      * The meta object literal for the '<em><b>Id</b></em>' attribute feature.

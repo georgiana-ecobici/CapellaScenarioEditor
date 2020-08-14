@@ -8,7 +8,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
@@ -21,34 +20,13 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.EntityImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.EntityImpl#getId <em>Id</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
+public class EntityImpl extends GenericComponentImpl implements Entity
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -96,31 +74,6 @@ public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
    * @generated
    */
   @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.ENTITY__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public String getId()
   {
     return id;
@@ -150,8 +103,6 @@ public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
   {
     switch (featureID)
     {
-      case DslPackage.ENTITY__NAME:
-        return getName();
       case DslPackage.ENTITY__ID:
         return getId();
     }
@@ -168,9 +119,6 @@ public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
   {
     switch (featureID)
     {
-      case DslPackage.ENTITY__NAME:
-        setName((String)newValue);
-        return;
       case DslPackage.ENTITY__ID:
         setId((String)newValue);
         return;
@@ -188,9 +136,6 @@ public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
   {
     switch (featureID)
     {
-      case DslPackage.ENTITY__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case DslPackage.ENTITY__ID:
         setId(ID_EDEFAULT);
         return;
@@ -208,8 +153,6 @@ public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
   {
     switch (featureID)
     {
-      case DslPackage.ENTITY__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case DslPackage.ENTITY__ID:
         return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
     }
@@ -227,9 +170,7 @@ public class EntityImpl extends MinimalEObjectImpl.Container implements Entity
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", id: ");
+    result.append(" (id: ");
     result.append(id);
     result.append(')');
     return result.toString();

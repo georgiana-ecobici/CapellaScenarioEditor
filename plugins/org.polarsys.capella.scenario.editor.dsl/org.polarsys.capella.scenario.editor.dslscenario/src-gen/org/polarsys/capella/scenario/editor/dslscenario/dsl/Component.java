@@ -3,7 +3,6 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.dsl;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,58 +13,35 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getName <em>Name</em>}</li>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getId <em>Id</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getNature <em>Nature</em>}</li>
  * </ul>
  *
  * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getComponent()
  * @model
  * @generated
  */
-public interface Component extends EObject
+public interface Component extends GenericComponent
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Nature</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getComponent_Name()
+   * @return the value of the '<em>Nature</em>' attribute.
+   * @see #setNature(String)
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getComponent_Nature()
    * @model
    * @generated
    */
-  String getName();
+  String getNature();
 
   /**
-   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getNature <em>Nature</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
+   * @param value the new value of the '<em>Nature</em>' attribute.
+   * @see #getNature()
    * @generated
    */
-  void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Id</em>' attribute.
-   * @see #setId(String)
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getComponent_Id()
-   * @model
-   * @generated
-   */
-  String getId();
-
-  /**
-   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Component#getId <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Id</em>' attribute.
-   * @see #getId()
-   * @generated
-   */
-  void setId(String value);
+  void setNature(String value);
 
 } // Component

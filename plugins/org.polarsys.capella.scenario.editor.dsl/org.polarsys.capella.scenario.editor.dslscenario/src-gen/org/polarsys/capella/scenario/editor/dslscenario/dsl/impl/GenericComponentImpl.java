@@ -5,24 +5,24 @@ package org.polarsys.capella.scenario.editor.dslscenario.dsl.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericComponent;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Actor</b></em>'.
+ * An implementation of the model object '<em><b>Generic Component</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class ActorImpl extends GenericComponentImpl implements Actor
+public class GenericComponentImpl extends ParticipantImpl implements GenericComponent
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ActorImpl()
+  protected GenericComponentImpl()
   {
     super();
   }
@@ -35,7 +35,7 @@ public class ActorImpl extends GenericComponentImpl implements Actor
   @Override
   protected EClass eStaticClass()
   {
-    return DslPackage.Literals.ACTOR;
+    return DslPackage.Literals.GENERIC_COMPONENT;
   }
 
-} //ActorImpl
+} //GenericComponentImpl

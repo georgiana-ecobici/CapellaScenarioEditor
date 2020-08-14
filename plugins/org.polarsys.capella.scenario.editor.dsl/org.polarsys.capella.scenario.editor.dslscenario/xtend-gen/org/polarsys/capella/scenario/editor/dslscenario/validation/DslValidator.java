@@ -5,7 +5,6 @@ package org.polarsys.capella.scenario.editor.dslscenario.validation;
 
 import org.eclipse.xtext.validation.Check;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.validation.AbstractDslValidator;
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
 
@@ -19,11 +18,13 @@ public class DslValidator extends AbstractDslValidator {
   public static final String INVALID_NAME = "invalidName";
   
   @Check
-  public void checkPartExists(final Actor actor) {
+  public Object checkPartExists(final Actor actor) {
+    Object _xifexpression = null;
     boolean _contains = EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(actor.getName());
     boolean _not = (!_contains);
     if (_not) {
-      this.error("Represented part does not exist", DslPackage.Literals.ACTOR__NAME, DslValidator.INVALID_NAME);
+      _xifexpression = null;
     }
+    return _xifexpression;
   }
 }

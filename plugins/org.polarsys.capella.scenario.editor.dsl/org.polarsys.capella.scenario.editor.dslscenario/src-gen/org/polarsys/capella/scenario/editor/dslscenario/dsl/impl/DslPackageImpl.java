@@ -21,14 +21,15 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslFactory;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericComponent;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.ReturnMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Role;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType;
 
@@ -52,7 +53,21 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass scenarioTypeAndParticipantsEClass = null;
+  private EClass participantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass genericComponentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass genericFunctionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,13 +82,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   private EClass componentEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass physicalComponentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -253,9 +261,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EReference getModel_ScenarioType()
+  public EAttribute getModel_Begin()
   {
-    return (EReference)modelEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)modelEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -264,7 +272,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EReference getModel_MessagesOrReferences()
+  public EReference getModel_Participants()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(1);
   }
@@ -275,9 +283,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EClass getScenarioTypeAndParticipants()
+  public EReference getModel_MessagesOrReferences()
   {
-    return scenarioTypeAndParticipantsEClass;
+    return (EReference)modelEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -286,9 +294,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getScenarioTypeAndParticipants_Name()
+  public EAttribute getModel_End()
   {
-    return (EAttribute)scenarioTypeAndParticipantsEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)modelEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -297,9 +305,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EReference getScenarioTypeAndParticipants_Participants()
+  public EClass getParticipant()
   {
-    return (EReference)scenarioTypeAndParticipantsEClass.getEStructuralFeatures().get(1);
+    return participantEClass;
   }
 
   /**
@@ -308,9 +316,42 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EReference getScenarioTypeAndParticipants_Participant()
+  public EAttribute getParticipant_Name()
   {
-    return (EReference)scenarioTypeAndParticipantsEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)participantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getGenericComponent()
+  {
+    return genericComponentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getGenericFunction()
+  {
+    return genericFunctionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getGenericFunction_Id()
+  {
+    return (EAttribute)genericFunctionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -330,28 +371,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getActor_Name()
-  {
-    return (EAttribute)actorEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getActor_Id()
-  {
-    return (EAttribute)actorEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getComponent()
   {
     return componentEClass;
@@ -363,42 +382,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getComponent_Name()
+  public EAttribute getComponent_Nature()
   {
     return (EAttribute)componentEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getComponent_Id()
-  {
-    return (EAttribute)componentEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getPhysicalComponent()
-  {
-    return physicalComponentEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getPhysicalComponent_Component()
-  {
-    return (EReference)physicalComponentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -418,53 +404,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getConfigurationItem_Name()
-  {
-    return (EAttribute)configurationItemEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getConfigurationItem_Id()
-  {
-    return (EAttribute)configurationItemEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getFunction()
   {
     return functionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getFunction_Name()
-  {
-    return (EAttribute)functionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getFunction_Id()
-  {
-    return (EAttribute)functionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -484,28 +426,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getActivity_Name()
-  {
-    return (EAttribute)activityEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getActivity_Id()
-  {
-    return (EAttribute)activityEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getEntity()
   {
     return entityEClass;
@@ -517,20 +437,9 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getEntity_Name()
-  {
-    return (EAttribute)entityEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getEntity_Id()
   {
-    return (EAttribute)entityEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)entityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -807,39 +716,31 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
 
     // Create classes and their features
     modelEClass = createEClass(MODEL);
-    createEReference(modelEClass, MODEL__SCENARIO_TYPE);
+    createEAttribute(modelEClass, MODEL__BEGIN);
+    createEReference(modelEClass, MODEL__PARTICIPANTS);
     createEReference(modelEClass, MODEL__MESSAGES_OR_REFERENCES);
+    createEAttribute(modelEClass, MODEL__END);
 
-    scenarioTypeAndParticipantsEClass = createEClass(SCENARIO_TYPE_AND_PARTICIPANTS);
-    createEAttribute(scenarioTypeAndParticipantsEClass, SCENARIO_TYPE_AND_PARTICIPANTS__NAME);
-    createEReference(scenarioTypeAndParticipantsEClass, SCENARIO_TYPE_AND_PARTICIPANTS__PARTICIPANTS);
-    createEReference(scenarioTypeAndParticipantsEClass, SCENARIO_TYPE_AND_PARTICIPANTS__PARTICIPANT);
+    participantEClass = createEClass(PARTICIPANT);
+    createEAttribute(participantEClass, PARTICIPANT__NAME);
+
+    genericComponentEClass = createEClass(GENERIC_COMPONENT);
+
+    genericFunctionEClass = createEClass(GENERIC_FUNCTION);
+    createEAttribute(genericFunctionEClass, GENERIC_FUNCTION__ID);
 
     actorEClass = createEClass(ACTOR);
-    createEAttribute(actorEClass, ACTOR__NAME);
-    createEAttribute(actorEClass, ACTOR__ID);
 
     componentEClass = createEClass(COMPONENT);
-    createEAttribute(componentEClass, COMPONENT__NAME);
-    createEAttribute(componentEClass, COMPONENT__ID);
-
-    physicalComponentEClass = createEClass(PHYSICAL_COMPONENT);
-    createEReference(physicalComponentEClass, PHYSICAL_COMPONENT__COMPONENT);
+    createEAttribute(componentEClass, COMPONENT__NATURE);
 
     configurationItemEClass = createEClass(CONFIGURATION_ITEM);
-    createEAttribute(configurationItemEClass, CONFIGURATION_ITEM__NAME);
-    createEAttribute(configurationItemEClass, CONFIGURATION_ITEM__ID);
 
     functionEClass = createEClass(FUNCTION);
-    createEAttribute(functionEClass, FUNCTION__NAME);
-    createEAttribute(functionEClass, FUNCTION__ID);
 
     activityEClass = createEClass(ACTIVITY);
-    createEAttribute(activityEClass, ACTIVITY__NAME);
-    createEAttribute(activityEClass, ACTIVITY__ID);
 
     entityEClass = createEClass(ENTITY);
-    createEAttribute(entityEClass, ENTITY__NAME);
     createEAttribute(entityEClass, ENTITY__ID);
 
     roleEClass = createEClass(ROLE);
@@ -904,6 +805,14 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    genericComponentEClass.getESuperTypes().add(this.getParticipant());
+    genericFunctionEClass.getESuperTypes().add(this.getParticipant());
+    actorEClass.getESuperTypes().add(this.getGenericComponent());
+    componentEClass.getESuperTypes().add(this.getGenericComponent());
+    configurationItemEClass.getESuperTypes().add(this.getGenericComponent());
+    functionEClass.getESuperTypes().add(this.getGenericFunction());
+    activityEClass.getESuperTypes().add(this.getGenericFunction());
+    entityEClass.getESuperTypes().add(this.getGenericComponent());
     sequenceMessageTypeEClass.getESuperTypes().add(this.getMessage());
     sequenceMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
     createMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
@@ -913,39 +822,31 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModel_ScenarioType(), this.getScenarioTypeAndParticipants(), null, "scenarioType", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModel_Begin(), ecorePackage.getEString(), "begin", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_Participants(), this.getParticipant(), null, "participants", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_MessagesOrReferences(), ecorePackage.getEObject(), null, "messagesOrReferences", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModel_End(), ecorePackage.getEString(), "end", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(scenarioTypeAndParticipantsEClass, ScenarioTypeAndParticipants.class, "ScenarioTypeAndParticipants", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getScenarioTypeAndParticipants_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScenarioTypeAndParticipants.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScenarioTypeAndParticipants_Participants(), ecorePackage.getEObject(), null, "participants", null, 0, -1, ScenarioTypeAndParticipants.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScenarioTypeAndParticipants_Participant(), ecorePackage.getEObject(), null, "participant", null, 0, -1, ScenarioTypeAndParticipants.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(participantEClass, Participant.class, "Participant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParticipant_Name(), ecorePackage.getEString(), "name", null, 0, 1, Participant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(genericComponentEClass, GenericComponent.class, "GenericComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(genericFunctionEClass, GenericFunction.class, "GenericFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGenericFunction_Id(), ecorePackage.getEString(), "id", null, 0, 1, GenericFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actorEClass, Actor.class, "Actor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getActor_Name(), ecorePackage.getEString(), "name", null, 0, 1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getActor_Id(), ecorePackage.getEString(), "id", null, 0, 1, Actor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentEClass, Component.class, "Component", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getComponent_Id(), ecorePackage.getEString(), "id", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(physicalComponentEClass, PhysicalComponent.class, "PhysicalComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPhysicalComponent_Component(), this.getComponent(), null, "component", null, 0, 1, PhysicalComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComponent_Nature(), ecorePackage.getEString(), "nature", null, 0, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configurationItemEClass, ConfigurationItem.class, "ConfigurationItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConfigurationItem_Name(), ecorePackage.getEString(), "name", null, 0, 1, ConfigurationItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getConfigurationItem_Id(), ecorePackage.getEString(), "id", null, 0, 1, ConfigurationItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(functionEClass, Function.class, "Function", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFunction_Id(), ecorePackage.getEString(), "id", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(activityEClass, Activity.class, "Activity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getActivity_Name(), ecorePackage.getEString(), "name", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getActivity_Id(), ecorePackage.getEString(), "id", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEntity_Name(), ecorePackage.getEString(), "name", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEntity_Id(), ecorePackage.getEString(), "id", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

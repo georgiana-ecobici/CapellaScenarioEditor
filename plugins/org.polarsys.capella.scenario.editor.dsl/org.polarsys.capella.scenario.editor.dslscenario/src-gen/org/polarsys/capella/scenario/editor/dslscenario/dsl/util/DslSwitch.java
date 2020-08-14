@@ -80,10 +80,26 @@ public class DslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case DslPackage.SCENARIO_TYPE_AND_PARTICIPANTS:
+      case DslPackage.PARTICIPANT:
       {
-        ScenarioTypeAndParticipants scenarioTypeAndParticipants = (ScenarioTypeAndParticipants)theEObject;
-        T result = caseScenarioTypeAndParticipants(scenarioTypeAndParticipants);
+        Participant participant = (Participant)theEObject;
+        T result = caseParticipant(participant);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.GENERIC_COMPONENT:
+      {
+        GenericComponent genericComponent = (GenericComponent)theEObject;
+        T result = caseGenericComponent(genericComponent);
+        if (result == null) result = caseParticipant(genericComponent);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DslPackage.GENERIC_FUNCTION:
+      {
+        GenericFunction genericFunction = (GenericFunction)theEObject;
+        T result = caseGenericFunction(genericFunction);
+        if (result == null) result = caseParticipant(genericFunction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -91,6 +107,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         Actor actor = (Actor)theEObject;
         T result = caseActor(actor);
+        if (result == null) result = caseGenericComponent(actor);
+        if (result == null) result = caseParticipant(actor);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -98,13 +116,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         Component component = (Component)theEObject;
         T result = caseComponent(component);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case DslPackage.PHYSICAL_COMPONENT:
-      {
-        PhysicalComponent physicalComponent = (PhysicalComponent)theEObject;
-        T result = casePhysicalComponent(physicalComponent);
+        if (result == null) result = caseGenericComponent(component);
+        if (result == null) result = caseParticipant(component);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -112,6 +125,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         ConfigurationItem configurationItem = (ConfigurationItem)theEObject;
         T result = caseConfigurationItem(configurationItem);
+        if (result == null) result = caseGenericComponent(configurationItem);
+        if (result == null) result = caseParticipant(configurationItem);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -119,6 +134,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         Function function = (Function)theEObject;
         T result = caseFunction(function);
+        if (result == null) result = caseGenericFunction(function);
+        if (result == null) result = caseParticipant(function);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -126,6 +143,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         Activity activity = (Activity)theEObject;
         T result = caseActivity(activity);
+        if (result == null) result = caseGenericFunction(activity);
+        if (result == null) result = caseParticipant(activity);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -133,6 +152,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         Entity entity = (Entity)theEObject;
         T result = caseEntity(entity);
+        if (result == null) result = caseGenericComponent(entity);
+        if (result == null) result = caseParticipant(entity);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -236,17 +257,49 @@ public class DslSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scenario Type And Participants</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Participant</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scenario Type And Participants</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Participant</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScenarioTypeAndParticipants(ScenarioTypeAndParticipants object)
+  public T caseParticipant(Participant object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Generic Component</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Generic Component</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenericComponent(GenericComponent object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Generic Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Generic Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseGenericFunction(GenericFunction object)
   {
     return null;
   }
@@ -279,22 +332,6 @@ public class DslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseComponent(Component object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Physical Component</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Physical Component</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePhysicalComponent(PhysicalComponent object)
   {
     return null;
   }

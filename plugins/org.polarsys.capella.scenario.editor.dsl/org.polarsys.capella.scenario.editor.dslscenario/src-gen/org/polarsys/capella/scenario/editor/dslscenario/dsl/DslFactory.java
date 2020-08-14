@@ -33,13 +33,31 @@ public interface DslFactory extends EFactory
   Model createModel();
 
   /**
-   * Returns a new object of class '<em>Scenario Type And Participants</em>'.
+   * Returns a new object of class '<em>Participant</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scenario Type And Participants</em>'.
+   * @return a new object of class '<em>Participant</em>'.
    * @generated
    */
-  ScenarioTypeAndParticipants createScenarioTypeAndParticipants();
+  Participant createParticipant();
+
+  /**
+   * Returns a new object of class '<em>Generic Component</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Generic Component</em>'.
+   * @generated
+   */
+  GenericComponent createGenericComponent();
+
+  /**
+   * Returns a new object of class '<em>Generic Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Generic Function</em>'.
+   * @generated
+   */
+  GenericFunction createGenericFunction();
 
   /**
    * Returns a new object of class '<em>Actor</em>'.
@@ -58,15 +76,6 @@ public interface DslFactory extends EFactory
    * @generated
    */
   Component createComponent();
-
-  /**
-   * Returns a new object of class '<em>Physical Component</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Physical Component</em>'.
-   * @generated
-   */
-  PhysicalComponent createPhysicalComponent();
 
   /**
    * Returns a new object of class '<em>Configuration Item</em>'.

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,8 +32,10 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParti
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getScenarioType <em>Scenario Type</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getBegin <em>Begin</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getParticipants <em>Participants</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getMessagesOrReferences <em>Messages Or References</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl#getEnd <em>End</em>}</li>
  * </ul>
  *
  * @generated
@@ -41,14 +43,34 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParti
 public class ModelImpl extends MinimalEObjectImpl.Container implements Model
 {
   /**
-   * The cached value of the '{@link #getScenarioType() <em>Scenario Type</em>}' containment reference.
+   * The default value of the '{@link #getBegin() <em>Begin</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getScenarioType()
+   * @see #getBegin()
    * @generated
    * @ordered
    */
-  protected ScenarioTypeAndParticipants scenarioType;
+  protected static final String BEGIN_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getBegin() <em>Begin</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBegin()
+   * @generated
+   * @ordered
+   */
+  protected String begin = BEGIN_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getParticipants() <em>Participants</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParticipants()
+   * @generated
+   * @ordered
+   */
+  protected EList<Participant> participants;
 
   /**
    * The cached value of the '{@link #getMessagesOrReferences() <em>Messages Or References</em>}' containment reference list.
@@ -59,6 +81,26 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @ordered
    */
   protected EList<EObject> messagesOrReferences;
+
+  /**
+   * The default value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
+  protected String end = END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -87,26 +129,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    */
   @Override
-  public ScenarioTypeAndParticipants getScenarioType()
+  public String getBegin()
   {
-    return scenarioType;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetScenarioType(ScenarioTypeAndParticipants newScenarioType, NotificationChain msgs)
-  {
-    ScenarioTypeAndParticipants oldScenarioType = scenarioType;
-    scenarioType = newScenarioType;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DslPackage.MODEL__SCENARIO_TYPE, oldScenarioType, newScenarioType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+    return begin;
   }
 
   /**
@@ -115,20 +140,27 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    */
   @Override
-  public void setScenarioType(ScenarioTypeAndParticipants newScenarioType)
+  public void setBegin(String newBegin)
   {
-    if (newScenarioType != scenarioType)
+    String oldBegin = begin;
+    begin = newBegin;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.MODEL__BEGIN, oldBegin, begin));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Participant> getParticipants()
+  {
+    if (participants == null)
     {
-      NotificationChain msgs = null;
-      if (scenarioType != null)
-        msgs = ((InternalEObject)scenarioType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DslPackage.MODEL__SCENARIO_TYPE, null, msgs);
-      if (newScenarioType != null)
-        msgs = ((InternalEObject)newScenarioType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DslPackage.MODEL__SCENARIO_TYPE, null, msgs);
-      msgs = basicSetScenarioType(newScenarioType, msgs);
-      if (msgs != null) msgs.dispatch();
+      participants = new EObjectContainmentEList<Participant>(Participant.class, this, DslPackage.MODEL__PARTICIPANTS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.MODEL__SCENARIO_TYPE, newScenarioType, newScenarioType));
+    return participants;
   }
 
   /**
@@ -152,12 +184,37 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    */
   @Override
+  public String getEnd()
+  {
+    return end;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setEnd(String newEnd)
+  {
+    String oldEnd = end;
+    end = newEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.MODEL__END, oldEnd, end));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
-      case DslPackage.MODEL__SCENARIO_TYPE:
-        return basicSetScenarioType(null, msgs);
+      case DslPackage.MODEL__PARTICIPANTS:
+        return ((InternalEList<?>)getParticipants()).basicRemove(otherEnd, msgs);
       case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
         return ((InternalEList<?>)getMessagesOrReferences()).basicRemove(otherEnd, msgs);
     }
@@ -174,10 +231,14 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case DslPackage.MODEL__SCENARIO_TYPE:
-        return getScenarioType();
+      case DslPackage.MODEL__BEGIN:
+        return getBegin();
+      case DslPackage.MODEL__PARTICIPANTS:
+        return getParticipants();
       case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
         return getMessagesOrReferences();
+      case DslPackage.MODEL__END:
+        return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -193,12 +254,19 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case DslPackage.MODEL__SCENARIO_TYPE:
-        setScenarioType((ScenarioTypeAndParticipants)newValue);
+      case DslPackage.MODEL__BEGIN:
+        setBegin((String)newValue);
+        return;
+      case DslPackage.MODEL__PARTICIPANTS:
+        getParticipants().clear();
+        getParticipants().addAll((Collection<? extends Participant>)newValue);
         return;
       case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
         getMessagesOrReferences().clear();
         getMessagesOrReferences().addAll((Collection<? extends EObject>)newValue);
+        return;
+      case DslPackage.MODEL__END:
+        setEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -214,11 +282,17 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case DslPackage.MODEL__SCENARIO_TYPE:
-        setScenarioType((ScenarioTypeAndParticipants)null);
+      case DslPackage.MODEL__BEGIN:
+        setBegin(BEGIN_EDEFAULT);
+        return;
+      case DslPackage.MODEL__PARTICIPANTS:
+        getParticipants().clear();
         return;
       case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
         getMessagesOrReferences().clear();
+        return;
+      case DslPackage.MODEL__END:
+        setEnd(END_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -234,12 +308,35 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case DslPackage.MODEL__SCENARIO_TYPE:
-        return scenarioType != null;
+      case DslPackage.MODEL__BEGIN:
+        return BEGIN_EDEFAULT == null ? begin != null : !BEGIN_EDEFAULT.equals(begin);
+      case DslPackage.MODEL__PARTICIPANTS:
+        return participants != null && !participants.isEmpty();
       case DslPackage.MODEL__MESSAGES_OR_REFERENCES:
         return messagesOrReferences != null && !messagesOrReferences.isEmpty();
+      case DslPackage.MODEL__END:
+        return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (begin: ");
+    result.append(begin);
+    result.append(", end: ");
+    result.append(end);
+    result.append(')');
+    return result.toString();
   }
 
 } //ModelImpl
