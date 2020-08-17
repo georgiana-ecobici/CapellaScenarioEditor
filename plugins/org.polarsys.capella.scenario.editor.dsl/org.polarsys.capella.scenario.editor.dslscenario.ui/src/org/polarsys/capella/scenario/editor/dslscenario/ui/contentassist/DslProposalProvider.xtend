@@ -18,6 +18,7 @@ import com.google.common.collect.Sets
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.Keyword
 import org.eclipse.jface.text.contentassist.ICompletionProposal
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
 
 /**
  * This class is used to display auto-complete proposals when pressing ctrl+space
@@ -38,67 +39,43 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		}
 	}
 
-//	override void completeModel_Participants(EObject model, Assignment assignment, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		acceptor.accept(createCompletionProposal("test1", "test1", null, context));
-//	}
-//
-//	override complete_Participant(EObject model, RuleCall ruleCall, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		acceptor.accept(createCompletionProposal("test2", "test2", null, context));
-//
-//	}
-//
-//	override void complete_GenericComponent(EObject model, RuleCall ruleCall, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		// subclasses may override
-//		acceptor.accept(createCompletionProposal("test3", "test3", null, context));
-//	}
-//
-//	override void complete_Component(EObject model, RuleCall ruleCall, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		// subclasses may override
-//		acceptor.accept(createCompletionProposal("test4", "test4", null, context));
-//	}
-//
-//	override completeActor_Name(EObject model, Assignment assignment, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		for (String el : getPropose()) {
-//			acceptor.accept(createCompletionProposal(el, el, null, context));
-//		}
-//	}
-//
-//	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		for (EObject el : variablesDefinedBefore2(model as Model)) {
-//			// acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
-//		}
-//	}
-//
-//	override completeSequenceMessage_Target(EObject model, Assignment assignment, ContentAssistContext context,
-//		ICompletionProposalAcceptor acceptor) {
-//		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
-//			// acceptor.accept(createCompletionProposal((el as Actor).id, (el as Actor).id, null, context))
-//		}
-//	}
-//
-//	def getPropose() {
-//		return Arrays.asList("Hello", "World!", "How", "Are", "You")
-//
-//	}
-//
-//	def variablesDefinedBefore(Participant sc) {
-//		return sc
-//
-//	}
-//
-//	def variablesDefinedBefore2(Model m) {
-//		return m.participants
-//
-//	}
-//
-//	def variablesDefinedBefore3(SequenceMessage seq) {
-//		return (seq.eContainer as Model).participants
-//	}
+	override completeActor_Name(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		for (String el : getPropose()) {
+			acceptor.accept(createCompletionProposal(el, el, null, context));
+		}
+	}
 
+	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		for (EObject el : variablesDefinedBefore2(model as Model)) {
+			acceptor.accept(createCompletionProposal((el as Actor).name, (el as Actor).name, null, context))
+		}
+	}
+
+	override completeSequenceMessage_Target(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
+			acceptor.accept(createCompletionProposal((el as Actor).name, (el as Actor).name, null, context))
+		}
+	}
+
+	def getPropose() {
+		return Arrays.asList("Hello", "World!", "How", "Are", "You")
+
+	}
+
+	def variablesDefinedBefore(Participant sc) {
+		return sc
+
+	}
+
+	def variablesDefinedBefore2(Model m) {
+		return m.participants
+
+	}
+
+	def variablesDefinedBefore3(SequenceMessage seq) {
+		return (seq.eContainer as Model).participants
+	}
 }

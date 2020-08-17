@@ -17,11 +17,18 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.polarsys.capella.core.data.cs.BlockArchitecture;
 import org.polarsys.capella.core.data.cs.Part;
+import org.polarsys.capella.core.data.ctx.SystemAnalysis;
+import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.ScenarioKind;
+import org.polarsys.capella.core.data.la.LogicalArchitecture;
+import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
+import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
+import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 
 public class EmbeddedEditorInstanceHelper {
@@ -57,13 +64,58 @@ public class EmbeddedEditorInstanceHelper {
     return instanceRole;
   }
 
-  /*
-   * IS
+  /**
+   * helper function that validates that a keyword typed in a text scenario is valid, based on scenario type and
+   * architecture level
+   * 
+   * @param keyword
+   * @return boolean
+   *
    */
   public static boolean checkValidKeyword(String keyword) {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
-    if (currentScenario.getKind() == ScenarioKind.INTERFACE) {
+    BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(currentScenario);
 
+    if (currentScenario.getKind() == ScenarioKind.INTERACTION) {
+      if (SequenceDiagramServices.isValidEntityScenario(currentScenario)) {
+        return keyword.equals("entity") || keyword.equals("actor") || keyword.equals("role");
+      }
+      if (SequenceDiagramServices.isValidActivityScenario(currentScenario)) {
+        return keyword.equals("activity");
+      }
+    }
+    if (currentScenario.getKind() == ScenarioKind.INTERFACE) {
+      if (blockArchitecture instanceof SystemAnalysis) {
+        return keyword.equals("actor");
+      }
+      if (blockArchitecture instanceof LogicalArchitecture) {
+        return keyword.equals("actor") || keyword.equals("component");
+      }
+      if (blockArchitecture instanceof PhysicalArchitecture) {
+        return keyword.equals("actor") || keyword.equals("component");
+      }
+      if (blockArchitecture instanceof EPBSArchitecture) {
+        return keyword.equals("configuration_item");
+      }
+    }
+    // FS Scenarios
+    if (currentScenario.getKind() == ScenarioKind.FUNCTIONAL) {
+      if (blockArchitecture instanceof SystemAnalysis || blockArchitecture instanceof LogicalArchitecture
+          || blockArchitecture instanceof PhysicalArchitecture) {
+        return keyword.equals("function");
+      }
+    }
+    // ES scenarios
+    if (currentScenario.getKind() == ScenarioKind.DATA_FLOW) {
+      if (blockArchitecture instanceof SystemAnalysis) {
+        return keyword.equals("actor");
+      }
+      if (blockArchitecture instanceof LogicalArchitecture) {
+        return keyword.equals("actor") || keyword.equals("component");
+      }
+      if (blockArchitecture instanceof PhysicalArchitecture) {
+        return keyword.equals("actor") || keyword.equals("component");
+      }
     }
     return false;
   }

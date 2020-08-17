@@ -71,7 +71,6 @@ public class DslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getActivityAccess().getNameAssignment_1(), "rule__Activity__NameAssignment_1");
 			builder.put(grammarAccess.getEntityAccess().getKeywordAssignment_0(), "rule__Entity__KeywordAssignment_0");
 			builder.put(grammarAccess.getEntityAccess().getNameAssignment_1(), "rule__Entity__NameAssignment_1");
-			builder.put(grammarAccess.getEntityAccess().getIdAssignment_3(), "rule__Entity__IdAssignment_3");
 			builder.put(grammarAccess.getRoleAccess().getKeywordAssignment_0(), "rule__Role__KeywordAssignment_0");
 			builder.put(grammarAccess.getRoleAccess().getNameAssignment_1(), "rule__Role__NameAssignment_1");
 			builder.put(grammarAccess.getSequenceMessageTypeAccess().getReturnAssignment_1(), "rule__SequenceMessageType__ReturnAssignment_1");

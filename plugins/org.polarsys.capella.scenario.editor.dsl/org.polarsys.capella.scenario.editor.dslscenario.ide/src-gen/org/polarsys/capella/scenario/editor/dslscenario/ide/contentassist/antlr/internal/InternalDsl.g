@@ -1197,7 +1197,6 @@ rule__Entity__Group__1
 	}
 :
 	rule__Entity__Group__1__Impl
-	rule__Entity__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -1212,59 +1211,6 @@ rule__Entity__Group__1__Impl
 	{ before(grammarAccess.getEntityAccess().getNameAssignment_1()); }
 	(rule__Entity__NameAssignment_1)
 	{ after(grammarAccess.getEntityAccess().getNameAssignment_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entity__Group__2
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__Entity__Group__2__Impl
-	rule__Entity__Group__3
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entity__Group__2__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getEntityAccess().getAsKeyword_2()); }
-	'as'
-	{ after(grammarAccess.getEntityAccess().getAsKeyword_2()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entity__Group__3
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__Entity__Group__3__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entity__Group__3__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getEntityAccess().getIdAssignment_3()); }
-	(rule__Entity__IdAssignment_3)
-	{ after(grammarAccess.getEntityAccess().getIdAssignment_3()); }
 )
 ;
 finally {
@@ -2478,21 +2424,6 @@ rule__Entity__NameAssignment_1
 		{ before(grammarAccess.getEntityAccess().getNameSTRINGTerminalRuleCall_1_0()); }
 		RULE_STRING
 		{ after(grammarAccess.getEntityAccess().getNameSTRINGTerminalRuleCall_1_0()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__Entity__IdAssignment_3
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getEntityAccess().getIdIDTerminalRuleCall_3_0()); }
-		RULE_ID
-		{ after(grammarAccess.getEntityAccess().getIdIDTerminalRuleCall_3_0()); }
 	)
 ;
 finally {

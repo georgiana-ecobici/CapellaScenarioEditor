@@ -40,7 +40,7 @@ Activity:
 ;  
 
 Entity:
-	keyword = 'entity' name=STRING 'as' id=ID
+	keyword = 'entity' name=STRING
 ;
 
 Role: 

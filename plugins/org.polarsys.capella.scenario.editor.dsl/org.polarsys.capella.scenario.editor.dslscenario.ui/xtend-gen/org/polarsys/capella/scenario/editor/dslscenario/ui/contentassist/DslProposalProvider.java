@@ -3,10 +3,19 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist;
 
+import java.util.Arrays;
+import java.util.List;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist.AbstractDslProposalProvider;
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
 
@@ -28,5 +37,46 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
       this.getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
       acceptor.accept(proposal);
     }
+  }
+  
+  @Override
+  public void completeActor_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    List<String> _propose = this.getPropose();
+    for (final String el : _propose) {
+      acceptor.accept(this.createCompletionProposal(el, el, null, context));
+    }
+  }
+  
+  @Override
+  public void completeSequenceMessage_Source(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    EList<Participant> _variablesDefinedBefore2 = this.variablesDefinedBefore2(((Model) model));
+    for (final EObject el : _variablesDefinedBefore2) {
+      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
+    }
+  }
+  
+  @Override
+  public void completeSequenceMessage_Target(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    EList<Participant> _variablesDefinedBefore3 = this.variablesDefinedBefore3(((SequenceMessage) model));
+    for (final EObject el : _variablesDefinedBefore3) {
+      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
+    }
+  }
+  
+  public List<String> getPropose() {
+    return Arrays.<String>asList("Hello", "World!", "How", "Are", "You");
+  }
+  
+  public Participant variablesDefinedBefore(final Participant sc) {
+    return sc;
+  }
+  
+  public EList<Participant> variablesDefinedBefore2(final Model m) {
+    return m.getParticipants();
+  }
+  
+  public EList<Participant> variablesDefinedBefore3(final SequenceMessage seq) {
+    EObject _eContainer = seq.eContainer();
+    return ((Model) _eContainer).getParticipants();
   }
 }
