@@ -446,22 +446,13 @@ public interface DslPackage extends EPackage
   int ENTITY__NAME = GENERIC_COMPONENT__NAME;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTITY__ID = GENERIC_COMPONENT_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Entity</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ENTITY_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 1;
+  int ENTITY_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.RoleImpl <em>Role</em>}' class.
@@ -1093,17 +1084,6 @@ public interface DslPackage extends EPackage
   EClass getEntity();
 
   /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity#getId()
-   * @see #getEntity()
-   * @generated
-   */
-  EAttribute getEntity_Id();
-
-  /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Role <em>Role</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1513,14 +1493,6 @@ public interface DslPackage extends EPackage
      * @generated
      */
     EClass ENTITY = eINSTANCE.getEntity();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ENTITY__ID = eINSTANCE.getEntity_Id();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.RoleImpl <em>Role</em>}' class.

@@ -25,9 +25,7 @@
     <genClasses ecoreClass="Dsl.ecore#//ConfigurationItem"/>
     <genClasses ecoreClass="Dsl.ecore#//Function"/>
     <genClasses ecoreClass="Dsl.ecore#//Activity"/>
-    <genClasses ecoreClass="Dsl.ecore#//Entity">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Entity/id"/>
-    </genClasses>
+    <genClasses ecoreClass="Dsl.ecore#//Entity"/>
     <genClasses ecoreClass="Dsl.ecore#//Role"/>
     <genClasses ecoreClass="Dsl.ecore#//Message">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Message/name"/>

@@ -7,6 +7,7 @@ import org.eclipse.xtext.validation.Check
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 
 /**
  * This class contains custom validation rules. 
@@ -16,11 +17,19 @@ import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 class DslValidator extends AbstractDslValidator {
 
 	public static val INVALID_NAME = 'invalidName'
-	
+
 	@Check
-	def checkPartExists(Actor actor) {
-		if (!EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(actor.name)) {
-			//error('Represented part does not exist', actor.name, INVALID_NAME)
+	def checkPartExists(Participant participant) {
+		if (!EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(participant.name)) {
+			error('Represented part does not exist', DslPackage.Literals.PARTICIPANT__NAME, INVALID_NAME)
+		}
+	}
+
+	@Check
+	def checkParticipantKeywordIsValid(Participant participant) {
+		if (!EmbeddedEditorInstanceHelper.checkValidKeyword(participant.keyword)) {
+			error('\'' +participant.keyword + '\' could not be used in this diagram',
+				DslPackage.Literals.PARTICIPANT__KEYWORD)
 		}
 	}
 }

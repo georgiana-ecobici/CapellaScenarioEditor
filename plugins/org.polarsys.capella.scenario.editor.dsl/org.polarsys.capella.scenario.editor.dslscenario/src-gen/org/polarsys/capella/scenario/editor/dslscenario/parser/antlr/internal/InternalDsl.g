@@ -643,28 +643,6 @@ ruleEntity returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2='as'
-		{
-			newLeafNode(otherlv_2, grammarAccess.getEntityAccess().getAsKeyword_2());
-		}
-		(
-			(
-				lv_id_3_0=RULE_ID
-				{
-					newLeafNode(lv_id_3_0, grammarAccess.getEntityAccess().getIdIDTerminalRuleCall_3_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getEntityRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"id",
-						lv_id_3_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
-			)
-		)
 	)
 ;
 

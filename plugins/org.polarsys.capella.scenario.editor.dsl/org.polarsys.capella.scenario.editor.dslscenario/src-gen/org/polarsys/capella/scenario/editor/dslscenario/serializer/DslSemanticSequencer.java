@@ -306,7 +306,7 @@ public class DslSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Entity returns Entity
 	 *
 	 * Constraint:
-	 *     (keyword='entity' name=STRING id=ID)
+	 *     (keyword='entity' name=STRING)
 	 */
 	protected void sequence_Entity(ISerializationContext context, Entity semanticObject) {
 		if (errorAcceptor != null) {
@@ -314,13 +314,10 @@ public class DslSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DslPackage.Literals.PARTICIPANT__KEYWORD));
 			if (transientValues.isValueTransient(semanticObject, DslPackage.Literals.PARTICIPANT__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DslPackage.Literals.PARTICIPANT__NAME));
-			if (transientValues.isValueTransient(semanticObject, DslPackage.Literals.ENTITY__ID) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DslPackage.Literals.ENTITY__ID));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getEntityAccess().getKeywordEntityKeyword_0_0(), semanticObject.getKeyword());
 		feeder.accept(grammarAccess.getEntityAccess().getNameSTRINGTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getEntityAccess().getIdIDTerminalRuleCall_3_0(), semanticObject.getId());
 		feeder.finish();
 	}
 	

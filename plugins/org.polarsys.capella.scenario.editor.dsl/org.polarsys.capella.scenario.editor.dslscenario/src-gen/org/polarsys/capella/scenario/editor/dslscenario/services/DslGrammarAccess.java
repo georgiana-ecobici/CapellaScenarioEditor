@@ -310,15 +310,12 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cKeywordEntityKeyword_0_0 = (Keyword)cKeywordAssignment_0.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cAsKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cIdIDTerminalRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
 		
 		//Entity:
-		//	keyword='entity' name=STRING 'as' id=ID;
+		//	keyword='entity' name=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//keyword='entity' name=STRING 'as' id=ID
+		//keyword='entity' name=STRING
 		public Group getGroup() { return cGroup; }
 		
 		//keyword='entity'
@@ -332,15 +329,6 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
-		
-		//'as'
-		public Keyword getAsKeyword_2() { return cAsKeyword_2; }
-		
-		//id=ID
-		public Assignment getIdAssignment_3() { return cIdAssignment_3; }
-		
-		//ID
-		public RuleCall getIdIDTerminalRuleCall_3_0() { return cIdIDTerminalRuleCall_3_0; }
 	}
 	public class RoleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.Role");
@@ -874,7 +862,7 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Entity:
-	//	keyword='entity' name=STRING 'as' id=ID;
+	//	keyword='entity' name=STRING;
 	public EntityElements getEntityAccess() {
 		return pEntity;
 	}

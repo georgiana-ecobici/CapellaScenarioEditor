@@ -93,10 +93,7 @@ public class XtextEditorCommands {
       EList<EObject> messages = domainModel.getMessagesOrReferences();
 
       // Project project;
-      BlockArchitecture blockArchitecture;
-      // project = ProjectExt.getProject(scenario);
-      blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(scenario); // getBlockArchitecture(Type.SA,
-                                                                                   // project);
+      BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(scenario);
 
       doEditingOnActors(scenario, blockArchitecture, actors);
 
@@ -425,7 +422,7 @@ public class XtextEditorCommands {
     Role role = factory.createRole();
     role.setName(name);
     role.setKeyword("role");
-    // participants.add(role);
+    participants.add(role);
   }
 
   private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {

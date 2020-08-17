@@ -23,9 +23,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ConfigurationItem" eSuperTypes="#//GenericComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//GenericFunction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Activity" eSuperTypes="#//GenericFunction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//GenericComponent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//GenericComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="Role" eSuperTypes="#//GenericComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="Message">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
