@@ -21,6 +21,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ParticipantImpl#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -28,6 +29,26 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
  */
 public class ParticipantImpl extends MinimalEObjectImpl.Container implements Participant
 {
+  /**
+   * The default value of the '{@link #getKeyword() <em>Keyword</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKeyword()
+   * @generated
+   * @ordered
+   */
+  protected static final String KEYWORD_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKeyword()
+   * @generated
+   * @ordered
+   */
+  protected String keyword = KEYWORD_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -75,6 +96,31 @@ public class ParticipantImpl extends MinimalEObjectImpl.Container implements Par
    * @generated
    */
   @Override
+  public String getKeyword()
+  {
+    return keyword;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setKeyword(String newKeyword)
+  {
+    String oldKeyword = keyword;
+    keyword = newKeyword;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.PARTICIPANT__KEYWORD, oldKeyword, keyword));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getName()
   {
     return name;
@@ -104,6 +150,8 @@ public class ParticipantImpl extends MinimalEObjectImpl.Container implements Par
   {
     switch (featureID)
     {
+      case DslPackage.PARTICIPANT__KEYWORD:
+        return getKeyword();
       case DslPackage.PARTICIPANT__NAME:
         return getName();
     }
@@ -120,6 +168,9 @@ public class ParticipantImpl extends MinimalEObjectImpl.Container implements Par
   {
     switch (featureID)
     {
+      case DslPackage.PARTICIPANT__KEYWORD:
+        setKeyword((String)newValue);
+        return;
       case DslPackage.PARTICIPANT__NAME:
         setName((String)newValue);
         return;
@@ -137,6 +188,9 @@ public class ParticipantImpl extends MinimalEObjectImpl.Container implements Par
   {
     switch (featureID)
     {
+      case DslPackage.PARTICIPANT__KEYWORD:
+        setKeyword(KEYWORD_EDEFAULT);
+        return;
       case DslPackage.PARTICIPANT__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -154,6 +208,8 @@ public class ParticipantImpl extends MinimalEObjectImpl.Container implements Par
   {
     switch (featureID)
     {
+      case DslPackage.PARTICIPANT__KEYWORD:
+        return KEYWORD_EDEFAULT == null ? keyword != null : !KEYWORD_EDEFAULT.equals(keyword);
       case DslPackage.PARTICIPANT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
@@ -171,7 +227,9 @@ public class ParticipantImpl extends MinimalEObjectImpl.Container implements Par
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (keyword: ");
+    result.append(keyword);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

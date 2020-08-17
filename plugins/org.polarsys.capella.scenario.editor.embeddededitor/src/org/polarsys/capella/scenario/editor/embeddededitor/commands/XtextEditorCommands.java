@@ -104,7 +104,8 @@ public class XtextEditorCommands {
     }
   }
 
-  private static void doEditingOnActors(Scenario scenario, BlockArchitecture blockArchitecture, EList<Participant> actors) {
+  private static void doEditingOnActors(Scenario scenario, BlockArchitecture blockArchitecture,
+      EList<Participant> actors) {
     // Make sure your element is attached to a resource, otherwise this will return null
     TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(scenario);
     domain.getCommandStack().execute(new RecordingCommand(domain) {
@@ -173,7 +174,7 @@ public class XtextEditorCommands {
               instance = components.get(0);
             }
 
-            Part part = (Part) instance.getRepresentingParts().get(0);
+            Part part = instance.getRepresentingParts().get(0);
             instanceRole.setRepresentedInstance(part);
 
             instanceRoles.add(instanceRole);
@@ -285,7 +286,7 @@ public class XtextEditorCommands {
 
       DslFactory factory = new DslFactoryImpl();
       Model domainModel = getModel(embeddedEditorViewPart, factory, scenario.getName());
-      //domainModel.getScenarioType().setName(scenario.getName());
+      // domainModel.getScenarioType().setName(scenario.getName());
       clearModel(domainModel);
 
       // Generate Participants
@@ -305,7 +306,7 @@ public class XtextEditorCommands {
     // get all instance roles (actors) from diagram
     EList<InstanceRole> instanceRoleList = scenario.getOwnedInstanceRoles();
 
-    //ScenarioTypeAndParticipants type = domainModel.getScenarioType();
+    // ScenarioTypeAndParticipants type = domainModel.getScenarioType();
 
     // get all participants/actors from editor
     EList<Participant> participants = domainModel.getParticipants();
@@ -380,28 +381,28 @@ public class XtextEditorCommands {
   private static void addActor(String name, String id, EList<Participant> participants, DslFactory factory) {
     Actor actor = factory.createActor();
     actor.setName(name);
-    //actor.setId(id);
+    actor.setKeyword("actor");
     participants.add(actor);
   }
 
   private static void addActivity(String name, String id, EList<Participant> participants, DslFactory factory) {
     Activity activity = factory.createActivity();
     activity.setName(name);
-    activity.setId(id);
+    activity.setKeyword("activity");
     participants.add(activity);
   }
 
   private static void addComponent(String name, String id, EList<Participant> participants, DslFactory factory) {
     org.polarsys.capella.scenario.editor.dslscenario.dsl.Component component = factory.createComponent();
     component.setName(name);
-   // component.setId(id);
+    component.setKeyword("component");
     participants.add(component);
   }
 
   private static void addEntity(String name, String id, EList<Participant> participants, DslFactory factory) {
     Entity entity = factory.createEntity();
     entity.setName(name);
-   // entity.setId(id);
+    entity.setKeyword("entity");
     participants.add(entity);
   }
 
@@ -409,22 +410,22 @@ public class XtextEditorCommands {
     org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem configItem = factory
         .createConfigurationItem();
     configItem.setName(name);
-    //configItem.setId(id);
+    configItem.setKeyword("configuration_item");
     participants.add(configItem);
   }
 
   private static void addFunction(String name, String id, EList<Participant> participants, DslFactory factory) {
     Function function = factory.createFunction();
     function.setName(name);
-    function.setId(id);
+    function.setKeyword("function");
     participants.add(function);
   }
 
   private static void addRole(String name, String id, EList<Participant> participants, DslFactory factory) {
     Role role = factory.createRole();
     role.setName(name);
-    role.setId(id);
-    //participants.add(role);
+    role.setKeyword("role");
+    // participants.add(role);
   }
 
   private static void generateSequenceMessages(Model domainModel, Scenario scenario, DslFactory factory) {
@@ -530,13 +531,13 @@ public class XtextEditorCommands {
       domainModel = (Model) resource.getContents().get(0);
     } else {
       domainModel = factory.createModel();
-//      ScenarioTypeAndParticipants scenarioType = factory.createScenarioTypeAndParticipants();
-//      scenarioType.setName(scenarioName);
-//      domainModel.setScenarioType(scenarioType);
+      // ScenarioTypeAndParticipants scenarioType = factory.createScenarioTypeAndParticipants();
+      // scenarioType.setName(scenarioName);
+      // domainModel.setScenarioType(scenarioType);
     }
     domainModel.setBegin("{");
     domainModel.setEnd("}");
-    
+
     return domainModel;
   }
 

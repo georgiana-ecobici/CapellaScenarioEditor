@@ -7,11 +7,10 @@ import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessageType
 import org.polarsys.capella.scenario.editor.dslscenario.services.DslGrammarAccess
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message
 
 class DslFormatter extends AbstractFormatter2 {
 	
@@ -24,20 +23,19 @@ class DslFormatter extends AbstractFormatter2 {
 		begin.append[newLine]
 		interior(begin, end)[indent]
 		
+		// call formatting function for each participant and message or references
 		model.participants.forEach[ element | element.format ]
 		model.messagesOrReferences.forEach[ element | element.format ]
 	}
 
-	def dispatch void format(SequenceMessage message, extension IFormattableDocument document) {
-		// each sequence messages definition on a separate line
+	def dispatch void format(Message message, extension IFormattableDocument document) {
+		// each messages definition on a separate line
 		message.regionFor.feature(DslPackage.Literals.MESSAGE__NAME).append[newLine]
 	}
 
 	def dispatch void format(Participant participant, extension IFormattableDocument document) {
+		// each participant definition on a separate line
 		val p = participant.regionFor.feature(DslPackage.Literals.PARTICIPANT__NAME)
 		participant.regionFor.feature(DslPackage.Literals.PARTICIPANT__NAME).append[newLine]
 	}
-	
-	
-	// TODO: implement for 
 }

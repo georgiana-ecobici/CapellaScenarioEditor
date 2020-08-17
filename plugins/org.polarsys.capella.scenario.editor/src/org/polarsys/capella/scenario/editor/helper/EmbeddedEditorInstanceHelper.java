@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
+import org.polarsys.capella.core.data.interaction.ScenarioKind;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 
@@ -47,12 +48,23 @@ public class EmbeddedEditorInstanceHelper {
     EList<InstanceRole> instanceRoles = getAvailableInstanceRoles();
     InstanceRole instanceRole = null;
     for (Iterator<InstanceRole> iterator = instanceRoles.iterator(); iterator.hasNext();) {
-      InstanceRole role = (InstanceRole) iterator.next();
+      InstanceRole role = iterator.next();
       if (role.getName().equals(source)) {
         instanceRole = role;
-        break; 
+        break;
       }
     }
     return instanceRole;
+  }
+
+  /*
+   * IS
+   */
+  public static boolean checkValidKeyword(String keyword) {
+    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
+    if (currentScenario.getKind() == ScenarioKind.INTERFACE) {
+
+    }
+    return false;
   }
 }

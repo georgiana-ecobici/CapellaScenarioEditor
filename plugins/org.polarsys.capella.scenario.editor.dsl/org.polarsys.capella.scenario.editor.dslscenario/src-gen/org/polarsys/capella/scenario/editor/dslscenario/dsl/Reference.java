@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getTimelines <em>Timelines</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getName <em>Name</em>}</li>
  * </ul>
@@ -26,6 +27,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Reference extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Keyword</em>' attribute.
+   * @see #setKeyword(String)
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getReference_Keyword()
+   * @model
+   * @generated
+   */
+  String getKeyword();
+
+  /**
+   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getKeyword <em>Keyword</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Keyword</em>' attribute.
+   * @see #getKeyword()
+   * @generated
+   */
+  void setKeyword(String value);
+
   /**
    * Returns the value of the '<em><b>Timelines</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.

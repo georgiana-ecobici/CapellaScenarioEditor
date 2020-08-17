@@ -13,12 +13,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Model/end"/>
     </genClasses>
     <genClasses ecoreClass="Dsl.ecore#//Participant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Participant/keyword"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Participant/name"/>
     </genClasses>
     <genClasses ecoreClass="Dsl.ecore#//GenericComponent"/>
-    <genClasses ecoreClass="Dsl.ecore#//GenericFunction">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//GenericFunction/id"/>
-    </genClasses>
+    <genClasses ecoreClass="Dsl.ecore#//GenericFunction"/>
     <genClasses ecoreClass="Dsl.ecore#//Actor"/>
     <genClasses ecoreClass="Dsl.ecore#//Component">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Component/nature"/>
@@ -29,10 +28,7 @@
     <genClasses ecoreClass="Dsl.ecore#//Entity">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Entity/id"/>
     </genClasses>
-    <genClasses ecoreClass="Dsl.ecore#//Role">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Role/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Role/id"/>
-    </genClasses>
+    <genClasses ecoreClass="Dsl.ecore#//Role"/>
     <genClasses ecoreClass="Dsl.ecore#//Message">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Message/name"/>
     </genClasses>
@@ -52,8 +48,11 @@
     <genClasses ecoreClass="Dsl.ecore#//ArmTimerMessage">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//ArmTimerMessage/participant"/>
     </genClasses>
-    <genClasses ecoreClass="Dsl.ecore#//ParticipantDeactivation"/>
+    <genClasses ecoreClass="Dsl.ecore#//ParticipantDeactivation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//ParticipantDeactivation/keyword"/>
+    </genClasses>
     <genClasses ecoreClass="Dsl.ecore#//Reference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Reference/keyword"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Reference/timelines"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Dsl.ecore#//Reference/name"/>
     </genClasses>

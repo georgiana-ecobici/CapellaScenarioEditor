@@ -316,9 +316,20 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getParticipant_Name()
+  public EAttribute getParticipant_Keyword()
   {
     return (EAttribute)participantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getParticipant_Name()
+  {
+    return (EAttribute)participantEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -341,17 +352,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
   public EClass getGenericFunction()
   {
     return genericFunctionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getGenericFunction_Id()
-  {
-    return (EAttribute)genericFunctionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -451,28 +451,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
   public EClass getRole()
   {
     return roleEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getRole_Name()
-  {
-    return (EAttribute)roleEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getRole_Id()
-  {
-    return (EAttribute)roleEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -657,6 +635,17 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
+  public EAttribute getParticipantDeactivation_Keyword()
+  {
+    return (EAttribute)participantDeactivationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getReference()
   {
     return referenceEClass;
@@ -668,7 +657,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getReference_Timelines()
+  public EAttribute getReference_Keyword()
   {
     return (EAttribute)referenceEClass.getEStructuralFeatures().get(0);
   }
@@ -679,9 +668,20 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getReference_Name()
+  public EAttribute getReference_Timelines()
   {
     return (EAttribute)referenceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getReference_Name()
+  {
+    return (EAttribute)referenceEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -722,12 +722,12 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     createEAttribute(modelEClass, MODEL__END);
 
     participantEClass = createEClass(PARTICIPANT);
+    createEAttribute(participantEClass, PARTICIPANT__KEYWORD);
     createEAttribute(participantEClass, PARTICIPANT__NAME);
 
     genericComponentEClass = createEClass(GENERIC_COMPONENT);
 
     genericFunctionEClass = createEClass(GENERIC_FUNCTION);
-    createEAttribute(genericFunctionEClass, GENERIC_FUNCTION__ID);
 
     actorEClass = createEClass(ACTOR);
 
@@ -744,8 +744,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     createEAttribute(entityEClass, ENTITY__ID);
 
     roleEClass = createEClass(ROLE);
-    createEAttribute(roleEClass, ROLE__NAME);
-    createEAttribute(roleEClass, ROLE__ID);
 
     messageEClass = createEClass(MESSAGE);
     createEAttribute(messageEClass, MESSAGE__NAME);
@@ -770,8 +768,10 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     createEAttribute(armTimerMessageEClass, ARM_TIMER_MESSAGE__PARTICIPANT);
 
     participantDeactivationEClass = createEClass(PARTICIPANT_DEACTIVATION);
+    createEAttribute(participantDeactivationEClass, PARTICIPANT_DEACTIVATION__KEYWORD);
 
     referenceEClass = createEClass(REFERENCE);
+    createEAttribute(referenceEClass, REFERENCE__KEYWORD);
     createEAttribute(referenceEClass, REFERENCE__TIMELINES);
     createEAttribute(referenceEClass, REFERENCE__NAME);
   }
@@ -813,6 +813,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     functionEClass.getESuperTypes().add(this.getGenericFunction());
     activityEClass.getESuperTypes().add(this.getGenericFunction());
     entityEClass.getESuperTypes().add(this.getGenericComponent());
+    roleEClass.getESuperTypes().add(this.getGenericComponent());
     sequenceMessageTypeEClass.getESuperTypes().add(this.getMessage());
     sequenceMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
     createMessageEClass.getESuperTypes().add(this.getSequenceMessageType());
@@ -828,12 +829,12 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     initEAttribute(getModel_End(), ecorePackage.getEString(), "end", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(participantEClass, Participant.class, "Participant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParticipant_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, Participant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getParticipant_Name(), ecorePackage.getEString(), "name", null, 0, 1, Participant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(genericComponentEClass, GenericComponent.class, "GenericComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(genericFunctionEClass, GenericFunction.class, "GenericFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGenericFunction_Id(), ecorePackage.getEString(), "id", null, 0, 1, GenericFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actorEClass, Actor.class, "Actor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -850,8 +851,6 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     initEAttribute(getEntity_Id(), ecorePackage.getEString(), "id", null, 0, 1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRole_Name(), ecorePackage.getEString(), "name", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRole_Id(), ecorePackage.getEString(), "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMessage_Name(), ecorePackage.getEString(), "name", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -876,8 +875,10 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     initEAttribute(getArmTimerMessage_Participant(), ecorePackage.getEString(), "participant", null, 0, 1, ArmTimerMessage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(participantDeactivationEClass, ParticipantDeactivation.class, "ParticipantDeactivation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParticipantDeactivation_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, ParticipantDeactivation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(referenceEClass, Reference.class, "Reference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getReference_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReference_Timelines(), ecorePackage.getEString(), "timelines", null, 0, -1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReference_Name(), ecorePackage.getEString(), "name", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -12,7 +12,7 @@ Participant:
 ; 
 
 GenericComponent:
-	Entity | Actor | Component | ConfigurationItem
+	Entity | Actor | Component | ConfigurationItem | Role
 ;
 
 GenericFunction:
@@ -20,31 +20,31 @@ GenericFunction:
 ;
 
 Actor:
-	'actor' name=STRING
+	keyword = 'actor' name=STRING
 ; 
 
 Component:
-	'component' name=STRING (nature = ('unset' | 'behavior' | 'node'))?
+	keyword = 'component' name=STRING (nature = ('unset' | 'behavior' | 'node'))?
 ;
 
 ConfigurationItem:
-	'configuration_item' name=STRING
+	keyword = 'configuration_item' name=STRING
 ;
 
 Function:
-	'function' name=STRING 'as' id=ID
+	keyword = 'function' name=STRING
 ;  
 
 Activity:
-	'activity' name=STRING 'as' id=ID
+	keyword = 'activity' name=STRING
 ;  
 
 Entity:
-	'entity' name=STRING 'as' id=ID
+	keyword = 'entity' name=STRING 'as' id=ID
 ;
 
 Role: 
-	'role' name=STRING 'as' id=ID
+	keyword = 'role' name=STRING
 ;
 
 Message:
@@ -77,10 +77,10 @@ ArmTimerMessage:
 ;
 
 ParticipantDeactivation:
-    'deactivate' name=STRING	
+    keyword = 'deactivate' name=STRING	
 ;
 
 Reference: 
-	'ref' 'over' (timelines+=STRING)+ name=STRING
+	keyword = 'ref' 'over' (timelines+=STRING)+ name=STRING
 ;
 

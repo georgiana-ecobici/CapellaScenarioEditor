@@ -9,12 +9,6 @@ package org.polarsys.capella.scenario.editor.dslscenario.dsl;
  * A representation of the model object '<em><b>Generic Function</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction#getId <em>Id</em>}</li>
- * </ul>
  *
  * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getGenericFunction()
  * @model
@@ -22,26 +16,4 @@ package org.polarsys.capella.scenario.editor.dslscenario.dsl;
  */
 public interface GenericFunction extends Participant
 {
-  /**
-   * Returns the value of the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Id</em>' attribute.
-   * @see #setId(String)
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getGenericFunction_Id()
-   * @model
-   * @generated
-   */
-  String getId();
-
-  /**
-   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction#getId <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Id</em>' attribute.
-   * @see #getId()
-   * @generated
-   */
-  void setId(String value);
-
 } // GenericFunction

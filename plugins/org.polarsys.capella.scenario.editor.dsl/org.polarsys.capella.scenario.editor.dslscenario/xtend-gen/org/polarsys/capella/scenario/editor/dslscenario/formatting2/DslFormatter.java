@@ -15,9 +15,9 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.services.DslGrammarAccess;
 
 @SuppressWarnings("all")
@@ -51,7 +51,7 @@ public class DslFormatter extends AbstractFormatter2 {
     model.getMessagesOrReferences().forEach(_function_4);
   }
   
-  protected void _format(final SequenceMessage message, @Extension final IFormattableDocument document) {
+  protected void _format(final Message message, @Extension final IFormattableDocument document) {
     final Procedure1<IHiddenRegionFormatter> _function = (IHiddenRegionFormatter it) -> {
       it.newLine();
     };
@@ -70,8 +70,8 @@ public class DslFormatter extends AbstractFormatter2 {
     if (message instanceof XtextResource) {
       _format((XtextResource)message, document);
       return;
-    } else if (message instanceof SequenceMessage) {
-      _format((SequenceMessage)message, document);
+    } else if (message instanceof Message) {
+      _format((Message)message, document);
       return;
     } else if (message instanceof Model) {
       _format((Model)message, document);

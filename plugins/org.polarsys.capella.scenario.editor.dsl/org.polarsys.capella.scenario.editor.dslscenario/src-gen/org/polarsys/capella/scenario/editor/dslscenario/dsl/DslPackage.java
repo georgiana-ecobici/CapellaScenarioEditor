@@ -123,13 +123,22 @@ public interface DslPackage extends EPackage
   int PARTICIPANT = 1;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTICIPANT__KEYWORD = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTICIPANT__NAME = 0;
+  int PARTICIPANT__NAME = 1;
 
   /**
    * The number of structural features of the '<em>Participant</em>' class.
@@ -138,7 +147,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTICIPANT_FEATURE_COUNT = 1;
+  int PARTICIPANT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.GenericComponentImpl <em>Generic Component</em>}' class.
@@ -149,6 +158,15 @@ public interface DslPackage extends EPackage
    * @generated
    */
   int GENERIC_COMPONENT = 2;
+
+  /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_COMPONENT__KEYWORD = PARTICIPANT__KEYWORD;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -179,6 +197,15 @@ public interface DslPackage extends EPackage
   int GENERIC_FUNCTION = 3;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GENERIC_FUNCTION__KEYWORD = PARTICIPANT__KEYWORD;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -188,22 +215,13 @@ public interface DslPackage extends EPackage
   int GENERIC_FUNCTION__NAME = PARTICIPANT__NAME;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GENERIC_FUNCTION__ID = PARTICIPANT_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Generic Function</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GENERIC_FUNCTION_FEATURE_COUNT = PARTICIPANT_FEATURE_COUNT + 1;
+  int GENERIC_FUNCTION_FEATURE_COUNT = PARTICIPANT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl <em>Actor</em>}' class.
@@ -214,6 +232,15 @@ public interface DslPackage extends EPackage
    * @generated
    */
   int ACTOR = 4;
+
+  /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR__KEYWORD = GENERIC_COMPONENT__KEYWORD;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -242,6 +269,15 @@ public interface DslPackage extends EPackage
    * @generated
    */
   int COMPONENT = 5;
+
+  /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPONENT__KEYWORD = GENERIC_COMPONENT__KEYWORD;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -281,6 +317,15 @@ public interface DslPackage extends EPackage
   int CONFIGURATION_ITEM = 6;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIGURATION_ITEM__KEYWORD = GENERIC_COMPONENT__KEYWORD;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -309,6 +354,15 @@ public interface DslPackage extends EPackage
   int FUNCTION = 7;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION__KEYWORD = GENERIC_FUNCTION__KEYWORD;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -316,15 +370,6 @@ public interface DslPackage extends EPackage
    * @ordered
    */
   int FUNCTION__NAME = GENERIC_FUNCTION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FUNCTION__ID = GENERIC_FUNCTION__ID;
 
   /**
    * The number of structural features of the '<em>Function</em>' class.
@@ -346,6 +391,15 @@ public interface DslPackage extends EPackage
   int ACTIVITY = 8;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTIVITY__KEYWORD = GENERIC_FUNCTION__KEYWORD;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -353,15 +407,6 @@ public interface DslPackage extends EPackage
    * @ordered
    */
   int ACTIVITY__NAME = GENERIC_FUNCTION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTIVITY__ID = GENERIC_FUNCTION__ID;
 
   /**
    * The number of structural features of the '<em>Activity</em>' class.
@@ -381,6 +426,15 @@ public interface DslPackage extends EPackage
    * @generated
    */
   int ENTITY = 9;
+
+  /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY__KEYWORD = GENERIC_COMPONENT__KEYWORD;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -420,22 +474,22 @@ public interface DslPackage extends EPackage
   int ROLE = 10;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROLE__KEYWORD = GENERIC_COMPONENT__KEYWORD;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ROLE__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ROLE__ID = 1;
+  int ROLE__NAME = GENERIC_COMPONENT__NAME;
 
   /**
    * The number of structural features of the '<em>Role</em>' class.
@@ -444,7 +498,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ROLE_FEATURE_COUNT = 2;
+  int ROLE_FEATURE_COUNT = GENERIC_COMPONENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.MessageImpl <em>Message</em>}' class.
@@ -797,13 +851,22 @@ public interface DslPackage extends EPackage
   int PARTICIPANT_DEACTIVATION__NAME = MESSAGE__NAME;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTICIPANT_DEACTIVATION__KEYWORD = MESSAGE_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>Participant Deactivation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTICIPANT_DEACTIVATION_FEATURE_COUNT = MESSAGE_FEATURE_COUNT + 0;
+  int PARTICIPANT_DEACTIVATION_FEATURE_COUNT = MESSAGE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl <em>Reference</em>}' class.
@@ -816,13 +879,22 @@ public interface DslPackage extends EPackage
   int REFERENCE = 19;
 
   /**
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REFERENCE__KEYWORD = 0;
+
+  /**
    * The feature id for the '<em><b>Timelines</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REFERENCE__TIMELINES = 0;
+  int REFERENCE__TIMELINES = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -831,7 +903,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REFERENCE__NAME = 1;
+  int REFERENCE__NAME = 2;
 
   /**
    * The number of structural features of the '<em>Reference</em>' class.
@@ -840,7 +912,7 @@ public interface DslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REFERENCE_FEATURE_COUNT = 2;
+  int REFERENCE_FEATURE_COUNT = 3;
 
 
   /**
@@ -908,6 +980,17 @@ public interface DslPackage extends EPackage
   EClass getParticipant();
 
   /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getKeyword <em>Keyword</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Keyword</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getKeyword()
+   * @see #getParticipant()
+   * @generated
+   */
+  EAttribute getParticipant_Keyword();
+
+  /**
    * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -937,17 +1020,6 @@ public interface DslPackage extends EPackage
    * @generated
    */
   EClass getGenericFunction();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction#getId()
-   * @see #getGenericFunction()
-   * @generated
-   */
-  EAttribute getGenericFunction_Id();
 
   /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor <em>Actor</em>}'.
@@ -1040,28 +1112,6 @@ public interface DslPackage extends EPackage
    * @generated
    */
   EClass getRole();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Role#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Role#getName()
-   * @see #getRole()
-   * @generated
-   */
-  EAttribute getRole_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Role#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Role#getId()
-   * @see #getRole()
-   * @generated
-   */
-  EAttribute getRole_Id();
 
   /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Message <em>Message</em>}'.
@@ -1232,6 +1282,17 @@ public interface DslPackage extends EPackage
   EClass getParticipantDeactivation();
 
   /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation#getKeyword <em>Keyword</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Keyword</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation#getKeyword()
+   * @see #getParticipantDeactivation()
+   * @generated
+   */
+  EAttribute getParticipantDeactivation_Keyword();
+
+  /**
    * Returns the meta object for class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference <em>Reference</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1240,6 +1301,17 @@ public interface DslPackage extends EPackage
    * @generated
    */
   EClass getReference();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getKeyword <em>Keyword</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Keyword</em>'.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getKeyword()
+   * @see #getReference()
+   * @generated
+   */
+  EAttribute getReference_Keyword();
 
   /**
    * Returns the meta object for the attribute list '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference#getTimelines <em>Timelines</em>}'.
@@ -1339,6 +1411,14 @@ public interface DslPackage extends EPackage
     EClass PARTICIPANT = eINSTANCE.getParticipant();
 
     /**
+     * The meta object literal for the '<em><b>Keyword</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTICIPANT__KEYWORD = eINSTANCE.getParticipant_Keyword();
+
+    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1365,14 +1445,6 @@ public interface DslPackage extends EPackage
      * @generated
      */
     EClass GENERIC_FUNCTION = eINSTANCE.getGenericFunction();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute GENERIC_FUNCTION__ID = eINSTANCE.getGenericFunction_Id();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ActorImpl <em>Actor</em>}' class.
@@ -1459,22 +1531,6 @@ public interface DslPackage extends EPackage
      * @generated
      */
     EClass ROLE = eINSTANCE.getRole();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ROLE__NAME = eINSTANCE.getRole_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ROLE__ID = eINSTANCE.getRole_Id();
 
     /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.MessageImpl <em>Message</em>}' class.
@@ -1621,6 +1677,14 @@ public interface DslPackage extends EPackage
     EClass PARTICIPANT_DEACTIVATION = eINSTANCE.getParticipantDeactivation();
 
     /**
+     * The meta object literal for the '<em><b>Keyword</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTICIPANT_DEACTIVATION__KEYWORD = eINSTANCE.getParticipantDeactivation_Keyword();
+
+    /**
      * The meta object literal for the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl <em>Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1629,6 +1693,14 @@ public interface DslPackage extends EPackage
      * @generated
      */
     EClass REFERENCE = eINSTANCE.getReference();
+
+    /**
+     * The meta object literal for the '<em><b>Keyword</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REFERENCE__KEYWORD = eINSTANCE.getReference_Keyword();
 
     /**
      * The meta object literal for the '<em><b>Timelines</b></em>' attribute list feature.

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -23,6 +24,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Participant extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Keyword</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Keyword</em>' attribute.
+   * @see #setKeyword(String)
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage#getParticipant_Keyword()
+   * @model
+   * @generated
+   */
+  String getKeyword();
+
+  /**
+   * Sets the value of the '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant#getKeyword <em>Keyword</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Keyword</em>' attribute.
+   * @see #getKeyword()
+   * @generated
+   */
+  void setKeyword(String value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

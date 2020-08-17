@@ -161,6 +161,8 @@ public class DslSwitch<T> extends Switch<T>
       {
         Role role = (Role)theEObject;
         T result = caseRole(role);
+        if (result == null) result = caseGenericComponent(role);
+        if (result == null) result = caseParticipant(role);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
