@@ -14,6 +14,7 @@ import java.util.Set;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.FileExtensionProvider;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.polarsys.capella.core.data.capellamodeller.CapellamodellerPackage;
 import org.polarsys.capella.scenario.editor.capella.to.xtext.CapellaXtextRuntimeModule;
 
 @SuppressWarnings("all")
@@ -36,6 +37,7 @@ public class CapellaXtextStandaloneSetup implements ISetup {
     for (final String fileExt : _fileExtensions) {
       this.registry.getExtensionToFactoryMap().put(fileExt, this.resourceServiceProvider);
     }
+    final CapellamodellerPackage treePackage = CapellamodellerPackage.eINSTANCE;
     return injector;
   }
 }

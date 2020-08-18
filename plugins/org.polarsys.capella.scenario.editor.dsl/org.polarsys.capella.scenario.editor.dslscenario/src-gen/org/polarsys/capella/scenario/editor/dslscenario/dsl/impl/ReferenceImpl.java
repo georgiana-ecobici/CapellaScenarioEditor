@@ -27,6 +27,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl#getTimelines <em>Timelines</em>}</li>
  *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ReferenceImpl#getName <em>Name</em>}</li>
  * </ul>
@@ -35,6 +36,26 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Reference;
  */
 public class ReferenceImpl extends MinimalEObjectImpl.Container implements Reference
 {
+  /**
+   * The default value of the '{@link #getKeyword() <em>Keyword</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKeyword()
+   * @generated
+   * @ordered
+   */
+  protected static final String KEYWORD_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getKeyword()
+   * @generated
+   * @ordered
+   */
+  protected String keyword = KEYWORD_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getTimelines() <em>Timelines</em>}' attribute list.
    * <!-- begin-user-doc -->
@@ -92,6 +113,31 @@ public class ReferenceImpl extends MinimalEObjectImpl.Container implements Refer
    * @generated
    */
   @Override
+  public String getKeyword()
+  {
+    return keyword;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setKeyword(String newKeyword)
+  {
+    String oldKeyword = keyword;
+    keyword = newKeyword;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.REFERENCE__KEYWORD, oldKeyword, keyword));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<String> getTimelines()
   {
     if (timelines == null)
@@ -136,6 +182,8 @@ public class ReferenceImpl extends MinimalEObjectImpl.Container implements Refer
   {
     switch (featureID)
     {
+      case DslPackage.REFERENCE__KEYWORD:
+        return getKeyword();
       case DslPackage.REFERENCE__TIMELINES:
         return getTimelines();
       case DslPackage.REFERENCE__NAME:
@@ -155,6 +203,9 @@ public class ReferenceImpl extends MinimalEObjectImpl.Container implements Refer
   {
     switch (featureID)
     {
+      case DslPackage.REFERENCE__KEYWORD:
+        setKeyword((String)newValue);
+        return;
       case DslPackage.REFERENCE__TIMELINES:
         getTimelines().clear();
         getTimelines().addAll((Collection<? extends String>)newValue);
@@ -176,6 +227,9 @@ public class ReferenceImpl extends MinimalEObjectImpl.Container implements Refer
   {
     switch (featureID)
     {
+      case DslPackage.REFERENCE__KEYWORD:
+        setKeyword(KEYWORD_EDEFAULT);
+        return;
       case DslPackage.REFERENCE__TIMELINES:
         getTimelines().clear();
         return;
@@ -196,6 +250,8 @@ public class ReferenceImpl extends MinimalEObjectImpl.Container implements Refer
   {
     switch (featureID)
     {
+      case DslPackage.REFERENCE__KEYWORD:
+        return KEYWORD_EDEFAULT == null ? keyword != null : !KEYWORD_EDEFAULT.equals(keyword);
       case DslPackage.REFERENCE__TIMELINES:
         return timelines != null && !timelines.isEmpty();
       case DslPackage.REFERENCE__NAME:
@@ -215,7 +271,9 @@ public class ReferenceImpl extends MinimalEObjectImpl.Container implements Refer
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (timelines: ");
+    result.append(" (keyword: ");
+    result.append(keyword);
+    result.append(", timelines: ");
     result.append(timelines);
     result.append(", name: ");
     result.append(name);

@@ -7,21 +7,38 @@ import java.util.Arrays;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist.AbstractDslProposalProvider;
+import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
 
 /**
- * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
- * on how to customize the content assistant.
+ * This class is used to display auto-complete proposals when pressing ctrl+space
  */
 @SuppressWarnings("all")
 public class DslProposalProvider extends AbstractDslProposalProvider {
+  /**
+   * filter the proposed keywords based on the context in which we edit the text scenario;
+   * check the context of the Capella Diagram - layer (OA, SA, LA, PA), type of scenario (IS, ES FS)
+   */
+  @Override
+  public void completeKeyword(final Keyword keyword, final ContentAssistContext contentAssistContext, final ICompletionProposalAcceptor acceptor) {
+    ICompletionProposal _createCompletionProposal = this.createCompletionProposal(keyword.getValue(), this.getKeywordDisplayString(keyword), this.getImage(keyword), contentAssistContext);
+    ICompletionProposal proposal = ((ICompletionProposal) _createCompletionProposal);
+    boolean _checkValidKeyword = EmbeddedEditorInstanceHelper.checkValidKeyword(proposal.getDisplayString());
+    if (_checkValidKeyword) {
+      this.getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
+      acceptor.accept(proposal);
+    }
+  }
+  
   @Override
   public void completeActor_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     List<String> _propose = this.getPropose();
@@ -32,17 +49,17 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   
   @Override
   public void completeSequenceMessage_Source(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
-    EList<EObject> _variablesDefinedBefore2 = this.variablesDefinedBefore2(((Model) model));
+    EList<Participant> _variablesDefinedBefore2 = this.variablesDefinedBefore2(((Model) model));
     for (final EObject el : _variablesDefinedBefore2) {
-      acceptor.accept(this.createCompletionProposal(((Actor) el).getId(), ((Actor) el).getId(), null, context));
+      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
     }
   }
   
   @Override
   public void completeSequenceMessage_Target(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
-    EList<EObject> _variablesDefinedBefore3 = this.variablesDefinedBefore3(((SequenceMessage) model));
+    EList<Participant> _variablesDefinedBefore3 = this.variablesDefinedBefore3(((SequenceMessage) model));
     for (final EObject el : _variablesDefinedBefore3) {
-      acceptor.accept(this.createCompletionProposal(((Actor) el).getId(), ((Actor) el).getId(), null, context));
+      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
     }
   }
   
@@ -50,16 +67,16 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
     return Arrays.<String>asList("Hello", "World!", "How", "Are", "You");
   }
   
-  public EList<EObject> variablesDefinedBefore(final ScenarioTypeAndParticipants sc) {
-    return sc.getParticipants();
+  public Participant variablesDefinedBefore(final Participant sc) {
+    return sc;
   }
   
-  public EList<EObject> variablesDefinedBefore2(final Model m) {
-    return m.getScenarioType().getParticipants();
+  public EList<Participant> variablesDefinedBefore2(final Model m) {
+    return m.getParticipants();
   }
   
-  public EList<EObject> variablesDefinedBefore3(final SequenceMessage seq) {
+  public EList<Participant> variablesDefinedBefore3(final SequenceMessage seq) {
     EObject _eContainer = seq.eContainer();
-    return ((Model) _eContainer).getScenarioType().getParticipants();
+    return ((Model) _eContainer).getParticipants();
   }
 }

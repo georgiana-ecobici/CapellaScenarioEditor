@@ -81,9 +81,19 @@ public class DslAdapterFactory extends AdapterFactoryImpl
         return createModelAdapter();
       }
       @Override
-      public Adapter caseScenarioTypeAndParticipants(ScenarioTypeAndParticipants object)
+      public Adapter caseParticipant(Participant object)
       {
-        return createScenarioTypeAndParticipantsAdapter();
+        return createParticipantAdapter();
+      }
+      @Override
+      public Adapter caseGenericComponent(GenericComponent object)
+      {
+        return createGenericComponentAdapter();
+      }
+      @Override
+      public Adapter caseGenericFunction(GenericFunction object)
+      {
+        return createGenericFunctionAdapter();
       }
       @Override
       public Adapter caseActor(Actor object)
@@ -94,11 +104,6 @@ public class DslAdapterFactory extends AdapterFactoryImpl
       public Adapter caseComponent(Component object)
       {
         return createComponentAdapter();
-      }
-      @Override
-      public Adapter casePhysicalComponent(PhysicalComponent object)
-      {
-        return createPhysicalComponentAdapter();
       }
       @Override
       public Adapter caseConfigurationItem(ConfigurationItem object)
@@ -208,16 +213,46 @@ public class DslAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants <em>Scenario Type And Participants</em>}'.
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant <em>Participant</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.ScenarioTypeAndParticipants
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
    * @generated
    */
-  public Adapter createScenarioTypeAndParticipantsAdapter()
+  public Adapter createParticipantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericComponent <em>Generic Component</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericComponent
+   * @generated
+   */
+  public Adapter createGenericComponentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction <em>Generic Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction
+   * @generated
+   */
+  public Adapter createGenericFunctionAdapter()
   {
     return null;
   }
@@ -248,21 +283,6 @@ public class DslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createComponentAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent <em>Physical Component</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.polarsys.capella.scenario.editor.dslscenario.dsl.PhysicalComponent
-   * @generated
-   */
-  public Adapter createPhysicalComponentAdapter()
   {
     return null;
   }

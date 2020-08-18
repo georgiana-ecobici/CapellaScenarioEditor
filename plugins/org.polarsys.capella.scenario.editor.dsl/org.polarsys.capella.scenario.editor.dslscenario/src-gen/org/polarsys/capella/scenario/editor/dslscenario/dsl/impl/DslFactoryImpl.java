@@ -66,10 +66,11 @@ public class DslFactoryImpl extends EFactoryImpl implements DslFactory
     switch (eClass.getClassifierID())
     {
       case DslPackage.MODEL: return createModel();
-      case DslPackage.SCENARIO_TYPE_AND_PARTICIPANTS: return createScenarioTypeAndParticipants();
+      case DslPackage.PARTICIPANT: return createParticipant();
+      case DslPackage.GENERIC_COMPONENT: return createGenericComponent();
+      case DslPackage.GENERIC_FUNCTION: return createGenericFunction();
       case DslPackage.ACTOR: return createActor();
       case DslPackage.COMPONENT: return createComponent();
-      case DslPackage.PHYSICAL_COMPONENT: return createPhysicalComponent();
       case DslPackage.CONFIGURATION_ITEM: return createConfigurationItem();
       case DslPackage.FUNCTION: return createFunction();
       case DslPackage.ACTIVITY: return createActivity();
@@ -107,10 +108,34 @@ public class DslFactoryImpl extends EFactoryImpl implements DslFactory
    * @generated
    */
   @Override
-  public ScenarioTypeAndParticipants createScenarioTypeAndParticipants()
+  public Participant createParticipant()
   {
-    ScenarioTypeAndParticipantsImpl scenarioTypeAndParticipants = new ScenarioTypeAndParticipantsImpl();
-    return scenarioTypeAndParticipants;
+    ParticipantImpl participant = new ParticipantImpl();
+    return participant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public GenericComponent createGenericComponent()
+  {
+    GenericComponentImpl genericComponent = new GenericComponentImpl();
+    return genericComponent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public GenericFunction createGenericFunction()
+  {
+    GenericFunctionImpl genericFunction = new GenericFunctionImpl();
+    return genericFunction;
   }
 
   /**
@@ -135,18 +160,6 @@ public class DslFactoryImpl extends EFactoryImpl implements DslFactory
   {
     ComponentImpl component = new ComponentImpl();
     return component;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PhysicalComponent createPhysicalComponent()
-  {
-    PhysicalComponentImpl physicalComponent = new PhysicalComponentImpl();
-    return physicalComponent;
   }
 
   /**

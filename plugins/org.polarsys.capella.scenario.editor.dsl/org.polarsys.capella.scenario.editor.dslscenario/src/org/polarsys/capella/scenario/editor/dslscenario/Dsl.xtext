@@ -3,52 +3,48 @@ grammar org.polarsys.capella.scenario.editor.dslscenario.Dsl with org.eclipse.xt
 generate dsl "http://www.polarsys.org/capella/scenario/editor/dslscenario/Dsl"
 
 Model:
-       'scenario' scenarioType=ScenarioTypeAndParticipants 
-       
+       'scenario' begin = '{' participants+=Participant* 
         (messagesOrReferences+=(Message|Reference))* 
-        '}';
- 
-ScenarioTypeAndParticipants: 
-	  'System' ('IS'|'ES')  name=STRING '{' (participants += Actor)*
-	| 'Logical' ('IS'|'ES') name=STRING '{' (participants += (Actor | Component))*
-	| 'Physical' ('IS'| 'ES') name=STRING '{' (participant += (Actor | PhysicalComponent))*
-	| ('System' | 'Logical' | 'Physical') 'FS'  name=STRING '{' (participants += Function)*
-	| 'EPBS' 'IS' name=STRING '{' (participants += ConfigurationItem)*
-	| 'OAS' name=STRING '{' (participants += Activity)*
-	| 'OES' name=STRING '{' (participants += (Entity | Actor | Role))*
-	
+        end = '}';
+
+Participant: 
+	 GenericComponent | GenericFunction
 ; 
 
+GenericComponent:
+	Entity | Actor | Component | ConfigurationItem | Role
+;
+
+GenericFunction:
+	Function | Activity
+;
+
 Actor:
-	'actor' name=STRING 'as' id=ID
+	keyword = 'actor' name=STRING
 ; 
 
 Component:
-	'component' name=STRING 'as' id=ID
-;
-
-PhysicalComponent: 
-	component=Component ('unset' | 'behavior' | 'node')?
+	keyword = 'component' name=STRING (nature = ('unset' | 'behavior' | 'node'))?
 ;
 
 ConfigurationItem:
-	'configuration_item' name=STRING 'as' id=ID
+	keyword = 'configuration_item' name=STRING
 ;
 
 Function:
-	'function' name=STRING 'as' id=ID
+	keyword = 'function' name=STRING
 ;  
 
 Activity:
-	'activity' name=STRING 'as' id=ID
+	keyword = 'activity' name=STRING
 ;  
 
 Entity:
-	'entity' name=STRING 'as' id=ID
+	keyword = 'entity' name=STRING
 ;
 
 Role: 
-	'role' name=STRING 'as' id=ID
+	keyword = 'role' name=STRING
 ;
 
 Message:
@@ -61,30 +57,30 @@ SequenceMessageType:
 ;
 
 SequenceMessage:
-	source=ID '->' target=ID ':' name=STRING 
+	source=STRING '->' target=STRING ':' name=STRING 
 ;
 
 CreateMessage:
-	source=ID '->+' target=ID ':' name=STRING 
+	source=STRING '->+' target=STRING ':' name=STRING 
 ;
 
 DeleteMessage:
-	source=ID '->x' target=ID ':' name=STRING 
+	source=STRING '->x' target=STRING ':' name=STRING 
 ;
 
 ReturnMessage:
-	target=ID '<--' source=ID ':' name=STRING
+	target=STRING '<--' source=STRING ':' name=STRING
 ;
 
 ArmTimerMessage:
-	"->>" participant=ID ':' name=STRING
+	"->>" participant=STRING ':' name=STRING
 ;
 
 ParticipantDeactivation:
-    'deactivate' name=ID	
+    keyword = 'deactivate' name=STRING	
 ;
 
 Reference: 
-	'ref' 'over' (timelines+=ID)+ name=STRING
-	
+	keyword = 'ref' 'over' (timelines+=STRING)+ name=STRING
 ;
+

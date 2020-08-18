@@ -6,23 +6,23 @@ package org.polarsys.capella.scenario.editor.dslscenario.dsl.impl;
 import org.eclipse.emf.ecore.EClass;
 
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.GenericFunction;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Entity</b></em>'.
+ * An implementation of the model object '<em><b>Generic Function</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class EntityImpl extends GenericComponentImpl implements Entity
+public class GenericFunctionImpl extends ParticipantImpl implements GenericFunction
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected EntityImpl()
+  protected GenericFunctionImpl()
   {
     super();
   }
@@ -35,7 +35,7 @@ public class EntityImpl extends GenericComponentImpl implements Entity
   @Override
   protected EClass eStaticClass()
   {
-    return DslPackage.Literals.ENTITY;
+    return DslPackage.Literals.GENERIC_FUNCTION;
   }
 
-} //EntityImpl
+} //GenericFunctionImpl

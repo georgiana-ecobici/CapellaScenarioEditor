@@ -8,7 +8,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Component;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
@@ -21,53 +20,32 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ComponentImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ComponentImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ComponentImpl#getNature <em>Nature</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ComponentImpl extends MinimalEObjectImpl.Container implements Component
+public class ComponentImpl extends GenericComponentImpl implements Component
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #getNature() <em>Nature</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getNature()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String NATURE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getNature() <em>Nature</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getNature()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getId()
-   * @generated
-   * @ordered
-   */
-  protected static final String ID_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getId()
-   * @generated
-   * @ordered
-   */
-  protected String id = ID_EDEFAULT;
+  protected String nature = NATURE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,9 +74,9 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @generated
    */
   @Override
-  public String getName()
+  public String getNature()
   {
-    return name;
+    return nature;
   }
 
   /**
@@ -107,37 +85,12 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
    * @generated
    */
   @Override
-  public void setName(String newName)
+  public void setNature(String newNature)
   {
-    String oldName = name;
-    name = newName;
+    String oldNature = nature;
+    nature = newNature;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.COMPONENT__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getId()
-  {
-    return id;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setId(String newId)
-  {
-    String oldId = id;
-    id = newId;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.COMPONENT__ID, oldId, id));
+      eNotify(new ENotificationImpl(this, Notification.SET, DslPackage.COMPONENT__NATURE, oldNature, nature));
   }
 
   /**
@@ -150,10 +103,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NAME:
-        return getName();
-      case DslPackage.COMPONENT__ID:
-        return getId();
+      case DslPackage.COMPONENT__NATURE:
+        return getNature();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -168,11 +119,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NAME:
-        setName((String)newValue);
-        return;
-      case DslPackage.COMPONENT__ID:
-        setId((String)newValue);
+      case DslPackage.COMPONENT__NATURE:
+        setNature((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -188,11 +136,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case DslPackage.COMPONENT__ID:
-        setId(ID_EDEFAULT);
+      case DslPackage.COMPONENT__NATURE:
+        setNature(NATURE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -208,10 +153,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
   {
     switch (featureID)
     {
-      case DslPackage.COMPONENT__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case DslPackage.COMPONENT__ID:
-        return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+      case DslPackage.COMPONENT__NATURE:
+        return NATURE_EDEFAULT == null ? nature != null : !NATURE_EDEFAULT.equals(nature);
     }
     return super.eIsSet(featureID);
   }
@@ -227,10 +170,8 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", id: ");
-    result.append(id);
+    result.append(" (nature: ");
+    result.append(nature);
     result.append(')');
     return result.toString();
   }

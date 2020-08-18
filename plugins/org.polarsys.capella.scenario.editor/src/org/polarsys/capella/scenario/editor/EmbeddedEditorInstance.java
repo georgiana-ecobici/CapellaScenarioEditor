@@ -17,6 +17,9 @@ import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
 import org.polarsys.capella.core.data.interaction.Scenario;
 
+/*
+ * EmbeddedEditorInstance class keeps references to both the current embedded editor and the Capella scenario diagram
+ */
 public class EmbeddedEditorInstance {
   private static EmbeddedEditorModelAccess model;
   private static EmbeddedEditor eEditor;
