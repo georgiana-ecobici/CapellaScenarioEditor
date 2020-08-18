@@ -4,10 +4,10 @@
 package org.polarsys.capella.scenario.editor.dslscenario.validation
 
 import org.eclipse.xtext.validation.Check
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function
 
 /**
  * This class contains custom validation rules. 
@@ -20,15 +20,19 @@ class DslValidator extends AbstractDslValidator {
 
 	@Check
 	def checkPartExists(Participant participant) {
-		if (!EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(participant.name)) {
-			error('Represented part does not exist', DslPackage.Literals.PARTICIPANT__NAME, INVALID_NAME)
+		if (!EmbeddedEditorInstanceHelper.getAvailablePartNames(participant.keyword).contains(participant.name)) {
+			if (participant instanceof Function) {
+				error('Function does not exist', DslPackage.Literals.PARTICIPANT__NAME, INVALID_NAME)
+			} else {
+				error('Represented part does not exist', DslPackage.Literals.PARTICIPANT__NAME, INVALID_NAME)
+			}
 		}
 	}
 
 	@Check
 	def checkParticipantKeywordIsValid(Participant participant) {
 		if (!EmbeddedEditorInstanceHelper.checkValidKeyword(participant.keyword)) {
-			error('\'' +participant.keyword + '\' could not be used in this diagram',
+			error('\'' + participant.keyword + '\' could not be used in this diagram',
 				DslPackage.Literals.PARTICIPANT__KEYWORD)
 		}
 	}
