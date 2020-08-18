@@ -20,12 +20,22 @@ import org.eclipse.emf.common.util.EList;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
+import org.polarsys.capella.core.data.ctx.SystemFunction;
+import org.polarsys.capella.core.data.ctx.impl.SystemFunctionImpl;
 import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
+import org.polarsys.capella.core.data.fa.AbstractFunction;
+import org.polarsys.capella.core.data.fa.FunctionRealization;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.ScenarioKind;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
+import org.polarsys.capella.core.data.la.LogicalFunction;
+import org.polarsys.capella.core.data.la.impl.LogicalFunctionImpl;
+import org.polarsys.capella.core.data.oa.OperationalActivity;
+import org.polarsys.capella.core.data.oa.impl.OperationalActivityImpl;
 import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
+import org.polarsys.capella.core.data.pa.PhysicalFunction;
+import org.polarsys.capella.core.data.pa.impl.PhysicalFunctionImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
@@ -38,16 +48,53 @@ public class EmbeddedEditorInstanceHelper {
     return currentScenario.getOwnedInstanceRoles();
   }
 
-  public static List<String> getAvailablePartNames() {
-    List<String> partNames = new ArrayList();
+  public static List<String> getAvailablePartNames(String keyword) {
+    List<String> partNames = new ArrayList<String>();
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     InteractionServices is = new InteractionServices();
-    List<Part> actorParts = is.getISScopeInsertActors(currentScenario);
-
-    for (Part part : actorParts) {
+    List<Part> parts = new ArrayList<Part>();
+    
+    switch (keyword) {
+    case "actor":
+      parts = is.getISScopeInsertActors(currentScenario);
+      break;
+    case "activity":
+      BlockArchitecture blockArch = BlockArchitectureExt.getRootBlockArchitecture(currentScenario);
+      OperationalActivityImpl root = (OperationalActivityImpl) BlockArchitectureExt.getRootFunction(blockArch);
+      partNames.add(root.getName());
+      EList<OperationalActivity> activities = root.getChildrenOperationalActivities();
+      for (OperationalActivity activity : activities) {
+        partNames.add(activity.getName());
+      }
+      break;
+    case "function":
+      BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(currentScenario);
+      AbstractFunction rootFunction = BlockArchitectureExt.getRootFunction(blockArchitecture);
+      partNames.add(rootFunction.getName());
+      if (rootFunction instanceof LogicalFunctionImpl) {
+        EList<LogicalFunction> functions = ((LogicalFunctionImpl) rootFunction).getChildrenLogicalFunctions();
+        for (LogicalFunction function : functions) {
+          partNames.add(function.getName());
+        }
+      } else if (rootFunction instanceof SystemFunctionImpl) {
+        EList<SystemFunction> functions = ((SystemFunctionImpl) rootFunction).getChildrenSystemFunctions();
+        for (SystemFunction function : functions) {
+          partNames.add(function.getName());
+        }
+      } else if (rootFunction instanceof PhysicalFunctionImpl) {
+        EList<PhysicalFunction> functions = ((PhysicalFunctionImpl) rootFunction).getChildrenPhysicalFunctions();
+        for (PhysicalFunction function : functions) {
+          partNames.add(function.getName());
+        }
+      }
+      break;
+    default:
+      parts = is.getESScopeInsertComponents(currentScenario);
+      break;
+    }
+    for (Part part : parts) {
       partNames.add(part.getName());
     }
-
     return partNames;
   }
 
