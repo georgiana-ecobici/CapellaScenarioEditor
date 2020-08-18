@@ -5,6 +5,7 @@ package org.polarsys.capella.scenario.editor.dslscenario.validation;
 
 import org.eclipse.xtext.validation.Check;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 import org.polarsys.capella.scenario.editor.dslscenario.validation.AbstractDslValidator;
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
@@ -20,10 +21,14 @@ public class DslValidator extends AbstractDslValidator {
   
   @Check
   public void checkPartExists(final Participant participant) {
-    boolean _contains = EmbeddedEditorInstanceHelper.getAvailablePartNames().contains(participant.getName());
+    boolean _contains = EmbeddedEditorInstanceHelper.getAvailablePartNames(participant.getKeyword()).contains(participant.getName());
     boolean _not = (!_contains);
     if (_not) {
-      this.error("Represented part does not exist", DslPackage.Literals.PARTICIPANT__NAME, DslValidator.INVALID_NAME);
+      if ((participant instanceof Function)) {
+        this.error("Function does not exist", DslPackage.Literals.PARTICIPANT__NAME, DslValidator.INVALID_NAME);
+      } else {
+        this.error("Represented part does not exist", DslPackage.Literals.PARTICIPANT__NAME, DslValidator.INVALID_NAME);
+      }
     }
   }
   
