@@ -3,7 +3,6 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist;
 
-import java.util.Arrays;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -41,9 +40,43 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   
   @Override
   public void completeActor_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
-    List<String> _propose = this.getPropose();
-    for (final String el : _propose) {
-      acceptor.accept(this.createCompletionProposal(el, el, null, context));
+    this.getExistingParticipants("actor", context, acceptor);
+  }
+  
+  @Override
+  public void completeComponent_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    this.getExistingParticipants("component", context, acceptor);
+  }
+  
+  @Override
+  public void completeConfigurationItem_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    this.getExistingParticipants("configuration_item", context, acceptor);
+  }
+  
+  @Override
+  public void completeFunction_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    this.getExistingParticipants("function", context, acceptor);
+  }
+  
+  @Override
+  public void completeActivity_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    this.getExistingParticipants("activity", context, acceptor);
+  }
+  
+  @Override
+  public void completeEntity_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    this.getExistingParticipants("entity", context, acceptor);
+  }
+  
+  @Override
+  public void completeRole_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    this.getExistingParticipants("role", context, acceptor);
+  }
+  
+  public void getExistingParticipants(final String keyword, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    List<String> _availablePartNames = EmbeddedEditorInstanceHelper.getAvailablePartNames(keyword);
+    for (final String el : _availablePartNames) {
+      acceptor.accept(this.createCompletionProposal((("\"" + el) + "\""), (("\"" + el) + "\""), null, context));
     }
   }
   
@@ -61,10 +94,6 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
     for (final EObject el : _variablesDefinedBefore3) {
       acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
     }
-  }
-  
-  public List<String> getPropose() {
-    return Arrays.<String>asList("Hello", "World!", "How", "Are", "You");
   }
   
   public Participant variablesDefinedBefore(final Participant sc) {

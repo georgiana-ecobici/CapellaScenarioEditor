@@ -33,17 +33,45 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		var proposal = createCompletionProposal(keyword.getValue(), getKeywordDisplayString(keyword), getImage(keyword),
 			contentAssistContext) as ICompletionProposal
-		if ( EmbeddedEditorInstanceHelper.checkValidKeyword(proposal.getDisplayString())) {
+		if (EmbeddedEditorInstanceHelper.checkValidKeyword(proposal.getDisplayString())) {
 			getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
 			acceptor.accept(proposal);
 		}
 	}
-
+	
 	override completeActor_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		for (String el : getPropose()) {
-			acceptor.accept(createCompletionProposal(el, el, null, context));
-		}
+		getExistingParticipants("actor", context, acceptor)
+	}
+	
+	override completeComponent_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		getExistingParticipants("component", context, acceptor)
+	}
+	
+	override completeConfigurationItem_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		getExistingParticipants("configuration_item", context, acceptor)
+	}
+	
+	override completeFunction_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		getExistingParticipants("function", context, acceptor)
+	}
+	
+	override completeActivity_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		getExistingParticipants("activity", context, acceptor)
+	}
+	
+	override completeEntity_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		getExistingParticipants("entity", context, acceptor)
+	}
+	
+	override completeRole_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		getExistingParticipants("role", context, acceptor)
+	}
+	
+	def getExistingParticipants(String keyword, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		for (String el : EmbeddedEditorInstanceHelper.getAvailablePartNames(keyword)) {
+			acceptor.accept(createCompletionProposal("\"" + el + "\"", "\"" + el + "\"", null, context));
+		} 
 	}
 
 	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context,
@@ -58,11 +86,6 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
 			acceptor.accept(createCompletionProposal((el as Actor).name, (el as Actor).name, null, context))
 		}
-	}
-
-	def getPropose() {
-		return Arrays.asList("Hello", "World!", "How", "Are", "You")
-
 	}
 
 	def variablesDefinedBefore(Participant sc) {
