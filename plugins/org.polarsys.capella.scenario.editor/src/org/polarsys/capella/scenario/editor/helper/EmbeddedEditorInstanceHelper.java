@@ -27,6 +27,8 @@ import org.polarsys.capella.core.data.fa.AbstractFunction;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.ScenarioKind;
+import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModel;
+import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.communications.AbstractCommunication;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
 import org.polarsys.capella.core.data.la.LogicalFunction;
 import org.polarsys.capella.core.data.la.impl.LogicalFunctionImpl;
@@ -36,6 +38,7 @@ import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
 import org.polarsys.capella.core.data.pa.PhysicalFunction;
 import org.polarsys.capella.core.data.pa.impl.PhysicalFunctionImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
+import org.polarsys.capella.core.model.helpers.ScenarioExt;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
@@ -45,6 +48,25 @@ public class EmbeddedEditorInstanceHelper {
   public static EList<InstanceRole> getAvailableInstanceRoles() {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     return currentScenario.getOwnedInstanceRoles();
+  }
+  
+  public static List<String> getMessageSequenceName(String source, String target) {
+    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
+    //DataFlowHelper.
+    //List<MessageEnd> ownedMessages = ScenarioExt.getOwnedMessagesEnds(currentScenario);
+    InstanceRole sourceIR = EmbeddedEditorInstanceHelper.getInstanceRole(source);
+    InstanceRole targetIR = EmbeddedEditorInstanceHelper.getInstanceRole(target);
+    SelectInvokedOperationModel model = new SelectInvokedOperationModel(sourceIR, targetIR, false);
+    List<AbstractCommunication> ownedMessages = model.getPossibleElements();
+    //EList<SequenceMessage> ownedMessages = currentScenario.getOwnedMessages();
+    List<String> messagesName = new ArrayList<String>();
+//    for (SequenceMessage message : ownedMessages) {
+//      messagesName.add(message.getName());
+//    }
+    for (AbstractCommunication message : ownedMessages) {
+      messagesName.add(message.exchangeItem.getName());
+    }
+    return messagesName;
   }
 
   public static List<String> getAvailablePartNames(String keyword) {

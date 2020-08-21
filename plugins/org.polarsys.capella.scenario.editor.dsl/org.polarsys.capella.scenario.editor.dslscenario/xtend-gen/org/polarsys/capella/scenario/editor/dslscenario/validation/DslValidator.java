@@ -7,6 +7,7 @@ import org.eclipse.xtext.validation.Check;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.validation.AbstractDslValidator;
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
 
@@ -42,6 +43,15 @@ public class DslValidator extends AbstractDslValidator {
       String _plus_1 = (_plus + "\' could not be used in this diagram");
       this.error(_plus_1, 
         DslPackage.Literals.PARTICIPANT__KEYWORD);
+    }
+  }
+  
+  @Check
+  public void checkMessagesExist(final SequenceMessage message) {
+    boolean _contains = EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource(), message.getTarget()).contains(message.getName());
+    boolean _not = (!_contains);
+    if (_not) {
+      this.error("Message does not exist", DslPackage.Literals.MESSAGE__NAME);
     }
   }
 }
