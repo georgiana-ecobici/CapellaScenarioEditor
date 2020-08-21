@@ -33,12 +33,14 @@ import org.polarsys.capella.core.data.la.LogicalArchitecture;
 import org.polarsys.capella.core.data.la.LogicalFunction;
 import org.polarsys.capella.core.data.la.impl.LogicalFunctionImpl;
 import org.polarsys.capella.core.data.oa.OperationalActivity;
+import org.polarsys.capella.core.data.oa.Role;
+import org.polarsys.capella.core.data.oa.RolePkg;
 import org.polarsys.capella.core.data.oa.impl.OperationalActivityImpl;
+import org.polarsys.capella.core.data.oa.impl.OperationalAnalysisImpl;
 import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
 import org.polarsys.capella.core.data.pa.PhysicalFunction;
 import org.polarsys.capella.core.data.pa.impl.PhysicalFunctionImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
-import org.polarsys.capella.core.model.helpers.ScenarioExt;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
@@ -49,20 +51,20 @@ public class EmbeddedEditorInstanceHelper {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     return currentScenario.getOwnedInstanceRoles();
   }
-  
+
   public static List<String> getMessageSequenceName(String source, String target) {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
-    //DataFlowHelper.
-    //List<MessageEnd> ownedMessages = ScenarioExt.getOwnedMessagesEnds(currentScenario);
+    // DataFlowHelper.
+    // List<MessageEnd> ownedMessages = ScenarioExt.getOwnedMessagesEnds(currentScenario);
     InstanceRole sourceIR = EmbeddedEditorInstanceHelper.getInstanceRole(source);
     InstanceRole targetIR = EmbeddedEditorInstanceHelper.getInstanceRole(target);
     SelectInvokedOperationModel model = new SelectInvokedOperationModel(sourceIR, targetIR, false);
     List<AbstractCommunication> ownedMessages = model.getPossibleElements();
-    //EList<SequenceMessage> ownedMessages = currentScenario.getOwnedMessages();
+    // EList<SequenceMessage> ownedMessages = currentScenario.getOwnedMessages();
     List<String> messagesName = new ArrayList<String>();
-//    for (SequenceMessage message : ownedMessages) {
-//      messagesName.add(message.getName());
-//    }
+    // for (SequenceMessage message : ownedMessages) {
+    // messagesName.add(message.getName());
+    // }
     for (AbstractCommunication message : ownedMessages) {
       messagesName.add(message.exchangeItem.getName());
     }
@@ -74,8 +76,15 @@ public class EmbeddedEditorInstanceHelper {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     InteractionServices is = new InteractionServices();
     List<Part> parts = new ArrayList<Part>();
-
     switch (keyword) {
+    case "role":
+      OperationalAnalysisImpl op = (OperationalAnalysisImpl) currentScenario.eContainer().eContainer().eContainer();
+      RolePkg rolesPkg = op.basicGetOwnedRolePkg();
+      EList<Role> roles = rolesPkg.getOwnedRoles();
+      for (Role role : roles) {
+        partNames.add(role.getName());
+      }
+      break;
     case "actor":
       parts = is.getISScopeInsertActors(currentScenario);
       break;
