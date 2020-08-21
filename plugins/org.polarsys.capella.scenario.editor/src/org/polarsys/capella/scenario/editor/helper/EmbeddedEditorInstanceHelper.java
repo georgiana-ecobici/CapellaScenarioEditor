@@ -17,17 +17,21 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
+import org.polarsys.capella.core.data.capellacore.CapellaElement;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
+import org.polarsys.capella.core.data.cs.ExchangeItemAllocation;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
 import org.polarsys.capella.core.data.ctx.SystemFunction;
 import org.polarsys.capella.core.data.ctx.impl.SystemFunctionImpl;
 import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.fa.AbstractFunction;
+import org.polarsys.capella.core.data.information.ExchangeItem;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.ScenarioKind;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModel;
+import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.communications.AbstractCommunication;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
 import org.polarsys.capella.core.data.la.LogicalFunction;
@@ -53,21 +57,22 @@ public class EmbeddedEditorInstanceHelper {
   }
 
   public static List<String> getMessageSequenceName(String source, String target) {
-    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
-    // DataFlowHelper.
-    // List<MessageEnd> ownedMessages = ScenarioExt.getOwnedMessagesEnds(currentScenario);
     InstanceRole sourceIR = EmbeddedEditorInstanceHelper.getInstanceRole(source);
     InstanceRole targetIR = EmbeddedEditorInstanceHelper.getInstanceRole(target);
-    SelectInvokedOperationModel model = new SelectInvokedOperationModel(sourceIR, targetIR, false);
-    List<AbstractCommunication> ownedMessages = model.getPossibleElements();
-    // EList<SequenceMessage> ownedMessages = currentScenario.getOwnedMessages();
     List<String> messagesName = new ArrayList<String>();
-    // for (SequenceMessage message : ownedMessages) {
-    // messagesName.add(message.getName());
-    // }
-    for (AbstractCommunication message : ownedMessages) {
-      messagesName.add(message.exchangeItem.getName());
+
+    List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
+        .getAvailableExchangeItems(sourceIR, targetIR, false);
+
+    for (CapellaElement message : exchanges) {
+      if (message instanceof ExchangeItemAllocation) {
+        ExchangeItemAllocation allocation = (ExchangeItemAllocation) message;
+        if (allocation.getAllocatedItem() instanceof ExchangeItem) {
+          messagesName.add(allocation.getAllocatedItem().getName());
+        }
+      }
     }
+
     return messagesName;
   }
 
