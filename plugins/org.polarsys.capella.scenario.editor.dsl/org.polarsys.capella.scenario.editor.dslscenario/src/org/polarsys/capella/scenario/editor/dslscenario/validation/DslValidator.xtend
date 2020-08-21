@@ -8,6 +8,8 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
 
 /**
  * This class contains custom validation rules. 
@@ -34,6 +36,13 @@ class DslValidator extends AbstractDslValidator {
 		if (!EmbeddedEditorInstanceHelper.checkValidKeyword(participant.keyword)) {
 			error('\'' + participant.keyword + '\' could not be used in this diagram',
 				DslPackage.Literals.PARTICIPANT__KEYWORD)
+		}
+	}
+	
+	@Check
+	def checkMessagesExist(SequenceMessage message) {
+		if (!EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource, message.getTarget).contains(message.name)) {
+			error('Message does not exist', DslPackage.Literals.MESSAGE__NAME)
 		}
 	}
 }
