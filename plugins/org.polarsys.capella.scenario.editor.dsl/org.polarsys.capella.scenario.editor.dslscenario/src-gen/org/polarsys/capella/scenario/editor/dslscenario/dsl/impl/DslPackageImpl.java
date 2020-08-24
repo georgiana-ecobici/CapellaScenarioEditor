@@ -316,7 +316,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getParticipant_Keyword()
+  public EAttribute getParticipant_Id()
   {
     return (EAttribute)participantEClass.getEStructuralFeatures().get(0);
   }
@@ -327,9 +327,20 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getParticipant_Name()
+  public EAttribute getParticipant_Keyword()
   {
     return (EAttribute)participantEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getParticipant_Name()
+  {
+    return (EAttribute)participantEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -459,9 +470,20 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
    * @generated
    */
   @Override
-  public EAttribute getMessage_Name()
+  public EAttribute getMessage_Id()
   {
     return (EAttribute)messageEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMessage_Name()
+  {
+    return (EAttribute)messageEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -711,6 +733,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     createEAttribute(modelEClass, MODEL__END);
 
     participantEClass = createEClass(PARTICIPANT);
+    createEAttribute(participantEClass, PARTICIPANT__ID);
     createEAttribute(participantEClass, PARTICIPANT__KEYWORD);
     createEAttribute(participantEClass, PARTICIPANT__NAME);
 
@@ -734,6 +757,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     roleEClass = createEClass(ROLE);
 
     messageEClass = createEClass(MESSAGE);
+    createEAttribute(messageEClass, MESSAGE__ID);
     createEAttribute(messageEClass, MESSAGE__NAME);
 
     sequenceMessageTypeEClass = createEClass(SEQUENCE_MESSAGE_TYPE);
@@ -817,6 +841,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     initEAttribute(getModel_End(), ecorePackage.getEString(), "end", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(participantEClass, Participant.class, "Participant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParticipant_Id(), ecorePackage.getEString(), "id", null, 0, 1, Participant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getParticipant_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, Participant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getParticipant_Name(), ecorePackage.getEString(), "name", null, 0, 1, Participant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -840,6 +865,7 @@ public class DslPackageImpl extends EPackageImpl implements DslPackage
     initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMessage_Id(), ecorePackage.getEString(), "id", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMessage_Name(), ecorePackage.getEString(), "name", null, 0, 1, Message.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sequenceMessageTypeEClass, SequenceMessageType.class, "SequenceMessageType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

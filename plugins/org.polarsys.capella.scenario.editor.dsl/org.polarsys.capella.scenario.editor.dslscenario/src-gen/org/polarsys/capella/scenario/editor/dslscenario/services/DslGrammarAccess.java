@@ -98,6 +98,21 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		//GenericFunction
 		public RuleCall getGenericFunctionParserRuleCall_1() { return cGenericFunctionParserRuleCall_1; }
 	}
+	public class ParticipantUncalledElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.ParticipantUncalled");
+		private final Assignment cIdAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_0 = (RuleCall)cIdAssignment.eContents().get(0);
+		
+		//ParticipantUncalled Participant:
+		//	id=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//id=ID
+		public Assignment getIdAssignment() { return cIdAssignment; }
+		
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_0() { return cIdIDTerminalRuleCall_0; }
+	}
 	public class GenericComponentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.GenericComponent");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -379,6 +394,21 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ParticipantDeactivation
 		public RuleCall getParticipantDeactivationParserRuleCall_2() { return cParticipantDeactivationParserRuleCall_2; }
+	}
+	public class MessageUncalledElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.MessageUncalled");
+		private final Assignment cIdAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_0 = (RuleCall)cIdAssignment.eContents().get(0);
+		
+		//MessageUncalled Message:
+		//	id=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//id=ID
+		public Assignment getIdAssignment() { return cIdAssignment; }
+		
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_0() { return cIdIDTerminalRuleCall_0; }
 	}
 	public class SequenceMessageTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.polarsys.capella.scenario.editor.dslscenario.Dsl.SequenceMessageType");
@@ -692,6 +722,7 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final ModelElements pModel;
 	private final ParticipantElements pParticipant;
+	private final ParticipantUncalledElements pParticipantUncalled;
 	private final GenericComponentElements pGenericComponent;
 	private final GenericFunctionElements pGenericFunction;
 	private final ActorElements pActor;
@@ -702,6 +733,7 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	private final EntityElements pEntity;
 	private final RoleElements pRole;
 	private final MessageElements pMessage;
+	private final MessageUncalledElements pMessageUncalled;
 	private final SequenceMessageTypeElements pSequenceMessageType;
 	private final SequenceMessageElements pSequenceMessage;
 	private final CreateMessageElements pCreateMessage;
@@ -722,6 +754,7 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pModel = new ModelElements();
 		this.pParticipant = new ParticipantElements();
+		this.pParticipantUncalled = new ParticipantUncalledElements();
 		this.pGenericComponent = new GenericComponentElements();
 		this.pGenericFunction = new GenericFunctionElements();
 		this.pActor = new ActorElements();
@@ -732,6 +765,7 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pEntity = new EntityElements();
 		this.pRole = new RoleElements();
 		this.pMessage = new MessageElements();
+		this.pMessageUncalled = new MessageUncalledElements();
 		this.pSequenceMessageType = new SequenceMessageTypeElements();
 		this.pSequenceMessage = new SequenceMessageElements();
 		this.pCreateMessage = new CreateMessageElements();
@@ -789,6 +823,16 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getParticipantRule() {
 		return getParticipantAccess().getRule();
+	}
+	
+	//ParticipantUncalled Participant:
+	//	id=ID;
+	public ParticipantUncalledElements getParticipantUncalledAccess() {
+		return pParticipantUncalled;
+	}
+	
+	public ParserRule getParticipantUncalledRule() {
+		return getParticipantUncalledAccess().getRule();
 	}
 	
 	//GenericComponent:
@@ -889,6 +933,16 @@ public class DslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getMessageRule() {
 		return getMessageAccess().getRule();
+	}
+	
+	//MessageUncalled Message:
+	//	id=ID;
+	public MessageUncalledElements getMessageUncalledAccess() {
+		return pMessageUncalled;
+	}
+	
+	public ParserRule getMessageUncalledRule() {
+		return getMessageUncalledAccess().getRule();
 	}
 	
 	//SequenceMessageType:
