@@ -18,6 +18,8 @@ tmp/
 *.swp
 *~.nib
 *.xtendbin
+*.java._trace
+*.xtendbin
 #local.properties
 #.classpath
 #.settings/
