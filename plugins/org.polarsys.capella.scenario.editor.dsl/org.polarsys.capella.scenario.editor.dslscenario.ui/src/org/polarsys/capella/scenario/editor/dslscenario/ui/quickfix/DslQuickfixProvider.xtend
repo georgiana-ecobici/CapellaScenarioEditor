@@ -16,6 +16,10 @@
 package org.polarsys.capella.scenario.editor.dslscenario.ui.quickfix
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
+import org.eclipse.xtext.ui.editor.quickfix.Fix
+import org.polarsys.capella.scenario.editor.dslscenario.validation.DslValidator
+import org.eclipse.xtext.validation.Issue
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 
 /**
  * Custom quickfixes.
@@ -24,13 +28,13 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
  */
 class DslQuickfixProvider extends DefaultQuickfixProvider {
 
-//	@Fix(DslValidator.INVALID_NAME)
-//	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, 'Capitalize name', 'Capitalize the name.', 'upcase.png') [
-//			context |
-//			val xtextDocument = context.xtextDocument
-//			val firstLetter = xtextDocument.get(issue.offset, 1)
-//			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
-//		]
-//	}
+	@Fix(DslValidator.DUPILCATED_NAME)
+	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, 'Duplicated name name', 'Choose an id', 'upcase.png') [
+			context |
+			val xtextDocument = context.xtextDocument
+			val firstLetter = xtextDocument.get(issue.offset, 1)
+			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
+		]
+	}
 }
