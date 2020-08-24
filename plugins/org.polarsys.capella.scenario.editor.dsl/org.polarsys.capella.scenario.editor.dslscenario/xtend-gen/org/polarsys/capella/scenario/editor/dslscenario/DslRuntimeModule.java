@@ -14,11 +14,29 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario;
 
+import org.eclipse.xtext.resource.DerivedStateAwareResource;
+import org.eclipse.xtext.resource.DerivedStateAwareResourceDescriptionManager;
+import org.eclipse.xtext.resource.IDerivedStateComputer;
+import org.eclipse.xtext.resource.IResourceDescription;
+import org.eclipse.xtext.resource.XtextResource;
 import org.polarsys.capella.scenario.editor.dslscenario.AbstractDslRuntimeModule;
+import org.polarsys.capella.scenario.editor.dslscenario.resource.DslDerivedStateComputer;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
 public class DslRuntimeModule extends AbstractDslRuntimeModule {
+  @Override
+  public Class<? extends XtextResource> bindXtextResource() {
+    return DerivedStateAwareResource.class;
+  }
+  
+  public Class<? extends IDerivedStateComputer> bindIDerivedStateComputer() {
+    return DslDerivedStateComputer.class;
+  }
+  
+  public Class<? extends IResourceDescription.Manager> bindIResourceDescriptionManager() {
+    return DerivedStateAwareResourceDescriptionManager.class;
+  }
 }
