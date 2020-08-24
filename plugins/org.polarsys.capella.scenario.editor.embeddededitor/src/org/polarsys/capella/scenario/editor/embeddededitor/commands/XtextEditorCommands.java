@@ -33,6 +33,7 @@ import org.polarsys.capella.core.data.ctx.impl.SystemAnalysisImpl;
 import org.polarsys.capella.core.data.epbs.ConfigurationItem;
 import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.epbs.impl.EPBSArchitectureImpl;
+import org.polarsys.capella.core.data.helpers.interaction.services.ExecutionEndExt;
 import org.polarsys.capella.core.data.information.AbstractEventOperation;
 import org.polarsys.capella.core.data.interaction.EventReceiptOperation;
 import org.polarsys.capella.core.data.interaction.EventSentOperation;
@@ -78,6 +79,8 @@ public class XtextEditorCommands {
   private static final String INTERACTION = "INTERACTION";
   private static final String FUNCTIONAL = "FUNCTIONAL";
   private static final String INTERFACE = "INTERFACE";
+  
+  private static final String KEYWORD_DEACTIVATE = "deactivate";
 
   public static void xtextToDiagram(Scenario scenario, EmbeddedEditorView embeddedEditorViewPart) {
     if (embeddedEditorViewPart != null) {
@@ -429,27 +432,46 @@ public class XtextEditorCommands {
     EList<EObject> messagesOrReferences = domainModel.getMessagesOrReferences();
 
     List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
-    Object[] ends = fragments.stream().filter(fragment -> fragment instanceof MessageEnd).toArray();
+    Object[] ends = fragments.toArray();
 
-    for (int i = 0; i < ends.length; i = i + 2) {
-      EObject seqMessage = copyMessageFromMsgEnd(ends[i], factory);
-      messagesOrReferences.add(seqMessage);
+    // The list of fragments contains both ends of each sequence message (sender and receiver) 
+    // and only one end of each execution (the one where execution ends). This means that we should skip 
+    // the receiving end for each message, so that we don't duplicate the generated xtext message.
+    int i = 0;
+    while (i < ends.length) {
+      if (ends[i] instanceof MessageEnd) {
+        EObject seqMessage = copyMessageFromMsgEnd(ends[i], factory);
+        messagesOrReferences.add(seqMessage); 
+        // skip the next MessageEnd (the receiving end), as it will generate the same xtext message
+        i = i + 2;
+      } else {
+        EObject participantDeactivateMsg = getParticipantDeactivationMsgFromExecutionEnd(ends[i], factory);
+        messagesOrReferences.add(participantDeactivateMsg);
+        i = i + 1;
+      } 
     }
   }
 
-  private static org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage copySequenceMessageFromMsgEnd(
-      Object object, DslFactory factory) {
-    org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = factory.createSequenceMessage();
-    MessageEnd end = (MessageEnd) object;
-    SequenceMessage sequenceMessage = end.getMessage();
-    seqMessage.setName(sequenceMessage.getName());
-    seqMessage.setSource(sequenceMessage.getSendingEnd().getCoveredInstanceRoles().get(0).getName());
-    seqMessage.setTarget(sequenceMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName());
-    return seqMessage;
+  /**
+   * generates the ParticipantDeactivation message with input from the ExecutionEnd in the Capella diagram
+   * 
+   * @param object - this is the ExecutionEnd
+   * @param factory - this is the factory to create ParticipantDeactivation type of message
+   * @return - EObject containing the ParticipantDeactivation message
+   */
+  private static EObject getParticipantDeactivationMsgFromExecutionEnd(Object object, DslFactory factory) {
+    ExecutionEnd end = (ExecutionEnd) object;
+    SequenceMessage seqMessage = ExecutionEndExt.getMessage(end);
+    String timelineToDeactivate = seqMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName();
+    
+    EObject participantDeactivationMsg = factory.createParticipantDeactivation();
+    ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) participantDeactivationMsg).setName(timelineToDeactivate);
+    ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) participantDeactivationMsg).setKeyword(KEYWORD_DEACTIVATE);
+    return participantDeactivationMsg;
   }
 
   private static EObject copyMessageFromMsgEnd(Object object, DslFactory factory) {
-    EObject seqMessage;// = factory.createSequenceMessage();
+    EObject seqMessage;
     MessageEnd end = (MessageEnd) object;
     SequenceMessage sequenceMessage = end.getMessage();
 
