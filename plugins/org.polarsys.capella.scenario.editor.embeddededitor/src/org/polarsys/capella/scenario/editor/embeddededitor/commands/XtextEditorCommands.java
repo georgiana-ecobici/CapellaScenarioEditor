@@ -434,11 +434,15 @@ public class XtextEditorCommands {
     List<InteractionFragment> fragments = SequenceDiagramServices.getOrderedInteractionFragments(scenario);
     Object[] ends = fragments.toArray();
 
+    // The list of fragments contains both ends of each sequence message (sender and receiver) 
+    // and only one end of each execution (the one where execution ends). This means that we should skip 
+    // the receiving end for each message, so that we don't duplicate the generated xtext message.
     int i = 0;
     while (i < ends.length) {
       if (ends[i] instanceof MessageEnd) {
         EObject seqMessage = copyMessageFromMsgEnd(ends[i], factory);
-        messagesOrReferences.add(seqMessage); //add only once, not for both ends
+        messagesOrReferences.add(seqMessage); 
+        // skip the next MessageEnd (the receiving end), as it will generate the same xtext message
         i = i + 2;
       } else {
         EObject participantDeactivateMsg = getParticipantDeactivationMsgFromExecutionEnd(ends[i], factory);
@@ -448,12 +452,19 @@ public class XtextEditorCommands {
     }
   }
 
+  /**
+   * generates the ParticipantDeactivation message with input from the ExecutionEnd in the Capella diagram
+   * 
+   * @param object - this is the ExecutionEnd
+   * @param factory - this is the factory to create ParticipantDeactivation type of message
+   * @return - EObject containing the ParticipantDeactivation message
+   */
   private static EObject getParticipantDeactivationMsgFromExecutionEnd(Object object, DslFactory factory) {
-    EObject participantDeactivationMsg;
     ExecutionEnd end = (ExecutionEnd) object;
-    participantDeactivationMsg = factory.createParticipantDeactivation();
     SequenceMessage seqMessage = ExecutionEndExt.getMessage(end);
     String timelineToDeactivate = seqMessage.getReceivingEnd().getCoveredInstanceRoles().get(0).getName();
+    
+    EObject participantDeactivationMsg = factory.createParticipantDeactivation();
     ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) participantDeactivationMsg).setName(timelineToDeactivate);
     ((org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) participantDeactivationMsg).setKeyword(KEYWORD_DEACTIVATE);
     return participantDeactivationMsg;
