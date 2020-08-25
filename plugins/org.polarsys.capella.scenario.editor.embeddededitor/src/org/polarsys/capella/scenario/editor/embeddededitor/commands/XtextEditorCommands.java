@@ -296,11 +296,6 @@ public class XtextEditorCommands {
           }
         }
       }
-
-      private Execution getLastExecutionStartedForInstanceRole(InstanceRole instanceRole) {
-        // TODO Auto-generated method stub
-        return null;
-      }
     });
   }
 
