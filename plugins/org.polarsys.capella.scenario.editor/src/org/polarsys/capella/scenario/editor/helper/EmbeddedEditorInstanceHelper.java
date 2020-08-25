@@ -15,8 +15,10 @@ package org.polarsys.capella.scenario.editor.helper;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
+import org.polarsys.capella.common.data.behavior.AbstractEvent;
 import org.polarsys.capella.core.data.capellacore.CapellaElement;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
 import org.polarsys.capella.core.data.cs.ExchangeItemAllocation;
@@ -26,13 +28,13 @@ import org.polarsys.capella.core.data.ctx.SystemFunction;
 import org.polarsys.capella.core.data.ctx.impl.SystemFunctionImpl;
 import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.fa.AbstractFunction;
+import org.polarsys.capella.core.data.fa.FunctionalExchange;
 import org.polarsys.capella.core.data.information.ExchangeItem;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.ScenarioKind;
-import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModel;
+import org.polarsys.capella.core.data.interaction.properties.controllers.DataFlowHelper;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
-import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.communications.AbstractCommunication;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
 import org.polarsys.capella.core.data.la.LogicalFunction;
 import org.polarsys.capella.core.data.la.impl.LogicalFunctionImpl;
@@ -45,6 +47,7 @@ import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
 import org.polarsys.capella.core.data.pa.PhysicalFunction;
 import org.polarsys.capella.core.data.pa.impl.PhysicalFunctionImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
+import org.polarsys.capella.core.model.helpers.ScenarioExt;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
@@ -59,18 +62,38 @@ public class EmbeddedEditorInstanceHelper {
   public static List<String> getMessageSequenceName(String source, String target) {
     InstanceRole sourceIR = EmbeddedEditorInstanceHelper.getInstanceRole(source);
     InstanceRole targetIR = EmbeddedEditorInstanceHelper.getInstanceRole(target);
+
+    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     List<String> messagesName = new ArrayList<String>();
+
+    if (EmbeddedEditorInstance.getAssociatedScenarioDiagram().getKind() == ScenarioKind.DATA_FLOW) {
+      List<AbstractEvent> exchangesAvailable = (List<AbstractEvent>) DataFlowHelper
+          .getAvailableComponentExchanges(sourceIR, targetIR);
+      messagesName = exchangesAvailable.stream().map(x -> x.getName()).collect(Collectors.toList());
+      return messagesName;
+    }
+    if (ScenarioExt.isFunctionalScenario(currentScenario)) {
+      List<FunctionalExchange> functionalExchanges = DataFlowHelper
+          .getAvailableFonctionalExchangesFromFunctions(sourceIR, targetIR);
+      messagesName = functionalExchanges.stream().map(x -> x.getName()).collect(Collectors.toList());
+      return messagesName;
+    }
 
     List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
         .getAvailableExchangeItems(sourceIR, targetIR, false);
-
-    for (CapellaElement message : exchanges) {
-      if (message instanceof ExchangeItemAllocation) {
-        ExchangeItemAllocation allocation = (ExchangeItemAllocation) message;
-        if (allocation.getAllocatedItem() instanceof ExchangeItem) {
-          messagesName.add(allocation.getAllocatedItem().getName());
+    if (!exchanges.isEmpty()) {
+      for (CapellaElement message : exchanges) {
+        if (message instanceof ExchangeItemAllocation) {
+          ExchangeItemAllocation allocation = (ExchangeItemAllocation) message;
+          if (allocation.getAllocatedItem() instanceof ExchangeItem) {
+            messagesName.add(allocation.getAllocatedItem().getName());
+          }
         }
       }
+    } else {
+      // OAS
+      List<FunctionalExchange> messages = DataFlowHelper.getAvailableFonctionalExchanges(sourceIR, targetIR);
+      messagesName = messages.stream().map(x -> x.getName()).collect(Collectors.toList());
     }
 
     return messagesName;

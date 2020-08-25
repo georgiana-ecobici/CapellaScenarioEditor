@@ -22,7 +22,6 @@ import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
@@ -95,7 +94,15 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   public void completeSequenceMessage_Source(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     EList<Participant> _variablesDefinedBefore2 = this.variablesDefinedBefore2(((Model) model));
     for (final EObject el : _variablesDefinedBefore2) {
-      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
+      String _name = ((Participant) el).getName();
+      String _plus = ("\"" + _name);
+      String _plus_1 = (_plus + "\"");
+      String _name_1 = ((Participant) el).getName();
+      String _plus_2 = ("\"" + _name_1);
+      String _plus_3 = (_plus_2 + "\"");
+      acceptor.accept(
+        this.createCompletionProposal(_plus_1, _plus_3, 
+          null, context));
     }
   }
   
@@ -103,8 +110,28 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   public void completeSequenceMessage_Target(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     EList<Participant> _variablesDefinedBefore3 = this.variablesDefinedBefore3(((SequenceMessage) model));
     for (final EObject el : _variablesDefinedBefore3) {
-      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
+      String _name = ((Participant) el).getName();
+      String _plus = ("\"" + _name);
+      String _plus_1 = (_plus + "\"");
+      String _name_1 = ((Participant) el).getName();
+      String _plus_2 = ("\"" + _name_1);
+      String _plus_3 = (_plus_2 + "\"");
+      acceptor.accept(
+        this.createCompletionProposal(_plus_1, _plus_3, 
+          null, context));
     }
+  }
+  
+  @Override
+  public void completeSequenceMessage_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    List<String> _messagesDefinedBefore = this.messagesDefinedBefore(((SequenceMessage) model));
+    for (final String el : _messagesDefinedBefore) {
+      acceptor.accept(this.createCompletionProposal((("\"" + el) + "\""), (("\"" + el) + "\""), null, context));
+    }
+  }
+  
+  public List<String> messagesDefinedBefore(final SequenceMessage message) {
+    return EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource(), message.getTarget());
   }
   
   public Participant variablesDefinedBefore(final Participant sc) {
