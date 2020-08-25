@@ -22,9 +22,15 @@ import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Component;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Role;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist.AbstractDslProposalProvider;
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
@@ -95,7 +101,7 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   public void completeSequenceMessage_Source(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     EList<Participant> _variablesDefinedBefore2 = this.variablesDefinedBefore2(((Model) model));
     for (final EObject el : _variablesDefinedBefore2) {
-      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
+      this.createAcceptorForParticipants(el, acceptor, context);
     }
   }
   
@@ -103,8 +109,100 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   public void completeSequenceMessage_Target(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     EList<Participant> _variablesDefinedBefore3 = this.variablesDefinedBefore3(((SequenceMessage) model));
     for (final EObject el : _variablesDefinedBefore3) {
-      acceptor.accept(this.createCompletionProposal(((Actor) el).getName(), ((Actor) el).getName(), null, context));
+      this.createAcceptorForParticipants(el, acceptor, context);
     }
+  }
+  
+  @Override
+  public void completeSequenceMessage_Name(final EObject model, final Assignment assignment, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
+    List<String> _messagesDefinedBefore = this.messagesDefinedBefore(((SequenceMessage) model));
+    for (final String el : _messagesDefinedBefore) {
+      acceptor.accept(this.createCompletionProposal((("\"" + el) + "\""), (("\"" + el) + "\""), null, context));
+    }
+  }
+  
+  public void createAcceptorForParticipants(final EObject el, final ICompletionProposalAcceptor acceptor, final ContentAssistContext context) {
+    if ((el instanceof Actor)) {
+      String _name = ((Actor) el).getName();
+      String _plus = ("\"" + _name);
+      String _plus_1 = (_plus + "\"");
+      String _name_1 = ((Actor) el).getName();
+      String _plus_2 = ("\"" + _name_1);
+      String _plus_3 = (_plus_2 + "\"");
+      acceptor.accept(
+        this.createCompletionProposal(_plus_1, _plus_3, null, context));
+    } else {
+      if ((el instanceof Component)) {
+        String _name_2 = ((Component) el).getName();
+        String _plus_4 = ("\"" + _name_2);
+        String _plus_5 = (_plus_4 + "\"");
+        String _name_3 = ((Component) el).getName();
+        String _plus_6 = ("\"" + _name_3);
+        String _plus_7 = (_plus_6 + "\"");
+        acceptor.accept(
+          this.createCompletionProposal(_plus_5, _plus_7, 
+            null, context));
+      } else {
+        if ((el instanceof Activity)) {
+          String _name_4 = ((Activity) el).getName();
+          String _plus_8 = ("\"" + _name_4);
+          String _plus_9 = (_plus_8 + "\"");
+          String _name_5 = ((Activity) el).getName();
+          String _plus_10 = ("\"" + _name_5);
+          String _plus_11 = (_plus_10 + "\"");
+          acceptor.accept(
+            this.createCompletionProposal(_plus_9, _plus_11, null, context));
+        } else {
+          if ((el instanceof Entity)) {
+            String _name_6 = ((Entity) el).getName();
+            String _plus_12 = ("\"" + _name_6);
+            String _plus_13 = (_plus_12 + "\"");
+            String _name_7 = ((Entity) el).getName();
+            String _plus_14 = ("\"" + _name_7);
+            String _plus_15 = (_plus_14 + "\"");
+            acceptor.accept(
+              this.createCompletionProposal(_plus_13, _plus_15, null, context));
+          } else {
+            if ((el instanceof Role)) {
+              String _name_8 = ((Role) el).getName();
+              String _plus_16 = ("\"" + _name_8);
+              String _plus_17 = (_plus_16 + "\"");
+              String _name_9 = ((Role) el).getName();
+              String _plus_18 = ("\"" + _name_9);
+              String _plus_19 = (_plus_18 + "\"");
+              acceptor.accept(
+                this.createCompletionProposal(_plus_17, _plus_19, null, context));
+            } else {
+              if ((el instanceof ConfigurationItem)) {
+                String _name_10 = ((ConfigurationItem) el).getName();
+                String _plus_20 = ("\"" + _name_10);
+                String _plus_21 = (_plus_20 + "\"");
+                String _name_11 = ((ConfigurationItem) el).getName();
+                String _plus_22 = ("\"" + _name_11);
+                String _plus_23 = (_plus_22 + "\"");
+                acceptor.accept(
+                  this.createCompletionProposal(_plus_21, _plus_23, null, context));
+              } else {
+                if ((el instanceof Function)) {
+                  String _name_12 = ((Function) el).getName();
+                  String _plus_24 = ("\"" + _name_12);
+                  String _plus_25 = (_plus_24 + "\"");
+                  String _name_13 = ((Function) el).getName();
+                  String _plus_26 = ("\"" + _name_13);
+                  String _plus_27 = (_plus_26 + "\"");
+                  acceptor.accept(
+                    this.createCompletionProposal(_plus_25, _plus_27, null, context));
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  public List<String> messagesDefinedBefore(final SequenceMessage message) {
+    return EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource(), message.getTarget());
   }
   
   public Participant variablesDefinedBefore(final Participant sc) {
