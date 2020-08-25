@@ -12,8 +12,10 @@
  *******************************************************************************/
 package org.polarsys.capella.scenario.editor.embeddededitor.commands;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
@@ -47,6 +49,7 @@ import org.polarsys.capella.core.data.interaction.MessageEnd;
 import org.polarsys.capella.core.data.interaction.MessageKind;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.SequenceMessage;
+import org.polarsys.capella.core.data.interaction.TimeLapse;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
 import org.polarsys.capella.core.data.la.impl.LogicalComponentImpl;
@@ -66,6 +69,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Role;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslFactoryImpl;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl;
@@ -94,7 +98,7 @@ public class XtextEditorCommands {
 
       // get messages
       EList<EObject> messages = domainModel.getMessagesOrReferences();
-
+      
       // Project project;
       BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(scenario);
 
@@ -198,75 +202,104 @@ public class XtextEditorCommands {
 
         SequenceMessage sequenceMessage;
         EList<SequenceMessage> sequenceMessages = scenario.getOwnedMessages();
-
+        ArrayList<InteractionFragment> executionEndsToProcess = new ArrayList<InteractionFragment>();
+        
         for (Iterator<EObject> iterator = messages.iterator(); iterator.hasNext();) {
-          EObject seqMessageFromXtext = iterator.next();
-          org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = (org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) seqMessageFromXtext;
-          InstanceRole source = EmbeddedEditorInstanceHelper.getInstanceRole(seqMessage.getSource());
-          InstanceRole target = EmbeddedEditorInstanceHelper.getInstanceRole(seqMessage.getTarget());
-          if (source != null && target != null) {
-            // create Capella SequenceMessage
-            sequenceMessage = InteractionFactory.eINSTANCE.createSequenceMessage();
-            sequenceMessage.setName(seqMessage.getName());
-            sequenceMessage.setKind(MessageKind.ASYNCHRONOUS_CALL);
+          EObject messageFromXtext = iterator.next();
+ 
+          if (messageFromXtext instanceof org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) {
+            
+            org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = (org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) messageFromXtext;
+            InstanceRole source = EmbeddedEditorInstanceHelper.getInstanceRole(seqMessage.getSource());
+            InstanceRole target = EmbeddedEditorInstanceHelper.getInstanceRole(seqMessage.getTarget());
+            if (source != null && target != null) {
+              // create Capella SequenceMessage
+              sequenceMessage = InteractionFactory.eINSTANCE.createSequenceMessage();
+              sequenceMessage.setName(seqMessage.getName());
+              sequenceMessage.setKind(MessageKind.ASYNCHRONOUS_CALL);
 
-            // sending end
-            MessageEnd sendingEnd = InteractionFactory.eINSTANCE.createMessageEnd();
-            sendingEnd.getCoveredInstanceRoles().add(source);
-            sequenceMessage.setSendingEnd(sendingEnd);
-            scenario.getOwnedInteractionFragments().add(sendingEnd);
+              // sending end
+              MessageEnd sendingEnd = InteractionFactory.eINSTANCE.createMessageEnd();
+              sendingEnd.getCoveredInstanceRoles().add(source);
+              sequenceMessage.setSendingEnd(sendingEnd);
+              scenario.getOwnedInteractionFragments().add(sendingEnd);
 
-            // receiving end
-            MessageEnd receivingEnd = InteractionFactory.eINSTANCE.createMessageEnd();
-            receivingEnd.getCoveredInstanceRoles().add(target);
-            sequenceMessage.setReceivingEnd(receivingEnd);
-            scenario.getOwnedInteractionFragments().add(receivingEnd);
+              // receiving end
+              MessageEnd receivingEnd = InteractionFactory.eINSTANCE.createMessageEnd();
+              receivingEnd.getCoveredInstanceRoles().add(target);
+              sequenceMessage.setReceivingEnd(receivingEnd);
+              scenario.getOwnedInteractionFragments().add(receivingEnd);
 
-            // execution end
-            ExecutionEnd executionEnd = InteractionFactory.eINSTANCE.createExecutionEnd();
-            scenario.getOwnedInteractionFragments().add(executionEnd);
-            executionEnd.getCoveredInstanceRoles().add(receivingEnd.getCoveredInstanceRoles().get(0));
+              // execution end
+              ExecutionEnd executionEnd = InteractionFactory.eINSTANCE.createExecutionEnd();
+              scenario.getOwnedInteractionFragments().add(executionEnd);
+              executionEnd.getCoveredInstanceRoles().add(receivingEnd.getCoveredInstanceRoles().get(0));
+              // Adding this execution end to executionEndsToProcess list. 
+              // We want to keep the order between interaction fragments consistent with the order in xtext scenario.
+              // To achieve this, the execution end will be processed when a corresponding "deactivate" message 
+              // will be encountered in the xtext scenario.
+              // At that point, the execution end will be moved at its proper place in the ownedInteractionFragments list 
+              // of the Capella scenario.
+              executionEndsToProcess.add(executionEnd);
 
-            // execution
-            Execution execution = InteractionFactory.eINSTANCE.createExecution();
-            execution.setFinish(executionEnd);
-            execution.setStart(receivingEnd);
-            scenario.getOwnedTimeLapses().add(execution);
+              // execution
+              Execution execution = InteractionFactory.eINSTANCE.createExecution();
+              execution.setFinish(executionEnd);
+              execution.setStart(receivingEnd);
+              scenario.getOwnedTimeLapses().add(execution);
 
-            // EventSentOperation
-            EventSentOperation eventSentOperation = InteractionFactory.eINSTANCE.createEventSentOperation();
-            scenario.getOwnedEvents().add(eventSentOperation);
-            sendingEnd.setEvent(eventSentOperation);
+              // EventSentOperation
+              EventSentOperation eventSentOperation = InteractionFactory.eINSTANCE.createEventSentOperation();
+              scenario.getOwnedEvents().add(eventSentOperation);
+              sendingEnd.setEvent(eventSentOperation);
 
-            // TODO - ordering
-            // Look for the InstanceRole mapped from the source of the given functional exchange
-            // EObject eObject = getMapping().get(getFunctionalExchangeSource(fe));
-            // if (eObject instanceof InstanceRole && !orderedInstRoles.contains(eObject)) {
-            // orderedInstRoles.add((InstanceRole) eObject);
-            // }
+              // EventReceiptOperation
+              EventReceiptOperation eventRecvOperation = InteractionFactory.eINSTANCE.createEventReceiptOperation();
+              scenario.getOwnedEvents().add(eventRecvOperation);
+              receivingEnd.setEvent(eventRecvOperation);
 
-            // EventReceiptOperation
-            EventReceiptOperation eventRecvOperation = InteractionFactory.eINSTANCE.createEventReceiptOperation();
-            scenario.getOwnedEvents().add(eventRecvOperation);
-            receivingEnd.setEvent(eventRecvOperation);
+              // execution event
+              ExecutionEvent executionEvent = InteractionFactory.eINSTANCE.createExecutionEvent();
+              executionEnd.setEvent(executionEvent);
+              scenario.getOwnedEvents().add(executionEvent);
 
-            // execution event
-            ExecutionEvent executionEvent = InteractionFactory.eINSTANCE.createExecutionEvent();
-            executionEnd.setEvent(executionEvent);
-            scenario.getOwnedEvents().add(executionEvent);
+              // get operation by name from the list of available exchanges
+              List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
+                  .getAvailableExchangeItems(source, target, false);
+              exchanges.stream().filter(ex -> ((AbstractNamedElement) ex).getName().equals(seqMessage.getName()));
+              if (!exchanges.isEmpty()) {
+                eventRecvOperation.setOperation((AbstractEventOperation) exchanges.get(0));
+                eventSentOperation.setOperation((AbstractEventOperation) exchanges.get(0));
+              }
 
-            // get operation by name from the list of available exchanges
-            List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
-                .getAvailableExchangeItems(source, target, false);
-            exchanges.stream().filter(ex -> ((AbstractNamedElement) ex).getName().equals(seqMessage.getName()));
-            if (!exchanges.isEmpty()) {
-              eventRecvOperation.setOperation((AbstractEventOperation) exchanges.get(0));
-              eventSentOperation.setOperation((AbstractEventOperation) exchanges.get(0));
+              sequenceMessages.add(sequenceMessage);
+            }            
+          } else {
+            // This is a ParticipantDeactivationMessage, this means that the execution on the corresponding timeline finished.
+            // We must move the interaction fragment representing the execution end on the correct position in the ownedInteractionFragments ordered list
+            org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation participantDeactivationMessage = 
+                (org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) messageFromXtext;
+  
+            //find the timeline (instance role) of the execution that has to end. Search by participant name (TODO - search by id)
+            InstanceRole instanceRole = EmbeddedEditorInstanceHelper.getInstanceRole(participantDeactivationMessage.getName());
+            
+            //search in the executionEndsToProcess list the last execution started on this timeline (instance role)
+            EList<InteractionFragment> fragments = scenario.getOwnedInteractionFragments();
+            InteractionFragment executionEnd = executionEndsToProcess.stream().filter(e -> e.getCoveredInstanceRoles().get(0).getName().equals(instanceRole.getName()))
+                .reduce((first, second) -> second).orElse(null);
+            
+            //move execution end at the end of the interaction fragments list, then remove it from the processing list
+            if (executionEnd != null) {
+              fragments.move(fragments.size() - 1, executionEnd);
+              executionEndsToProcess.remove(executionEnd);
             }
-
-            sequenceMessages.add(sequenceMessage);
           }
         }
+      }
+
+      private Execution getLastExecutionStartedForInstanceRole(InstanceRole instanceRole) {
+        // TODO Auto-generated method stub
+        return null;
       }
     });
   }
