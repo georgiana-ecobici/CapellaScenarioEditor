@@ -18,25 +18,13 @@ package org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
-import java.util.Arrays
 import org.eclipse.xtext.Assignment
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
-import org.eclipse.xtext.RuleCall
-import org.eclipse.xtext.AbstractElement
-import com.google.common.collect.Sets
-import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.Keyword
 import org.eclipse.jface.text.contentassist.ICompletionProposal
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Component
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Role
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function
 
 /**
  * This class is used to display auto-complete proposals when pressing ctrl+space
@@ -101,14 +89,18 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 	override completeSequenceMessage_Source(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		for (EObject el : variablesDefinedBefore2(model as Model)) {
-			createAcceptorForParticipants(el, acceptor, context)
+			acceptor.accept(
+				createCompletionProposal("\"" + (el as Participant).name + "\"", "\"" + (el as Participant).name + "\"",
+					null, context))
 		}
 	}
 
 	override completeSequenceMessage_Target(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
-			createAcceptorForParticipants(el, acceptor, context)
+			acceptor.accept(
+				createCompletionProposal("\"" + (el as Participant).name + "\"", "\"" + (el as Participant).name + "\"",
+					null, context))
 		}
 	}
 
@@ -116,39 +108,6 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		for (String el : messagesDefinedBefore(model as SequenceMessage)) {
 			acceptor.accept(createCompletionProposal("\"" + el + "\"", "\"" + el + "\"", null, context))
-
-		}
-	}
-
-	def createAcceptorForParticipants(EObject el, ICompletionProposalAcceptor acceptor, ContentAssistContext context) {
-		if (el instanceof Actor) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as Actor).name + "\"", "\"" + (el as Actor).name + "\"", null,
-					context))
-		} else if (el instanceof Component) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as Component).name + "\"", "\"" + (el as Component).name + "\"",
-					null, context))
-		} else if (el instanceof Activity) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as Activity).name + "\"", "\"" + (el as Activity).name + "\"", null,
-					context))
-		} else if (el instanceof Entity) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as Entity).name + "\"", "\"" + (el as Entity).name + "\"", null,
-					context))
-		} else if (el instanceof Role) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as Role).name + "\"", "\"" + (el as Role).name + "\"", null,
-					context))
-		} else if (el instanceof ConfigurationItem) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as ConfigurationItem).name + "\"",
-					"\"" + (el as ConfigurationItem).name + "\"", null, context))
-		} else if (el instanceof Function) {
-			acceptor.accept(
-				createCompletionProposal("\"" + (el as Function).name + "\"",
-					"\"" + (el as Function).name + "\"", null, context))
 
 		}
 	}

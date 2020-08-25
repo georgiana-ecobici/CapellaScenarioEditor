@@ -91,6 +91,7 @@ public class EmbeddedEditorInstanceHelper {
         }
       }
     } else {
+      // OAS
       List<FunctionalExchange> messages = DataFlowHelper.getAvailableFonctionalExchanges(sourceIR, targetIR);
       messagesName = messages.stream().map(x -> x.getName()).collect(Collectors.toList());
     }
