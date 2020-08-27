@@ -65,7 +65,7 @@ class DslValidator extends AbstractDslValidator {
 		var index = 0
 		val names = newHashSet
 		for (p : model.participants) {
-			if (!names.add(p.name)) {
+			if (!names.add(p.name + ":"+ p.id)) {
 				error(
 					'Multiple participants with the same name',
 					DslPackage.Literals.MODEL__PARTICIPANTS,

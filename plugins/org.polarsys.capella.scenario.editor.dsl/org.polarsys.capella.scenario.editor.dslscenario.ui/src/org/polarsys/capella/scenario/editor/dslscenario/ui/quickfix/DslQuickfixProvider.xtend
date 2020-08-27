@@ -28,13 +28,23 @@ import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
  */
 class DslQuickfixProvider extends DefaultQuickfixProvider {
 
-	@Fix(DslValidator.DUPILCATED_NAME)
+	@Fix(DslValidator.INVALID_NAME)
 	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-		acceptor.accept(issue, 'Duplicated name name', 'Choose an id', 'upcase.png') [
+		acceptor.accept(issue, 'Create element (todo)', 'Choose an id', 'upcase.png') [
 			context |
 			val xtextDocument = context.xtextDocument
 			val firstLetter = xtextDocument.get(issue.offset, 1)
-			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
+			xtextDocument.replace(issue.offset, 1, firstLetter)
+		]
+	}
+
+	@Fix(DslValidator.DUPILCATED_NAME)
+	def duplicatedName(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, 'Duplicated name (todo)', 'Choose an id', 'upcase.png') [
+			context |
+			val xtextDocument = context.xtextDocument
+			val firstLetter = xtextDocument.get(issue.offset, 1)
+			xtextDocument.replace(issue.offset, 1, firstLetter)
 		]
 	}
 }

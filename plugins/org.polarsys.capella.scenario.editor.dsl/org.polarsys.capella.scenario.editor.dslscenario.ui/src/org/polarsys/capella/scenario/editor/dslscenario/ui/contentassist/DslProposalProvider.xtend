@@ -37,8 +37,6 @@ import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher
  * This class is used to display auto-complete proposals when pressing ctrl+space
  */
 class DslProposalProvider extends AbstractDslProposalProvider {
-	//@Inject DslscenarioProvider provider
-
 	/*
 	 * filter the proposed keywords based on the context in which we edit the text scenario;
 	 * check the context of the Capella Diagram - layer (OA, SA, LA, PA), type of scenario (IS, ES FS)
@@ -52,61 +50,74 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 
 	override completeActor_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("actor", context, acceptor, model, assignment)
+		getExistingParticipants("actor", context, acceptor)
 	}
 
 	override completeComponent_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("component", context, acceptor, model, assignment)
+		getExistingParticipants("component", context, acceptor)
 	}
 
 	override completeConfigurationItem_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("configuration_item", context, acceptor, model, assignment)
+		getExistingParticipants("configuration_item", context, acceptor)
 	}
 
 	override completeFunction_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("function", context, acceptor, model, assignment)
+		getExistingParticipants("function", context, acceptor)
 	}
 
 	override completeActivity_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("activity", context, acceptor, model, assignment)
+		getExistingParticipants("activity", context, acceptor)
 	}
 
 	override completeEntity_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("entity", context, acceptor, model, assignment)
+		getExistingParticipants("entity", context, acceptor)
 	}
 
 	override completeRole_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		getExistingParticipants("role", context, acceptor, model, assignment)
+		getExistingParticipants("role", context, acceptor)
 	}
 
-	def getExistingParticipants(String keyword, ContentAssistContext context, ICompletionProposalAcceptor acceptor,
-		EObject model, Assignment assignment
+	/*
+	 * propose a list with the participats (parts that can be created
+	 * if we have duplicated names in the list we can chose based on the id
+	 */
+	def getExistingParticipants(
+		String keyword,
+		ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor
 	) {
 		for (el : EmbeddedEditorInstanceHelper.getAvailableElements(keyword)) {
-			
-			var textApplier = new IReplacementTextApplier () {
-				override apply(IDocument document, ConfigurableCompletionProposal proposal) throws BadLocationException {
-					var participant = proposal.getAdditionalData("participant") as Participant
-					participant.id = proposal.getAdditionalData("id") as String
-					participant.name = "A"
-					document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), proposal.getReplacementString());
+
+			var textApplier = new IReplacementTextApplier() {
+				override apply(IDocument document,
+					ConfigurableCompletionProposal proposal) throws BadLocationException {
+					// use a map that will be used in dsl computer to add the id the chosen element
+					EmbeddedEditorInstanceHelper.addElementToCompute(
+						proposal.getAdditionalData("name") as String,
+						proposal.getAdditionalData("id") as String
+					)
+					// replace the name with the selected one via content assist
+					document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(),
+						proposal.getReplacementString());
+
 				}
 			}
 
+			// create the proposal and configure it (with text applier and additional data like the id and name of the element)
 			var proposal = createCompletionProposal("\"" + EmbeddedEditorInstanceHelper.getName(el) + "\"",
-					EmbeddedEditorInstanceHelper.getLabel(el), null, context) as ConfigurableCompletionProposal
-			proposal.setTextApplier(textApplier)
-			proposal.setAdditionalData("id", EmbeddedEditorInstanceHelper.getId(el))
-			proposal.setAdditionalData("participant", context.currentModel)
-			proposal.setAdditionalProposalInfo(EmbeddedEditorInstanceHelper.getId(el))
-			proposal.setAutoInsertable(true);
-			proposal.setSimpleLinkedMode(context.getViewer(), '\t', ' ');
+				EmbeddedEditorInstanceHelper.getLabel(el), null, context) as ConfigurableCompletionProposal
+			if (proposal instanceof ConfigurableCompletionProposal) {
+				var configurable = proposal as ConfigurableCompletionProposal
+				configurable.setTextApplier(textApplier)
+				configurable.setAdditionalData("id", EmbeddedEditorInstanceHelper.getId(el))
+				configurable.setAdditionalData("name", EmbeddedEditorInstanceHelper.getName(el))
+			}
 			acceptor.accept(proposal);
 		}
 	}
@@ -115,7 +126,8 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		for (EObject el : variablesDefinedBefore2(model as Model)) {
 			acceptor.accept(
-				createCompletionProposal("\"" + (el as Actor).name + "\"", EmbeddedEditorInstanceHelper.getLabel(el),
+				createCompletionProposal("\"" + (el as Participant).name + "\"",
+					(el as Participant).name,
 					null, context))
 		}
 	}
@@ -124,9 +136,22 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
 			acceptor.accept(
-				createCompletionProposal("\"" + (el as Actor).name + "\"", EmbeddedEditorInstanceHelper.getLabel(el),
+				createCompletionProposal("\"" + (el as Participant).name + "\"", 
+					(el as Participant).name,
 					null, context))
 		}
+	}
+	
+	override completeSequenceMessage_Name(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		for (String el : messagesDefinedBefore(model as SequenceMessage)) {
+			acceptor.accept(createCompletionProposal("\"" + el + "\"", "\"" + el + "\"", null, context))
+
+		}
+	}
+
+	def messagesDefinedBefore(SequenceMessage message) {
+		return EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource, message.getTarget)
 	}
 
 	def variablesDefinedBefore(Participant sc) {

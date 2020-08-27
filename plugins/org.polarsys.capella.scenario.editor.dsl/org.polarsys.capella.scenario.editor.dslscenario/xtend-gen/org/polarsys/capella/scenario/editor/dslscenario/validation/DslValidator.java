@@ -79,7 +79,11 @@ public class DslValidator extends AbstractDslValidator {
     EList<Participant> _participants = model.getParticipants();
     for (final Participant p : _participants) {
       {
-        boolean _add = names.add(p.getName());
+        String _name = p.getName();
+        String _plus = (_name + ":");
+        String _id = p.getId();
+        String _plus_1 = (_plus + _id);
+        boolean _add = names.add(_plus_1);
         boolean _not = (!_add);
         if (_not) {
           this.error(

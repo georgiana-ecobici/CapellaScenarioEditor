@@ -18,20 +18,22 @@ package org.polarsys.capella.scenario.editor.dslscenario.resource
 import org.eclipse.xtext.resource.IDerivedStateComputer
 import org.eclipse.xtext.resource.DerivedStateAwareResource
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
+import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 
 class DslDerivedStateComputer implements IDerivedStateComputer {
-
 	override discardDerivedState(DerivedStateAwareResource resource) {
-		resource.allContents.filter(Actor).forEach [
-			id = "456"
-		]
+		resource.allContents.filter(Participant).forEach [ participant |
+				participant.id = null
+			]
 	}
 
 	override installDerivedState(DerivedStateAwareResource resource, boolean preLinkingPhase) {
 		if (!preLinkingPhase)
-			resource.allContents.filter(Actor).forEach [ participant |
-				participant.id = "123"
+			resource.allContents.filter(Participant).forEach [ participant |
+				//obtain the id from the dictionary then set it
+				var id = EmbeddedEditorInstanceHelper.getIdOfElementToCompute(participant.name) as String
+				if(id != null)
+					participant.id = id
 			]
 	}
 

@@ -30,13 +30,23 @@ import org.polarsys.capella.scenario.editor.dslscenario.validation.DslValidator;
  */
 @SuppressWarnings("all")
 public class DslQuickfixProvider extends DefaultQuickfixProvider {
-  @Fix(DslValidator.DUPILCATED_NAME)
+  @Fix(DslValidator.INVALID_NAME)
   public void capitalizeName(final Issue issue, final IssueResolutionAcceptor acceptor) {
     final IModification _function = (IModificationContext context) -> {
       final IXtextDocument xtextDocument = context.getXtextDocument();
       final String firstLetter = xtextDocument.get((issue.getOffset()).intValue(), 1);
-      xtextDocument.replace((issue.getOffset()).intValue(), 1, firstLetter.toUpperCase());
+      xtextDocument.replace((issue.getOffset()).intValue(), 1, firstLetter);
     };
-    acceptor.accept(issue, "Duplicated name name", "Choose an id", "upcase.png", _function);
+    acceptor.accept(issue, "Create element (todo)", "Choose an id", "upcase.png", _function);
+  }
+  
+  @Fix(DslValidator.DUPILCATED_NAME)
+  public void duplicatedName(final Issue issue, final IssueResolutionAcceptor acceptor) {
+    final IModification _function = (IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      final String firstLetter = xtextDocument.get((issue.getOffset()).intValue(), 1);
+      xtextDocument.replace((issue.getOffset()).intValue(), 1, firstLetter);
+    };
+    acceptor.accept(issue, "Duplicated name (todo)", "Choose an id", "upcase.png", _function);
   }
 }

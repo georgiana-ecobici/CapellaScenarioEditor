@@ -109,7 +109,7 @@ public class XtextEditorCommands {
 
       // get messages
       EList<EObject> messages = domainModel.getMessagesOrReferences();
-      
+
       // Project project;
       BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(scenario);
 
@@ -310,12 +310,12 @@ public class XtextEditorCommands {
         SequenceMessage sequenceMessage;
         EList<SequenceMessage> sequenceMessages = scenario.getOwnedMessages();
         ArrayList<InteractionFragment> executionEndsToProcess = new ArrayList<InteractionFragment>();
-        
+
         for (Iterator<EObject> iterator = messages.iterator(); iterator.hasNext();) {
           EObject messageFromXtext = iterator.next();
- 
+
           if (messageFromXtext instanceof org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) {
-            
+
             org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage seqMessage = (org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage) messageFromXtext;
             InstanceRole source = EmbeddedEditorInstanceHelper.getInstanceRole(seqMessage.getSource());
             InstanceRole target = EmbeddedEditorInstanceHelper.getInstanceRole(seqMessage.getTarget());
@@ -341,11 +341,12 @@ public class XtextEditorCommands {
               ExecutionEnd executionEnd = InteractionFactory.eINSTANCE.createExecutionEnd();
               scenario.getOwnedInteractionFragments().add(executionEnd);
               executionEnd.getCoveredInstanceRoles().add(receivingEnd.getCoveredInstanceRoles().get(0));
-              // Adding this execution end to executionEndsToProcess list. 
+              // Adding this execution end to executionEndsToProcess list.
               // We want to keep the order between interaction fragments consistent with the order in xtext scenario.
-              // To achieve this, the execution end will be processed when a corresponding "deactivate" message 
+              // To achieve this, the execution end will be processed when a corresponding "deactivate" message
               // will be encountered in the xtext scenario.
-              // At that point, the execution end will be moved at its proper place in the ownedInteractionFragments list 
+              // At that point, the execution end will be moved at its proper place in the ownedInteractionFragments
+              // list
               // of the Capella scenario.
               executionEndsToProcess.add(executionEnd);
 
@@ -380,22 +381,26 @@ public class XtextEditorCommands {
               }
 
               sequenceMessages.add(sequenceMessage);
-            }            
+            }
           } else {
-            // This is a ParticipantDeactivationMessage, this means that the execution on the corresponding timeline finished.
-            // We must move the interaction fragment representing the execution end on the correct position in the ownedInteractionFragments ordered list
-            org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation participantDeactivationMessage = 
-                (org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) messageFromXtext;
-  
-            //find the timeline (instance role) of the execution that has to end. Search by participant name (TODO - search by id)
-            InstanceRole instanceRole = EmbeddedEditorInstanceHelper.getInstanceRole(participantDeactivationMessage.getName());
-            
-            //search in the executionEndsToProcess list the last execution started on this timeline (instance role)
+            // This is a ParticipantDeactivationMessage, this means that the execution on the corresponding timeline
+            // finished.
+            // We must move the interaction fragment representing the execution end on the correct position in the
+            // ownedInteractionFragments ordered list
+            org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation participantDeactivationMessage = (org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation) messageFromXtext;
+
+            // find the timeline (instance role) of the execution that has to end. Search by participant name (TODO -
+            // search by id)
+            InstanceRole instanceRole = EmbeddedEditorInstanceHelper
+                .getInstanceRole(participantDeactivationMessage.getName());
+
+            // search in the executionEndsToProcess list the last execution started on this timeline (instance role)
             EList<InteractionFragment> fragments = scenario.getOwnedInteractionFragments();
-            InteractionFragment executionEnd = executionEndsToProcess.stream().filter(e -> e.getCoveredInstanceRoles().get(0).getName().equals(instanceRole.getName()))
+            InteractionFragment executionEnd = executionEndsToProcess.stream()
+                .filter(e -> e.getCoveredInstanceRoles().get(0).getName().equals(instanceRole.getName()))
                 .reduce((first, second) -> second).orElse(null);
-            
-            //move execution end at the end of the interaction fragments list, then remove it from the processing list
+
+            // move execution end at the end of the interaction fragments list, then remove it from the processing list
             if (executionEnd != null) {
               fragments.move(fragments.size() - 1, executionEnd);
               executionEndsToProcess.remove(executionEnd);
@@ -421,19 +426,21 @@ public class XtextEditorCommands {
 
       DslFactory factory = new DslFactoryImpl();
       Model domainModel = getModel(embeddedEditorViewPart, factory, scenario.getName());
-      // domainModel.getScenarioType().setName(scenario.getName());
-      clearModel(domainModel);
+      if (domainModel != null) {
+        // domainModel.getScenarioType().setName(scenario.getName());
+        clearModel(domainModel);
 
-      // Generate Participants
-      generateActors(domainModel, scenario, factory);
+        // Generate Participants
+        generateActors(domainModel, scenario, factory);
 
-      // Generate Sequence Messages
-      generateSequenceMessages(domainModel, scenario, factory);
+        // Generate Sequence Messages
+        generateSequenceMessages(domainModel, scenario, factory);
 
-      content.add(domainModel);
+        content.add(domainModel);
 
-      String serialized = ((XtextResource) domainModel.eResource()).getSerializer().serialize(domainModel);
-      EmbeddedEditorInstance.geteEditor().getDocument().set(serialized);
+        String serialized = ((XtextResource) domainModel.eResource()).getSerializer().serialize(domainModel);
+        EmbeddedEditorInstance.geteEditor().getDocument().set(serialized);
+      }
     }
   }
 
@@ -454,7 +461,9 @@ public class XtextEditorCommands {
 
       // recreate the list of participants
       for (InstanceRole a : instanceRoleList) {
-        String id = "a" + a.getId().replace("-", "").substring(0, 5);
+        String id = a.getId();
+        EmbeddedEditorInstanceHelper.addElementToCompute(a.getName(), id);
+
         AbstractType irType = a.getRepresentedInstance().getAbstractType();
         switch (scenario.getKind()) {
         case DATA_FLOW:
@@ -689,14 +698,17 @@ public class XtextEditorCommands {
     if (!content.isEmpty() && content.get(0) instanceof Model) {
       domainModel = (Model) resource.getContents().get(0);
     } else {
-      domainModel = factory.createModel();
-      // ScenarioTypeAndParticipants scenarioType = factory.createScenarioTypeAndParticipants();
-      // scenarioType.setName(scenarioName);
-      // domainModel.setScenarioType(scenarioType);
+      // domainModel = factory.createModel();
+      // System.out.println(domainModel);
+      // domainModel.setBegin("{");
+      // domainModel.setEnd("}");
+      EmbeddedEditorInstance.geteEditor().getDocument().set("scenario {}");
+      EList<EObject> content1 = resource.getContents();
+      System.out.println("conetnr1");
+      if (!content1.isEmpty() && content1.get(0) instanceof Model) {
+        domainModel = (Model) resource.getContents().get(0);
+      }
     }
-    domainModel.setBegin("{");
-    domainModel.setEnd("}");
-
     return domainModel;
   }
 

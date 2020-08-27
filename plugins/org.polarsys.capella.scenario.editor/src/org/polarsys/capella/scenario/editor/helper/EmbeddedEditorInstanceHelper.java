@@ -14,8 +14,10 @@ package org.polarsys.capella.scenario.editor.helper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
@@ -47,6 +49,18 @@ import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 
 public class EmbeddedEditorInstanceHelper {
+
+  private static Map<String, String> elementsToCompute = new HashMap();
+
+  public static void addElementToCompute(String name, String label) {
+    elementsToCompute.put(name, label);
+  }
+
+  public static String getIdOfElementToCompute(String name) {
+    String id = elementsToCompute.get(name);
+    elementsToCompute.remove(name);
+    return id;
+  }
 
   public static EList<InstanceRole> getAvailableInstanceRoles() {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
@@ -182,6 +196,14 @@ public class EmbeddedEditorInstanceHelper {
     return elementsForKeyword;
   }
 
+  /**
+   * returns instance role associated to the params
+   * 
+   * @param soruce
+   *          (name of the instance role)
+   * @return InstanceRole
+   *
+   */
   public static InstanceRole getInstanceRole(String source) {
     EList<InstanceRole> instanceRoles = getAvailableInstanceRoles();
     InstanceRole instanceRole = null;
@@ -206,7 +228,12 @@ public class EmbeddedEditorInstanceHelper {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     switch (currentScenario.getKind()) {
     case INTERACTION:
-      elements = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
+      if (SequenceDiagramServices.isValidActivityScenario(currentScenario)) {
+        elements = FaServices.getFaServices()
+            .getAllAbstractFunctions(BlockArchitectureExt.getRootBlockArchitecture(currentScenario));
+      } else {
+        elements = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
+      }
       break;
     case DATA_FLOW:
     case INTERFACE:
