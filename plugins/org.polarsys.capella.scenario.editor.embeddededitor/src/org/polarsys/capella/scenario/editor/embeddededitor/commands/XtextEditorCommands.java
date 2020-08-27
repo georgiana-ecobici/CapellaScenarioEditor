@@ -142,8 +142,6 @@ public class XtextEditorCommands {
         for (Iterator<Participant> iterator = participants.iterator(); iterator.hasNext();) {
           EObject participant = iterator.next();
           
-          //TODO: decide approach - switch on keyword and level? vs. search by name and later by id
-
           String instanceName = ((Participant) participant).getName();
           //if the participant doesn't exist, create it
           if (instanceRoles.stream().filter(ir -> ir.getName().equals(instanceName)).collect(Collectors.toList())
