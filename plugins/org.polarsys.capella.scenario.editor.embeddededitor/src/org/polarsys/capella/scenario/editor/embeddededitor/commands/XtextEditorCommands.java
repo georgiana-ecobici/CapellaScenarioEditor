@@ -15,7 +15,6 @@ package org.polarsys.capella.scenario.editor.embeddededitor.commands;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
@@ -31,10 +30,12 @@ import org.polarsys.capella.core.data.cs.BlockArchitecture;
 import org.polarsys.capella.core.data.cs.Component;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
+import org.polarsys.capella.core.data.ctx.SystemFunctionPkg;
 import org.polarsys.capella.core.data.ctx.impl.SystemAnalysisImpl;
 import org.polarsys.capella.core.data.epbs.ConfigurationItem;
 import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.epbs.impl.EPBSArchitectureImpl;
+import org.polarsys.capella.core.data.fa.AbstractFunction;
 import org.polarsys.capella.core.data.helpers.interaction.services.ExecutionEndExt;
 import org.polarsys.capella.core.data.information.AbstractEventOperation;
 import org.polarsys.capella.core.data.interaction.EventReceiptOperation;
@@ -49,17 +50,22 @@ import org.polarsys.capella.core.data.interaction.MessageEnd;
 import org.polarsys.capella.core.data.interaction.MessageKind;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.SequenceMessage;
-import org.polarsys.capella.core.data.interaction.TimeLapse;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
+import org.polarsys.capella.core.data.la.LogicalComponent;
+import org.polarsys.capella.core.data.la.LogicalFunctionPkg;
 import org.polarsys.capella.core.data.la.impl.LogicalComponentImpl;
+import org.polarsys.capella.core.data.oa.OperationalActivityPkg;
 import org.polarsys.capella.core.data.oa.OperationalAnalysis;
 import org.polarsys.capella.core.data.oa.impl.EntityImpl;
 import org.polarsys.capella.core.data.oa.impl.OperationalActivityImpl;
 import org.polarsys.capella.core.data.oa.impl.RoleImpl;
 import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
+import org.polarsys.capella.core.data.pa.PhysicalComponent;
+import org.polarsys.capella.core.data.pa.PhysicalFunctionPkg;
 import org.polarsys.capella.core.data.pa.impl.PhysicalComponentImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
+import org.polarsys.capella.core.model.helpers.BlockArchitectureExt.Type;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Activity;
@@ -69,7 +75,6 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Entity;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.ParticipantDeactivation;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Role;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.DslFactoryImpl;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.impl.ModelImpl;
@@ -85,6 +90,17 @@ public class XtextEditorCommands {
   private static final String INTERFACE = "INTERFACE";
   
   private static final String KEYWORD_DEACTIVATE = "deactivate";
+  private static final String KEYWORD_ACTOR = "actor";
+  private static final String KEYWORD_COMPONENT = "component";
+  private static final String KEYWORD_ENTITY = "entity";
+  private static final String KEYWORD_FUNCTION = "function";
+  private static final String KEYWORD_ACTIVITY = "activity";
+  private static final String KEYWORD_ROLE = "role";
+  private static final String KEYWORD_CONFIGURATION_ITEM = "configuration_item";
+  
+  private static final String COMPONENT_NAME_SYSTEM = "System";
+  private static final String COMPONENT_NAME_PHYSICAL_SYSTEM = "Physical System";
+  private static final String COMPONENT_NAME_LOGICAL_SYSTEM = "Logical System";
 
   public static void xtextToDiagram(Scenario scenario, EmbeddedEditorView embeddedEditorViewPart) {
     if (embeddedEditorViewPart != null) {
@@ -93,8 +109,8 @@ public class XtextEditorCommands {
       EList<EObject> content = resource.getContents();
 
       ModelImpl domainModel = (ModelImpl) content.get(0);
-      // get actors
-      EList<Participant> actors = domainModel.getParticipants();
+      // get participants
+      EList<Participant> participants = domainModel.getParticipants();
 
       // get messages
       EList<EObject> messages = domainModel.getMessagesOrReferences();
@@ -102,92 +118,188 @@ public class XtextEditorCommands {
       // Project project;
       BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(scenario);
 
-      doEditingOnActors(scenario, blockArchitecture, actors);
+      doEditingOnParticipants(scenario, blockArchitecture, participants);
 
       doEditingOnMessages(scenario, blockArchitecture, messages);
     }
   }
 
-  private static void doEditingOnActors(Scenario scenario, BlockArchitecture blockArchitecture,
-      EList<Participant> actors) {
+  private static void doEditingOnParticipants(Scenario scenario, BlockArchitecture blockArchitecture,
+      EList<Participant> participants) {
     // Make sure your element is attached to a resource, otherwise this will return null
     TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(scenario);
     domain.getCommandStack().execute(new RecordingCommand(domain) {
 
       @Override
       protected void doExecute() {
-        // Implement your write operations here,
-        // for example: set a new name
-        // element.eSet(element.eClass().getEStructuralFeature("name"), "aNewName");
-
         InstanceRole instanceRole;
-        Component instance;
+        Component instance = null;
+        org.polarsys.capella.core.data.oa.Role role = null;
+        AbstractFunction function = null;
+        
         EList<InstanceRole> instanceRoles = scenario.getOwnedInstanceRoles();
 
-        for (Iterator<Participant> iterator = actors.iterator(); iterator.hasNext();) {
-          EObject actor = iterator.next();
-
-          String instanceName = ((Actor) actor).getName();
+        for (Iterator<Participant> iterator = participants.iterator(); iterator.hasNext();) {
+          EObject participant = iterator.next();
+          
+          String instanceName = ((Participant) participant).getName();
+          //if the participant doesn't exist, create it
           if (instanceRoles.stream().filter(ir -> ir.getName().equals(instanceName)).collect(Collectors.toList())
               .size() == 0) {
             instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();
             instanceRole.setName(instanceName);
 
-            // search actor by name
             List<Component> components;
 
-            switch (BlockArchitectureExt.getBlockArchitectureType(blockArchitecture)) {
-            case SA:
+            Type archLevel = BlockArchitectureExt.getBlockArchitectureType(blockArchitecture);
+            String keyword = ((Participant) participant).getKeyword();
+            if(archLevel.equals(Type.SA) && keyword.equals(KEYWORD_FUNCTION)) {
+              List<AbstractFunction> functions = ((SystemFunctionPkg) ((SystemAnalysis) blockArchitecture).getOwnedFunctionPkg())
+                .getOwnedSystemFunctions().get(0)
+                .getOwnedFunctions()
+                .stream().filter(f -> f.getName().equals(instanceName)).collect(Collectors.toList());            
+              if (functions.size() > 0) {
+                function = functions.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.SA) && (keyword.equals(KEYWORD_COMPONENT) || (keyword.equals(KEYWORD_ACTOR)))) {
               components = ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents()
                   .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
-              break;
-            case PA:
+              if(components.size() > 0) {
+                instance = components.get(0);
+              }
+            }
+            
+            else if(archLevel.equals(Type.PA) && keyword.equals(KEYWORD_FUNCTION)) {
+              // Physical Function
+              List<AbstractFunction> functions = ((PhysicalFunctionPkg) ((PhysicalArchitecture) blockArchitecture).getOwnedFunctionPkg())
+                  .getOwnedPhysicalFunctions().get(0)
+                  .getOwnedFunctions()
+                  .stream().filter(f -> f.getName().equals(instanceName)).collect(Collectors.toList());
+                
+              if (functions.size() > 0) {
+                function = functions.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.PA) && keyword.equals(KEYWORD_COMPONENT)) {
+              // Physical Component located under Physical System level
+              components = ((PhysicalArchitecture) blockArchitecture).getOwnedPhysicalComponentPkg()
+                .getOwnedPhysicalComponents().stream().filter(comp -> comp.getName().equals(COMPONENT_NAME_PHYSICAL_SYSTEM))
+                .collect(Collectors.toList());
+              
+              //go one level down and search for a component, by name       
+              components = ((PhysicalComponent) components.get(0)).getOwnedPhysicalComponents().stream()
+                  .filter(lc -> lc.getName().equals(instanceName)).collect(Collectors.toList());
+              
+              if(components.size() > 0) {
+                instance = components.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.PA) && keyword.equals(KEYWORD_ACTOR)) {
               components = ((PhysicalArchitecture) blockArchitecture).getOwnedPhysicalComponentPkg()
                   .getOwnedPhysicalComponents().stream().filter(comp -> comp.getName().equals(instanceName))
                   .collect(Collectors.toList());
-              break;
-            case LA:
+              if(components.size() > 0) {
+                instance = components.get(0);
+              }
+            }
+            
+            else if(archLevel.equals(Type.LA) && keyword.equals(KEYWORD_FUNCTION)) {
+              List<AbstractFunction> functions = ((LogicalFunctionPkg) ((LogicalArchitecture) blockArchitecture).getOwnedFunctionPkg())
+                  .getOwnedLogicalFunctions().get(0)
+                  .getOwnedFunctions()
+                  .stream().filter(f -> f.getName().equals(instanceName)).collect(Collectors.toList());
+                
+              if (functions.size() > 0) {
+                function = functions.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.LA) && keyword.equals(KEYWORD_COMPONENT)) {
+              // Logical Component under Logical System level
+              components = ((LogicalArchitecture) blockArchitecture).getOwnedLogicalComponentPkg()
+                .getOwnedLogicalComponents().stream().filter(comp -> comp.getName().equals(COMPONENT_NAME_LOGICAL_SYSTEM))
+                .collect(Collectors.toList());
+              
+              //go one level down and search for a component, by name
+              components = ((LogicalComponent) components.get(0)).getOwnedLogicalComponents().stream()
+                  .filter(lc -> lc.getName().equals(instanceName)).collect(Collectors.toList());
+              if (components.size() > 0) {
+                instance = components.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.LA) && keyword.equals(KEYWORD_ACTOR)) {
               components = ((LogicalArchitecture) blockArchitecture).getOwnedLogicalComponentPkg()
                   .getOwnedLogicalComponents().stream().filter(comp -> comp.getName().equals(instanceName))
                   .collect(Collectors.toList());
-              break;
-            case OA:
+              if (components.size() > 0) {
+                instance = components.get(0);
+              }
+            }
+            
+            else if(archLevel.equals(Type.OA) && keyword.equals(KEYWORD_ACTIVITY)) {
+             // Activity under Operational Activities level
+             List<AbstractFunction> activities = 
+                  ((OperationalActivityPkg) ((OperationalAnalysis) blockArchitecture).getOwnedFunctionPkg())
+                  .getOwnedOperationalActivities().get(0)
+                  .getOwnedFunctions()
+                  .stream().filter(e -> e.getName().equals(instanceName)).collect(Collectors.toList());
+              
+              if (activities.size() > 0) {
+                function = activities.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.OA) && keyword.equals(KEYWORD_ROLE)) {
+              // Role under the Roles level
+              List<org.polarsys.capella.core.data.oa.Role> roles = ((OperationalAnalysis) blockArchitecture).getOwnedRolePkg().getOwnedRoles().stream()
+                  .filter(r -> r.getName().equals(instanceName)).collect(Collectors.toList());
+              
+              if(roles.size() > 0) {
+                role = roles.get(0);
+              }
+            }
+            else if(archLevel.equals(Type.OA) && (keyword.equals(KEYWORD_ENTITY) || keyword.equals(KEYWORD_ACTOR))) {
               components = ((OperationalAnalysis) blockArchitecture).getOwnedEntityPkg().getOwnedEntities().stream()
                   .filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
-              break;
-            case EPBS:
-              components = ((EPBSArchitecture) blockArchitecture).getOwnedConfigurationItemPkg()
-                  .getOwnedConfigurationItems().stream().filter(comp -> comp.getName().equals(instanceName))
+              if(components.size() > 0) {
+                instance = components.get(0);
+              }
+            }
+            
+            else if(archLevel.equals(Type.EPBS) && keyword.equals(KEYWORD_CONFIGURATION_ITEM)) {
+             // Configuration item under System configuration item, one level down
+             components = ((EPBSArchitecture) blockArchitecture).getOwnedConfigurationItemPkg()
+                  .getOwnedConfigurationItems().stream().filter(comp -> comp.getName().equals(COMPONENT_NAME_SYSTEM))
                   .collect(Collectors.toList());
-              break;
-            default:
-              components = ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents()
-                  .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
-              break;
+              
+              List<ConfigurationItem> configurationItems = ((ConfigurationItem) components.get(0)).getOwnedConfigurationItems().stream()
+                  .filter(ci -> ci.getName().equals(instanceName)).collect(Collectors.toList());
+              if (configurationItems.size() > 0) {
+                instance = configurationItems.get(0);
+              }
             }
 
-            if (components.size() == 0) {
-              // this is a configuration item under EPBS level, which has to be found under the System configuration
-              // item, so one level down
-              components = ((EPBSArchitecture) blockArchitecture).getOwnedConfigurationItemPkg()
-                  .getOwnedConfigurationItems().stream().filter(comp -> comp.getName().equals("System"))
-                  .collect(Collectors.toList());
-              instance = ((ConfigurationItem) components.get(0)).getOwnedConfigurationItems().stream()
-                  .filter(ci -> ci.getName().equals(instanceName)).collect(Collectors.toList()).get(0);
+            //set represented instance
+            if (instance != null) {
+              Part part = instance.getRepresentingParts().get(0);
+              instanceRole.setRepresentedInstance(part);
+            } else if (function != null) {
+              instanceRole.setRepresentedInstance(function);
             } else {
-              instance = components.get(0);
+              instanceRole.setRepresentedInstance(role);
             }
-
-            Part part = instance.getRepresentingParts().get(0);
-            instanceRole.setRepresentedInstance(part);
 
             instanceRoles.add(instanceRole);
+            
+            //reset
+            instance = null;
+            role = null;
+            function = null;
           }
         }
       }
     });
   }
-
+  
   private static void doEditingOnMessages(Scenario scenario, BlockArchitecture blockArchitecture,
       EList<EObject> messages) {
     // Make sure your element is attached to a resource, otherwise this will return null
@@ -409,28 +521,28 @@ public class XtextEditorCommands {
   private static void addActor(String name, String id, EList<Participant> participants, DslFactory factory) {
     Actor actor = factory.createActor();
     actor.setName(name);
-    actor.setKeyword("actor");
+    actor.setKeyword(KEYWORD_ACTOR);
     participants.add(actor);
   }
 
   private static void addActivity(String name, String id, EList<Participant> participants, DslFactory factory) {
     Activity activity = factory.createActivity();
     activity.setName(name);
-    activity.setKeyword("activity");
+    activity.setKeyword(KEYWORD_ACTIVITY);
     participants.add(activity);
   }
 
   private static void addComponent(String name, String id, EList<Participant> participants, DslFactory factory) {
     org.polarsys.capella.scenario.editor.dslscenario.dsl.Component component = factory.createComponent();
     component.setName(name);
-    component.setKeyword("component");
+    component.setKeyword(KEYWORD_COMPONENT);
     participants.add(component);
   }
 
   private static void addEntity(String name, String id, EList<Participant> participants, DslFactory factory) {
     Entity entity = factory.createEntity();
     entity.setName(name);
-    entity.setKeyword("entity");
+    entity.setKeyword(KEYWORD_ENTITY);
     participants.add(entity);
   }
 
@@ -438,21 +550,21 @@ public class XtextEditorCommands {
     org.polarsys.capella.scenario.editor.dslscenario.dsl.ConfigurationItem configItem = factory
         .createConfigurationItem();
     configItem.setName(name);
-    configItem.setKeyword("configuration_item");
+    configItem.setKeyword(KEYWORD_CONFIGURATION_ITEM);
     participants.add(configItem);
   }
 
   private static void addFunction(String name, String id, EList<Participant> participants, DslFactory factory) {
     Function function = factory.createFunction();
     function.setName(name);
-    function.setKeyword("function");
+    function.setKeyword(KEYWORD_FUNCTION);
     participants.add(function);
   }
 
   private static void addRole(String name, String id, EList<Participant> participants, DslFactory factory) {
     Role role = factory.createRole();
     role.setName(name);
-    role.setKeyword("role");
+    role.setKeyword(KEYWORD_ROLE);
     participants.add(role);
   }
 
