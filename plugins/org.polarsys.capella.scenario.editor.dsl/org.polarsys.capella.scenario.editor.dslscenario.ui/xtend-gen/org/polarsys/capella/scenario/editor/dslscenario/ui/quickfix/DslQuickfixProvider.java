@@ -14,7 +14,14 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.ui.quickfix;
 
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.edit.IModification;
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
+import org.eclipse.xtext.ui.editor.quickfix.Fix;
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
+import org.eclipse.xtext.validation.Issue;
+import org.polarsys.capella.scenario.editor.dslscenario.validation.DslValidator;
 
 /**
  * Custom quickfixes.
@@ -23,4 +30,23 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
  */
 @SuppressWarnings("all")
 public class DslQuickfixProvider extends DefaultQuickfixProvider {
+  @Fix(DslValidator.INVALID_NAME)
+  public void capitalizeName(final Issue issue, final IssueResolutionAcceptor acceptor) {
+    final IModification _function = (IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      final String firstLetter = xtextDocument.get((issue.getOffset()).intValue(), 1);
+      xtextDocument.replace((issue.getOffset()).intValue(), 1, firstLetter);
+    };
+    acceptor.accept(issue, "Create element (todo)", "Choose an id", "upcase.png", _function);
+  }
+  
+  @Fix(DslValidator.DUPILCATED_NAME)
+  public void duplicatedName(final Issue issue, final IssueResolutionAcceptor acceptor) {
+    final IModification _function = (IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      final String firstLetter = xtextDocument.get((issue.getOffset()).intValue(), 1);
+      xtextDocument.replace((issue.getOffset()).intValue(), 1, firstLetter);
+    };
+    acceptor.accept(issue, "Duplicated name (todo)", "Choose an id", "upcase.png", _function);
+  }
 }

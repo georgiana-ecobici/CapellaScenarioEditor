@@ -22,6 +22,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Message
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model
 
 /**
  * This class contains custom validation rules. 
@@ -31,6 +32,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
 class DslValidator extends AbstractDslValidator {
 
 	public static val INVALID_NAME = 'invalidName'
+	public static val DUPILCATED_NAME = 'duplicatedName'
 
 	@Check
 	def checkPartExists(Participant participant) {
@@ -55,6 +57,23 @@ class DslValidator extends AbstractDslValidator {
 	def checkMessagesExist(SequenceMessage message) {
 		if (!EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource, message.getTarget).contains(message.name)) {
 			error('Message does not exist', DslPackage.Literals.MESSAGE__NAME)
+		}
+	}
+	
+	@Check
+	def checkDuplicatedParticipantsNames(Model model) {
+		var index = 0
+		val names = newHashSet
+		for (p : model.participants) {
+			if (!names.add(p.name + ":"+ p.id)) {
+				error(
+					'Multiple participants with the same name',
+					DslPackage.Literals.MODEL__PARTICIPANTS,
+					index,
+					DUPILCATED_NAME
+				)
+			}
+			index++
 		}
 	}
 }

@@ -17,6 +17,7 @@ package org.polarsys.capella.scenario.editor.dslscenario.ui.labeling;
 import com.google.inject.Inject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 
 /**
  * Provides labels for EObjects.
@@ -28,5 +29,15 @@ public class DslLabelProvider extends DefaultEObjectLabelProvider {
   @Inject
   public DslLabelProvider(final AdapterFactoryLabelProvider delegate) {
     super(delegate);
+  }
+  
+  public String text(final Participant participant) {
+    String _xblockexpression = null;
+    {
+      String _name = participant.getName();
+      /* (_name + " : "); */
+      _xblockexpression = participant.getId();
+    }
+    return _xblockexpression;
   }
 }

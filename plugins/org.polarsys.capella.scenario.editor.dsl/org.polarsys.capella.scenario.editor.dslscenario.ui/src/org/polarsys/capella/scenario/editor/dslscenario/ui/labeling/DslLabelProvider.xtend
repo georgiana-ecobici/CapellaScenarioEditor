@@ -18,6 +18,7 @@ package org.polarsys.capella.scenario.editor.dslscenario.ui.labeling
 import com.google.inject.Inject
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 
 /**
  * Provides labels for EObjects.
@@ -30,12 +31,10 @@ class DslLabelProvider extends DefaultEObjectLabelProvider {
 	new(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
-
-	// Labels and icons can be computed like this:
 	
-//	def text(Greeting ele) {
-//		'A greeting to ' + ele.name
-//	}
+	def text(Participant participant) {
+		participant.getName() + " : " participant.getId()
+	}
 //
 //	def image(Greeting ele) {
 //		'Greeting.gif'

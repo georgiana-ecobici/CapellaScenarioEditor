@@ -13,22 +13,25 @@
 package org.polarsys.capella.scenario.editor.helper;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.polarsys.capella.common.data.behavior.AbstractEvent;
+import org.polarsys.capella.common.data.modellingcore.AbstractNamedElement;
 import org.polarsys.capella.core.data.capellacore.CapellaElement;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
+import org.polarsys.capella.core.data.cs.Component;
 import org.polarsys.capella.core.data.cs.ExchangeItemAllocation;
 import org.polarsys.capella.core.data.cs.Part;
 import org.polarsys.capella.core.data.ctx.SystemAnalysis;
-import org.polarsys.capella.core.data.ctx.SystemFunction;
-import org.polarsys.capella.core.data.ctx.impl.SystemFunctionImpl;
 import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.fa.AbstractFunction;
-import org.polarsys.capella.core.data.fa.FunctionalExchange;
 import org.polarsys.capella.core.data.information.ExchangeItem;
 import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
@@ -36,126 +39,171 @@ import org.polarsys.capella.core.data.interaction.ScenarioKind;
 import org.polarsys.capella.core.data.interaction.properties.controllers.DataFlowHelper;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
-import org.polarsys.capella.core.data.la.LogicalFunction;
-import org.polarsys.capella.core.data.la.impl.LogicalFunctionImpl;
-import org.polarsys.capella.core.data.oa.OperationalActivity;
 import org.polarsys.capella.core.data.oa.Role;
-import org.polarsys.capella.core.data.oa.RolePkg;
-import org.polarsys.capella.core.data.oa.impl.OperationalActivityImpl;
-import org.polarsys.capella.core.data.oa.impl.OperationalAnalysisImpl;
 import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
-import org.polarsys.capella.core.data.pa.PhysicalFunction;
-import org.polarsys.capella.core.data.pa.impl.PhysicalFunctionImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
-import org.polarsys.capella.core.model.helpers.ScenarioExt;
+import org.polarsys.capella.core.sirius.analysis.FaServices;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
+import org.polarsys.capella.core.sirius.analysis.OAServices;
 import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 
 public class EmbeddedEditorInstanceHelper {
+
+  private static Map<String, String> elementsToCompute = new HashMap();
+
+  public static void addElementToCompute(String name, String label) {
+    elementsToCompute.put(name, label);
+  }
+
+  public static String getIdOfElementToCompute(String name) {
+    String id = elementsToCompute.get(name);
+    elementsToCompute.remove(name);
+    return id;
+  }
 
   public static EList<InstanceRole> getAvailableInstanceRoles() {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     return currentScenario.getOwnedInstanceRoles();
   }
 
-  public static List<String> getMessageSequenceName(String source, String target) {
-    InstanceRole sourceIR = EmbeddedEditorInstanceHelper.getInstanceRole(source);
-    InstanceRole targetIR = EmbeddedEditorInstanceHelper.getInstanceRole(target);
+  public static String getName(EObject element) {
+    String name = "";
+    if (element instanceof AbstractNamedElement) {
+      name = ((AbstractNamedElement) element).getName();
+    }
+    return name;
+  }
 
-    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
-    List<String> messagesName = new ArrayList<String>();
+  public static String getId(EObject element) {
+    String name = "";
+    if (element instanceof AbstractNamedElement) {
+      name = ((AbstractNamedElement) element).getId();
+    }
+    return name;
+  }
+
+  public static String getLabel(EObject element) {
+    String label = "";
+    if (element instanceof AbstractNamedElement) {
+      label = ((AbstractNamedElement) element).getName() + " : " + ((AbstractNamedElement) element).getId();
+    }
+    return label;
+  }
+
+  public static List<String> getMessageSequenceName(String source, String target) {
+    List<String> messages = new ArrayList<String>();
+
+    List<AbstractEvent> exchanges = getAvailableSequenceMessages(source, target);
+    for (AbstractEvent exchange : exchanges) {
+      messages.add(exchange.getName());
+    }
+
+    return messages;
+  }
+
+  /**
+   * returns the list of available messages possible to be inserted between source and target
+   * 
+   * @param source
+   *          - the id of the source element
+   * @param target
+   *          - the id of the target element
+   * @return list of exchanges
+   *
+   */
+  public static List<AbstractEvent> getAvailableSequenceMessages(String source, String target) {
+    List<AbstractEvent> exchangesAvailable = new ArrayList();
+    InstanceRole sourceIr = EmbeddedEditorInstanceHelper.getInstanceRole(source);
+    InstanceRole targetIr = EmbeddedEditorInstanceHelper.getInstanceRole(target);
 
     if (EmbeddedEditorInstance.getAssociatedScenarioDiagram().getKind() == ScenarioKind.DATA_FLOW) {
-      List<AbstractEvent> exchangesAvailable = (List<AbstractEvent>) DataFlowHelper
-          .getAvailableComponentExchanges(sourceIR, targetIR);
-      messagesName = exchangesAvailable.stream().map(x -> x.getName()).collect(Collectors.toList());
-      return messagesName;
-    }
-    if (ScenarioExt.isFunctionalScenario(currentScenario)) {
-      List<FunctionalExchange> functionalExchanges = DataFlowHelper
-          .getAvailableFonctionalExchangesFromFunctions(sourceIR, targetIR);
-      messagesName = functionalExchanges.stream().map(x -> x.getName()).collect(Collectors.toList());
-      return messagesName;
-    }
-
-    List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
-        .getAvailableExchangeItems(sourceIR, targetIR, false);
-    if (!exchanges.isEmpty()) {
+      exchangesAvailable = (List<AbstractEvent>) DataFlowHelper.getAvailableComponentExchanges(sourceIr, targetIr);
+      if (exchangesAvailable.isEmpty())
+        exchangesAvailable = DataFlowHelper.getAvailableFonctionalExchanges(sourceIr, targetIr).stream()
+            .filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
+    } else if (EmbeddedEditorInstance.getAssociatedScenarioDiagram().getKind() == ScenarioKind.FUNCTIONAL) {
+      exchangesAvailable = DataFlowHelper.getAvailableFonctionalExchangesFromFunctions(sourceIr, targetIr).stream()
+          .filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
+    } else {
+      List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
+          .getAvailableExchangeItems(sourceIr, targetIr, false);
       for (CapellaElement message : exchanges) {
         if (message instanceof ExchangeItemAllocation) {
           ExchangeItemAllocation allocation = (ExchangeItemAllocation) message;
           if (allocation.getAllocatedItem() instanceof ExchangeItem) {
-            messagesName.add(allocation.getAllocatedItem().getName());
+            ExchangeItem item = allocation.getAllocatedItem();
+            exchangesAvailable.add(item);
           }
         }
       }
-    } else {
-      // OAS
-      List<FunctionalExchange> messages = DataFlowHelper.getAvailableFonctionalExchanges(sourceIR, targetIR);
-      messagesName = messages.stream().map(x -> x.getName()).collect(Collectors.toList());
     }
-
-    return messagesName;
+    return exchangesAvailable;
   }
 
+  /**
+   * returns the list of available elements as names that could be inserted
+   * 
+   * @param keyword
+   * @return boolean
+   *
+   */
   public static List<String> getAvailablePartNames(String keyword) {
     List<String> partNames = new ArrayList<String>();
-    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
-    InteractionServices is = new InteractionServices();
-    List<Part> parts = new ArrayList<Part>();
-    switch (keyword) {
-    case "role":
-      OperationalAnalysisImpl op = (OperationalAnalysisImpl) currentScenario.eContainer().eContainer().eContainer();
-      RolePkg rolesPkg = op.basicGetOwnedRolePkg();
-      EList<Role> roles = rolesPkg.getOwnedRoles();
-      for (Role role : roles) {
-        partNames.add(role.getName());
+
+    Collection<? extends EObject> elements = getAvailableElements(keyword);
+    for (EObject element : elements) {
+      if (element instanceof AbstractNamedElement) {
+        partNames.add(((AbstractNamedElement) element).getName());
       }
-      break;
-    case "actor":
-      parts = is.getISScopeInsertActors(currentScenario);
-      break;
-    case "activity":
-      BlockArchitecture blockArch = BlockArchitectureExt.getRootBlockArchitecture(currentScenario);
-      OperationalActivityImpl root = (OperationalActivityImpl) BlockArchitectureExt.getRootFunction(blockArch);
-      partNames.add(root.getName());
-      EList<OperationalActivity> activities = root.getChildrenOperationalActivities();
-      for (OperationalActivity activity : activities) {
-        partNames.add(activity.getName());
-      }
-      break;
-    case "function":
-      BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(currentScenario);
-      AbstractFunction rootFunction = BlockArchitectureExt.getRootFunction(blockArchitecture);
-      partNames.add(rootFunction.getName());
-      if (rootFunction instanceof LogicalFunctionImpl) {
-        EList<LogicalFunction> functions = ((LogicalFunctionImpl) rootFunction).getChildrenLogicalFunctions();
-        for (LogicalFunction function : functions) {
-          partNames.add(function.getName());
-        }
-      } else if (rootFunction instanceof SystemFunctionImpl) {
-        EList<SystemFunction> functions = ((SystemFunctionImpl) rootFunction).getChildrenSystemFunctions();
-        for (SystemFunction function : functions) {
-          partNames.add(function.getName());
-        }
-      } else if (rootFunction instanceof PhysicalFunctionImpl) {
-        EList<PhysicalFunction> functions = ((PhysicalFunctionImpl) rootFunction).getChildrenPhysicalFunctions();
-        for (PhysicalFunction function : functions) {
-          partNames.add(function.getName());
-        }
-      }
-      break;
-    default:
-      parts = is.getESScopeInsertComponents(currentScenario);
-      break;
-    }
-    for (Part part : parts) {
-      partNames.add(part.getName());
     }
     return partNames;
   }
 
+  /**
+   * returns the list of available elements that could be inserted for the given keyword (which can be actor, component,
+   * function, entity, role, activity, configuration_item)
+   * 
+   * @param keyword
+   * @return boolean
+   *
+   */
+  public static Collection<? extends EObject> getAvailableElements(String keyword) {
+    List<? extends EObject> elementsForKeyword = new ArrayList();
+
+    Collection<? extends EObject> elements = getAvailableElements();
+
+    switch (keyword) {
+    case DslConstants.ACTIVITY:
+    case DslConstants.FUNCTION:
+      elementsForKeyword = elements.stream().filter(x -> x instanceof AbstractFunction).collect(Collectors.toList());
+      break;
+    case DslConstants.ROLE:
+      elementsForKeyword = elements.stream().filter(x -> x instanceof Role).collect(Collectors.toList());
+      break;
+    case DslConstants.ACTOR:
+      elementsForKeyword = elements.stream().filter(x -> x instanceof Part
+          && ((Part) x).getAbstractType() instanceof Component && ((Component) ((Part) x).getAbstractType()).isActor())
+          .collect(Collectors.toList());
+      break;
+    default:
+      // gets all the components (non actors)
+      elementsForKeyword = elements.stream().filter(x -> x instanceof Part
+          && ((Part) x).getAbstractType() instanceof Component && !((Component) ((Part) x).getAbstractType()).isActor())
+          .collect(Collectors.toList());
+      break;
+    }
+    return elementsForKeyword;
+  }
+
+  /**
+   * returns instance role associated to the params
+   * 
+   * @param soruce
+   *          (name of the instance role)
+   * @return InstanceRole
+   *
+   */
   public static InstanceRole getInstanceRole(String source) {
     EList<InstanceRole> instanceRoles = getAvailableInstanceRoles();
     InstanceRole instanceRole = null;
@@ -167,6 +215,41 @@ public class EmbeddedEditorInstanceHelper {
       }
     }
     return instanceRole;
+  }
+
+  /**
+   * returns the list of available elements that could be inserted on the current scenario
+   * 
+   * @return collection of elements
+   *
+   */
+  public static Collection<? extends EObject> getAvailableElements() {
+    Collection<? extends EObject> elements = new ArrayList();
+    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
+    switch (currentScenario.getKind()) {
+    case INTERACTION:
+      if (SequenceDiagramServices.isValidActivityScenario(currentScenario)) {
+        elements = FaServices.getFaServices()
+            .getAllAbstractFunctions(BlockArchitectureExt.getRootBlockArchitecture(currentScenario));
+      } else {
+        elements = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
+      }
+      break;
+    case DATA_FLOW:
+    case INTERFACE:
+      List<Part> elements1 = (new InteractionServices()).getESScopeInsertComponents(currentScenario);
+      List<Part> elements2 = (new InteractionServices()).getESScopeInsertActors(currentScenario);
+      elements1.addAll(elements2);
+      elements = elements1;
+      break;
+    case FUNCTIONAL:
+      elements = FaServices.getFaServices()
+          .getAllAbstractFunctions(BlockArchitectureExt.getRootBlockArchitecture(currentScenario));
+      break;
+    default:
+      break;
+    }
+    return elements;
   }
 
   /**
@@ -183,43 +266,30 @@ public class EmbeddedEditorInstanceHelper {
 
     if (currentScenario.getKind() == ScenarioKind.INTERACTION) {
       if (SequenceDiagramServices.isValidEntityScenario(currentScenario)) {
-        return keyword.equals("entity") || keyword.equals("actor") || keyword.equals("role");
+        return keyword.equals(DslConstants.ENTITY) || keyword.equals(DslConstants.ACTOR)
+            || keyword.equals(DslConstants.ROLE);
       }
       if (SequenceDiagramServices.isValidActivityScenario(currentScenario)) {
-        return keyword.equals("activity");
+        return keyword.equals(DslConstants.ACTIVITY);
       }
     }
-    if (currentScenario.getKind() == ScenarioKind.INTERFACE) {
+    // IS and ES
+    if (currentScenario.getKind() == ScenarioKind.INTERFACE || currentScenario.getKind() == ScenarioKind.DATA_FLOW) {
       if (blockArchitecture instanceof SystemAnalysis) {
-        return keyword.equals("actor");
+        return keyword.equals(DslConstants.ACTOR);
       }
-      if (blockArchitecture instanceof LogicalArchitecture) {
-        return keyword.equals("actor") || keyword.equals("component");
-      }
-      if (blockArchitecture instanceof PhysicalArchitecture) {
-        return keyword.equals("actor") || keyword.equals("component");
+      if (blockArchitecture instanceof LogicalArchitecture || blockArchitecture instanceof PhysicalArchitecture) {
+        return keyword.equals(DslConstants.ACTOR) || keyword.equals(DslConstants.COMPONENT);
       }
       if (blockArchitecture instanceof EPBSArchitecture) {
-        return keyword.equals("configuration_item");
+        return keyword.equals(DslConstants.CONFIGURATION_ITEM);
       }
     }
     // FS Scenarios
     if (currentScenario.getKind() == ScenarioKind.FUNCTIONAL) {
       if (blockArchitecture instanceof SystemAnalysis || blockArchitecture instanceof LogicalArchitecture
           || blockArchitecture instanceof PhysicalArchitecture) {
-        return keyword.equals("function");
-      }
-    }
-    // ES scenarios
-    if (currentScenario.getKind() == ScenarioKind.DATA_FLOW) {
-      if (blockArchitecture instanceof SystemAnalysis) {
-        return keyword.equals("actor");
-      }
-      if (blockArchitecture instanceof LogicalArchitecture) {
-        return keyword.equals("actor") || keyword.equals("component");
-      }
-      if (blockArchitecture instanceof PhysicalArchitecture) {
-        return keyword.equals("actor") || keyword.equals("component");
+        return keyword.equals(DslConstants.FUNCTION);
       }
     }
     return false;

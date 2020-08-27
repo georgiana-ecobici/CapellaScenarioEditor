@@ -14,9 +14,13 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.validation;
 
+import java.util.HashSet;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.DslPackage;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Function;
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage;
 import org.polarsys.capella.scenario.editor.dslscenario.validation.AbstractDslValidator;
@@ -30,6 +34,8 @@ import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper;
 @SuppressWarnings("all")
 public class DslValidator extends AbstractDslValidator {
   public static final String INVALID_NAME = "invalidName";
+  
+  public static final String DUPILCATED_NAME = "duplicatedName";
   
   @Check
   public void checkPartExists(final Participant participant) {
@@ -63,6 +69,30 @@ public class DslValidator extends AbstractDslValidator {
     boolean _not = (!_contains);
     if (_not) {
       this.error("Message does not exist", DslPackage.Literals.MESSAGE__NAME);
+    }
+  }
+  
+  @Check
+  public void checkDuplicatedParticipantsNames(final Model model) {
+    int index = 0;
+    final HashSet<String> names = CollectionLiterals.<String>newHashSet();
+    EList<Participant> _participants = model.getParticipants();
+    for (final Participant p : _participants) {
+      {
+        String _name = p.getName();
+        String _plus = (_name + ":");
+        String _id = p.getId();
+        String _plus_1 = (_plus + _id);
+        boolean _add = names.add(_plus_1);
+        boolean _not = (!_add);
+        if (_not) {
+          this.error(
+            "Multiple participants with the same name", 
+            DslPackage.Literals.MODEL__PARTICIPANTS, index, 
+            DslValidator.DUPILCATED_NAME);
+        }
+        index++;
+      }
     }
   }
 }

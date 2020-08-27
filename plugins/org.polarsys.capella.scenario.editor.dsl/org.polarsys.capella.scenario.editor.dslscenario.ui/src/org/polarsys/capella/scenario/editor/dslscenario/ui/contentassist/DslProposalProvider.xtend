@@ -25,23 +25,26 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 import org.eclipse.xtext.Keyword
 import org.eclipse.jface.text.contentassist.ICompletionProposal
+import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
+import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal.IReplacementTextApplier
+import org.eclipse.jface.text.IDocument
+import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal
+import org.eclipse.jface.text.BadLocationException
+import org.eclipse.xtext.util.Strings
+import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher
 
 /**
  * This class is used to display auto-complete proposals when pressing ctrl+space
  */
 class DslProposalProvider extends AbstractDslProposalProvider {
-
 	/*
 	 * filter the proposed keywords based on the context in which we edit the text scenario;
 	 * check the context of the Capella Diagram - layer (OA, SA, LA, PA), type of scenario (IS, ES FS)
 	 */
 	override completeKeyword(Keyword keyword, ContentAssistContext contentAssistContext,
 		ICompletionProposalAcceptor acceptor) {
-		var proposal = createCompletionProposal(keyword.getValue(), getKeywordDisplayString(keyword), getImage(keyword),
-			contentAssistContext) as ICompletionProposal
-		if (EmbeddedEditorInstanceHelper.checkValidKeyword(proposal.getDisplayString())) {
-			getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
-			acceptor.accept(proposal);
+		if (EmbeddedEditorInstanceHelper.checkValidKeyword(keyword.getValue())) {
+			super.completeKeyword(keyword, contentAssistContext, acceptor)
 		}
 	}
 
@@ -80,9 +83,42 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		getExistingParticipants("role", context, acceptor)
 	}
 
-	def getExistingParticipants(String keyword, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		for (String el : EmbeddedEditorInstanceHelper.getAvailablePartNames(keyword)) {
-			acceptor.accept(createCompletionProposal("\"" + el + "\"", "\"" + el + "\"", null, context));
+	/*
+	 * propose a list with the participats (parts that can be created
+	 * if we have duplicated names in the list we can chose based on the id
+	 */
+	def getExistingParticipants(
+		String keyword,
+		ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor
+	) {
+		for (el : EmbeddedEditorInstanceHelper.getAvailableElements(keyword)) {
+
+			var textApplier = new IReplacementTextApplier() {
+				override apply(IDocument document,
+					ConfigurableCompletionProposal proposal) throws BadLocationException {
+					// use a map that will be used in dsl computer to add the id the chosen element
+					EmbeddedEditorInstanceHelper.addElementToCompute(
+						proposal.getAdditionalData("name") as String,
+						proposal.getAdditionalData("id") as String
+					)
+					// replace the name with the selected one via content assist
+					document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(),
+						proposal.getReplacementString());
+
+				}
+			}
+
+			// create the proposal and configure it (with text applier and additional data like the id and name of the element)
+			var proposal = createCompletionProposal("\"" + EmbeddedEditorInstanceHelper.getName(el) + "\"",
+				EmbeddedEditorInstanceHelper.getLabel(el), null, context) as ConfigurableCompletionProposal
+			if (proposal instanceof ConfigurableCompletionProposal) {
+				var configurable = proposal as ConfigurableCompletionProposal
+				configurable.setTextApplier(textApplier)
+				configurable.setAdditionalData("id", EmbeddedEditorInstanceHelper.getId(el))
+				configurable.setAdditionalData("name", EmbeddedEditorInstanceHelper.getName(el))
+			}
+			acceptor.accept(proposal);
 		}
 	}
 
@@ -90,7 +126,8 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		for (EObject el : variablesDefinedBefore2(model as Model)) {
 			acceptor.accept(
-				createCompletionProposal("\"" + (el as Participant).name + "\"", "\"" + (el as Participant).name + "\"",
+				createCompletionProposal("\"" + (el as Participant).name + "\"",
+					(el as Participant).name,
 					null, context))
 		}
 	}
@@ -99,11 +136,12 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		for (EObject el : variablesDefinedBefore3(model as SequenceMessage)) {
 			acceptor.accept(
-				createCompletionProposal("\"" + (el as Participant).name + "\"", "\"" + (el as Participant).name + "\"",
+				createCompletionProposal("\"" + (el as Participant).name + "\"", 
+					(el as Participant).name,
 					null, context))
 		}
 	}
-
+	
 	override completeSequenceMessage_Name(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		for (String el : messagesDefinedBefore(model as SequenceMessage)) {

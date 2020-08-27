@@ -14,12 +14,16 @@
  */
 package org.polarsys.capella.scenario.editor.dslscenario.ui.contentassist;
 
+import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Model;
@@ -39,12 +43,9 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
    */
   @Override
   public void completeKeyword(final Keyword keyword, final ContentAssistContext contentAssistContext, final ICompletionProposalAcceptor acceptor) {
-    ICompletionProposal _createCompletionProposal = this.createCompletionProposal(keyword.getValue(), this.getKeywordDisplayString(keyword), this.getImage(keyword), contentAssistContext);
-    ICompletionProposal proposal = ((ICompletionProposal) _createCompletionProposal);
-    boolean _checkValidKeyword = EmbeddedEditorInstanceHelper.checkValidKeyword(proposal.getDisplayString());
+    boolean _checkValidKeyword = EmbeddedEditorInstanceHelper.checkValidKeyword(keyword.getValue());
     if (_checkValidKeyword) {
-      this.getPriorityHelper().adjustKeywordPriority(proposal, contentAssistContext.getPrefix());
-      acceptor.accept(proposal);
+      super.completeKeyword(keyword, contentAssistContext, acceptor);
     }
   }
   
@@ -83,10 +84,40 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
     this.getExistingParticipants("role", context, acceptor);
   }
   
+  /**
+   * propose a list with the participats (parts that can be created
+   * if we have duplicated names in the list we can chose based on the id
+   */
   public void getExistingParticipants(final String keyword, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
-    List<String> _availablePartNames = EmbeddedEditorInstanceHelper.getAvailablePartNames(keyword);
-    for (final String el : _availablePartNames) {
-      acceptor.accept(this.createCompletionProposal((("\"" + el) + "\""), (("\"" + el) + "\""), null, context));
+    Collection<? extends EObject> _availableElements = EmbeddedEditorInstanceHelper.getAvailableElements(keyword);
+    for (final EObject el : _availableElements) {
+      {
+        ConfigurableCompletionProposal.IReplacementTextApplier textApplier = new ConfigurableCompletionProposal.IReplacementTextApplier() {
+          @Override
+          public void apply(final IDocument document, final ConfigurableCompletionProposal proposal) throws BadLocationException {
+            Object _additionalData = proposal.getAdditionalData("name");
+            Object _additionalData_1 = proposal.getAdditionalData("id");
+            EmbeddedEditorInstanceHelper.addElementToCompute(
+              ((String) _additionalData), 
+              ((String) _additionalData_1));
+            document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), 
+              proposal.getReplacementString());
+          }
+        };
+        String _name = EmbeddedEditorInstanceHelper.getName(el);
+        String _plus = ("\"" + _name);
+        String _plus_1 = (_plus + "\"");
+        ICompletionProposal _createCompletionProposal = this.createCompletionProposal(_plus_1, 
+          EmbeddedEditorInstanceHelper.getLabel(el), null, context);
+        ConfigurableCompletionProposal proposal = ((ConfigurableCompletionProposal) _createCompletionProposal);
+        if ((proposal instanceof ConfigurableCompletionProposal)) {
+          ConfigurableCompletionProposal configurable = ((ConfigurableCompletionProposal) proposal);
+          configurable.setTextApplier(textApplier);
+          configurable.setAdditionalData("id", EmbeddedEditorInstanceHelper.getId(el));
+          configurable.setAdditionalData("name", EmbeddedEditorInstanceHelper.getName(el));
+        }
+        acceptor.accept(proposal);
+      }
     }
   }
   
@@ -97,11 +128,9 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
       String _name = ((Participant) el).getName();
       String _plus = ("\"" + _name);
       String _plus_1 = (_plus + "\"");
-      String _name_1 = ((Participant) el).getName();
-      String _plus_2 = ("\"" + _name_1);
-      String _plus_3 = (_plus_2 + "\"");
       acceptor.accept(
-        this.createCompletionProposal(_plus_1, _plus_3, 
+        this.createCompletionProposal(_plus_1, 
+          ((Participant) el).getName(), 
           null, context));
     }
   }
@@ -113,11 +142,9 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
       String _name = ((Participant) el).getName();
       String _plus = ("\"" + _name);
       String _plus_1 = (_plus + "\"");
-      String _name_1 = ((Participant) el).getName();
-      String _plus_2 = ("\"" + _name_1);
-      String _plus_3 = (_plus_2 + "\"");
       acceptor.accept(
-        this.createCompletionProposal(_plus_1, _plus_3, 
+        this.createCompletionProposal(_plus_1, 
+          ((Participant) el).getName(), 
           null, context));
     }
   }

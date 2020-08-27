@@ -5,13 +5,13 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Sample Category"
+            name="Editor Category"
             id="org.eclipse.xtext.example.domainmodel.embeddededitor">
       </category>
       <view
             id="org.eclipse.xtext.example.domainmodel.embeddededitor.views.EmbeddedEditorView"
-            name="Embedded Editor View"
-            icon="icons/sample.png"
+            name="Scenario Editor"
+            icon="icons/scenario.gif"
             class="org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView"
             category="org.eclipse.xtext.example.domainmodel.embeddededitor"
             inject="true">
