@@ -40,10 +40,10 @@ import org.polarsys.capella.core.data.la.LogicalArchitecture;
 import org.polarsys.capella.core.data.oa.Role;
 import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
+import org.polarsys.capella.core.model.helpers.ScenarioExt;
 import org.polarsys.capella.core.sirius.analysis.FaServices;
 import org.polarsys.capella.core.sirius.analysis.InteractionServices;
 import org.polarsys.capella.core.sirius.analysis.OAServices;
-import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 
 public class EmbeddedEditorInstanceHelper {
@@ -95,16 +95,20 @@ public class EmbeddedEditorInstanceHelper {
     List<AbstractEvent> exchangesAvailable = new ArrayList();
     InstanceRole sourceIr = EmbeddedEditorInstanceHelper.getInstanceRole(source);
     InstanceRole targetIr = EmbeddedEditorInstanceHelper.getInstanceRole(target);
+    Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
 
-    if (EmbeddedEditorInstance.getAssociatedScenarioDiagram().getKind() == ScenarioKind.DATA_FLOW) {
+    switch (currentScenario.getKind()) {
+    case DATA_FLOW:
       exchangesAvailable = (List<AbstractEvent>) DataFlowHelper.getAvailableComponentExchanges(sourceIr, targetIr);
       if (exchangesAvailable.isEmpty())
         exchangesAvailable = DataFlowHelper.getAvailableFonctionalExchanges(sourceIr, targetIr).stream()
             .filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
-    } else if (EmbeddedEditorInstance.getAssociatedScenarioDiagram().getKind() == ScenarioKind.FUNCTIONAL) {
+      break;
+    case FUNCTIONAL:
       exchangesAvailable = DataFlowHelper.getAvailableFonctionalExchangesFromFunctions(sourceIr, targetIr).stream()
           .filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
-    } else {
+      break;
+    case INTERFACE:
       List<CapellaElement> exchanges = SelectInvokedOperationModelForSharedDataAndEvent
           .getAvailableExchangeItems(sourceIr, targetIr, false);
       for (CapellaElement message : exchanges) {
@@ -116,6 +120,24 @@ public class EmbeddedEditorInstanceHelper {
           }
         }
       }
+      break;
+    case INTERACTION:
+      if (ScenarioExt.isFunctionalScenario(currentScenario)) {
+        exchangesAvailable = DataFlowHelper.getAvailableFonctionalExchangesFromFunctions(sourceIr, targetIr).stream()
+            .filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
+      } else {
+        exchangesAvailable = DataFlowHelper.getAvailableFonctionalExchanges(sourceIr, targetIr).stream()
+            .filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
+
+        // communication means
+        if (exchangesAvailable.isEmpty()) {
+          exchangesAvailable = (List<AbstractEvent>) DataFlowHelper.getAvailableComponentExchanges(sourceIr, targetIr)
+              .stream().filter(x -> x instanceof AbstractEvent).collect(Collectors.toList());
+        }
+      }
+      break;
+    default:
+      break;
     }
     return exchangesAvailable;
   }
@@ -243,12 +265,11 @@ public class EmbeddedEditorInstanceHelper {
     BlockArchitecture blockArchitecture = BlockArchitectureExt.getRootBlockArchitecture(currentScenario);
 
     if (currentScenario.getKind() == ScenarioKind.INTERACTION) {
-      if (SequenceDiagramServices.isValidEntityScenario(currentScenario)) {
+      if (ScenarioExt.isFunctionalScenario(currentScenario)) {
+        return keyword.equals(DslConstants.ACTIVITY);
+      } else {
         return keyword.equals(DslConstants.ENTITY) || keyword.equals(DslConstants.ACTOR)
             || keyword.equals(DslConstants.ROLE);
-      }
-      if (SequenceDiagramServices.isValidActivityScenario(currentScenario)) {
-        return keyword.equals(DslConstants.ACTIVITY);
       }
     }
     // IS and ES
