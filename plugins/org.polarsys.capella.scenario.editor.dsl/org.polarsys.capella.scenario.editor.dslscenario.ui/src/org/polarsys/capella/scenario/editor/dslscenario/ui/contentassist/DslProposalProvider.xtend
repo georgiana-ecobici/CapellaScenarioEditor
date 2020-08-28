@@ -24,14 +24,7 @@ import org.polarsys.capella.scenario.editor.dslscenario.dsl.SequenceMessage
 import org.polarsys.capella.scenario.editor.dslscenario.dsl.Participant
 import org.polarsys.capella.scenario.editor.helper.EmbeddedEditorInstanceHelper
 import org.eclipse.xtext.Keyword
-import org.eclipse.jface.text.contentassist.ICompletionProposal
-import org.polarsys.capella.scenario.editor.dslscenario.dsl.Actor
-import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal.IReplacementTextApplier
-import org.eclipse.jface.text.IDocument
 import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal
-import org.eclipse.jface.text.BadLocationException
-import org.eclipse.xtext.util.Strings
-import org.eclipse.xtext.ui.editor.contentassist.PrefixMatcher
 
 /**
  * This class is used to display auto-complete proposals when pressing ctrl+space
@@ -84,7 +77,7 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 	}
 
 	/*
-	 * propose a list with the participats (parts that can be created
+	 * propose a list with the participants (parts that can be created
 	 * if we have duplicated names in the list we can chose based on the id
 	 */
 	def getExistingParticipants(
@@ -93,31 +86,9 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		ICompletionProposalAcceptor acceptor
 	) {
 		for (el : EmbeddedEditorInstanceHelper.getAvailableElements(keyword)) {
-
-			var textApplier = new IReplacementTextApplier() {
-				override apply(IDocument document,
-					ConfigurableCompletionProposal proposal) throws BadLocationException {
-					// use a map that will be used in dsl computer to add the id the chosen element
-					EmbeddedEditorInstanceHelper.addElementToCompute(
-						proposal.getAdditionalData("name") as String,
-						proposal.getAdditionalData("id") as String
-					)
-					// replace the name with the selected one via content assist
-					document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(),
-						proposal.getReplacementString());
-
-				}
-			}
-
-			// create the proposal and configure it (with text applier and additional data like the id and name of the element)
+			// create the proposal
 			var proposal = createCompletionProposal("\"" + EmbeddedEditorInstanceHelper.getName(el) + "\"",
-				EmbeddedEditorInstanceHelper.getLabel(el), null, context) as ConfigurableCompletionProposal
-			if (proposal instanceof ConfigurableCompletionProposal) {
-				var configurable = proposal as ConfigurableCompletionProposal
-				configurable.setTextApplier(textApplier)
-				configurable.setAdditionalData("id", EmbeddedEditorInstanceHelper.getId(el))
-				configurable.setAdditionalData("name", EmbeddedEditorInstanceHelper.getName(el))
-			}
+				EmbeddedEditorInstanceHelper.getName(el), null, context) as ConfigurableCompletionProposal
 			acceptor.accept(proposal);
 		}
 	}
@@ -151,7 +122,7 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 	}
 
 	def messagesDefinedBefore(SequenceMessage message) {
-		return EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource, message.getTarget)
+		return EmbeddedEditorInstanceHelper.getExchangeNames(message.getSource, message.getTarget)
 	}
 
 	def variablesDefinedBefore(Participant sc) {

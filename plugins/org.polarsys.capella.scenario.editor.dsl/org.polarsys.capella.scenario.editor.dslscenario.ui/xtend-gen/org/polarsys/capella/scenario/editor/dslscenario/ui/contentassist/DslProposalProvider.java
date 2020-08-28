@@ -18,8 +18,6 @@ import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Keyword;
@@ -85,37 +83,19 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   }
   
   /**
-   * propose a list with the participats (parts that can be created
+   * propose a list with the participants (parts that can be created
    * if we have duplicated names in the list we can chose based on the id
    */
   public void getExistingParticipants(final String keyword, final ContentAssistContext context, final ICompletionProposalAcceptor acceptor) {
     Collection<? extends EObject> _availableElements = EmbeddedEditorInstanceHelper.getAvailableElements(keyword);
     for (final EObject el : _availableElements) {
       {
-        ConfigurableCompletionProposal.IReplacementTextApplier textApplier = new ConfigurableCompletionProposal.IReplacementTextApplier() {
-          @Override
-          public void apply(final IDocument document, final ConfigurableCompletionProposal proposal) throws BadLocationException {
-            Object _additionalData = proposal.getAdditionalData("name");
-            Object _additionalData_1 = proposal.getAdditionalData("id");
-            EmbeddedEditorInstanceHelper.addElementToCompute(
-              ((String) _additionalData), 
-              ((String) _additionalData_1));
-            document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), 
-              proposal.getReplacementString());
-          }
-        };
         String _name = EmbeddedEditorInstanceHelper.getName(el);
         String _plus = ("\"" + _name);
         String _plus_1 = (_plus + "\"");
         ICompletionProposal _createCompletionProposal = this.createCompletionProposal(_plus_1, 
-          EmbeddedEditorInstanceHelper.getLabel(el), null, context);
+          EmbeddedEditorInstanceHelper.getName(el), null, context);
         ConfigurableCompletionProposal proposal = ((ConfigurableCompletionProposal) _createCompletionProposal);
-        if ((proposal instanceof ConfigurableCompletionProposal)) {
-          ConfigurableCompletionProposal configurable = ((ConfigurableCompletionProposal) proposal);
-          configurable.setTextApplier(textApplier);
-          configurable.setAdditionalData("id", EmbeddedEditorInstanceHelper.getId(el));
-          configurable.setAdditionalData("name", EmbeddedEditorInstanceHelper.getName(el));
-        }
         acceptor.accept(proposal);
       }
     }
@@ -158,7 +138,7 @@ public class DslProposalProvider extends AbstractDslProposalProvider {
   }
   
   public List<String> messagesDefinedBefore(final SequenceMessage message) {
-    return EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource(), message.getTarget());
+    return EmbeddedEditorInstanceHelper.getExchangeNames(message.getSource(), message.getTarget());
   }
   
   public Participant variablesDefinedBefore(final Participant sc) {

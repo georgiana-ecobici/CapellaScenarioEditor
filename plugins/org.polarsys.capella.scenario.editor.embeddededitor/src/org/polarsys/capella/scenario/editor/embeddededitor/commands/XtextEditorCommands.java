@@ -13,7 +13,6 @@
 package org.polarsys.capella.scenario.editor.embeddededitor.commands;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,15 +27,8 @@ import org.polarsys.capella.common.data.modellingcore.AbstractNamedElement;
 import org.polarsys.capella.common.data.modellingcore.AbstractType;
 import org.polarsys.capella.core.data.capellacore.CapellaElement;
 import org.polarsys.capella.core.data.cs.BlockArchitecture;
-import org.polarsys.capella.core.data.cs.Component;
-import org.polarsys.capella.core.data.cs.Part;
-import org.polarsys.capella.core.data.ctx.SystemAnalysis;
-import org.polarsys.capella.core.data.ctx.SystemFunctionPkg;
 import org.polarsys.capella.core.data.ctx.impl.SystemAnalysisImpl;
-import org.polarsys.capella.core.data.epbs.ConfigurationItem;
-import org.polarsys.capella.core.data.epbs.EPBSArchitecture;
 import org.polarsys.capella.core.data.epbs.impl.EPBSArchitectureImpl;
-import org.polarsys.capella.core.data.fa.AbstractFunction;
 import org.polarsys.capella.core.data.helpers.interaction.services.ExecutionEndExt;
 import org.polarsys.capella.core.data.information.AbstractEventOperation;
 import org.polarsys.capella.core.data.information.AbstractInstance;
@@ -54,17 +46,11 @@ import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.data.interaction.SequenceMessage;
 import org.polarsys.capella.core.data.interaction.properties.dialogs.sequenceMessage.model.SelectInvokedOperationModelForSharedDataAndEvent;
 import org.polarsys.capella.core.data.la.LogicalArchitecture;
-import org.polarsys.capella.core.data.la.LogicalComponent;
-import org.polarsys.capella.core.data.la.LogicalFunctionPkg;
 import org.polarsys.capella.core.data.la.impl.LogicalComponentImpl;
-import org.polarsys.capella.core.data.oa.OperationalActivityPkg;
-import org.polarsys.capella.core.data.oa.OperationalAnalysis;
 import org.polarsys.capella.core.data.oa.impl.EntityImpl;
 import org.polarsys.capella.core.data.oa.impl.OperationalActivityImpl;
 import org.polarsys.capella.core.data.oa.impl.RoleImpl;
 import org.polarsys.capella.core.data.pa.PhysicalArchitecture;
-import org.polarsys.capella.core.data.pa.PhysicalComponent;
-import org.polarsys.capella.core.data.pa.PhysicalFunctionPkg;
 import org.polarsys.capella.core.data.pa.impl.PhysicalComponentImpl;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt;
 import org.polarsys.capella.core.model.helpers.BlockArchitectureExt.Type;
@@ -94,7 +80,7 @@ public class XtextEditorCommands {
   private static final String KEYWORD_ACTIVITY = "activity";
   private static final String KEYWORD_ROLE = "role";
   private static final String KEYWORD_CONFIGURATION_ITEM = "configuration_item";
-  
+
   private static final String COMPONENT_NAME_SYSTEM = "System";
   private static final String COMPONENT_NAME_PHYSICAL_SYSTEM = "Physical System";
   private static final String COMPONENT_NAME_LOGICAL_SYSTEM = "Logical System";
@@ -134,9 +120,9 @@ public class XtextEditorCommands {
 
         for (Iterator<Participant> iterator = participants.iterator(); iterator.hasNext();) {
           EObject participant = iterator.next();
-          
+
           String instanceName = ((Participant) participant).getName();
-          //if the participant doesn't exist, create it
+          // if the participant doesn't exist, create it
           if (instanceRoles.stream().filter(ir -> ir.getName().equals(instanceName)).collect(Collectors.toList())
               .size() == 0) {
             instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();
@@ -144,23 +130,24 @@ public class XtextEditorCommands {
 
             Type archLevel = BlockArchitectureExt.getBlockArchitectureType(blockArchitecture);
             String keyword = ((Participant) participant).getKeyword();
-            
+
             EObject capellaParticipant = null;
-            
+
             List<? extends EObject> capellaParticipants = EmbeddedEditorInstanceHelper.getAvailableElements(keyword)
-                .stream().filter(f -> ((AbstractInstance) f).getName().equals(instanceName)).collect(Collectors.toList());
-            if(capellaParticipants.size() > 0) {
+                .stream().filter(f -> ((AbstractInstance) f).getName().equals(instanceName))
+                .collect(Collectors.toList());
+            if (capellaParticipants.size() > 0) {
               capellaParticipant = capellaParticipants.get(0);
             }
-            
-            instanceRole.setRepresentedInstance((AbstractInstance) capellaParticipant);              
+
+            instanceRole.setRepresentedInstance((AbstractInstance) capellaParticipant);
             instanceRoles.add(instanceRole);
           }
         }
       }
     });
   }
-  
+
   private static void doEditingOnMessages(Scenario scenario, BlockArchitecture blockArchitecture,
       EList<EObject> messages) {
     // Make sure your element is attached to a resource, otherwise this will return null
@@ -328,8 +315,6 @@ public class XtextEditorCommands {
       // recreate the list of participants
       for (InstanceRole a : instanceRoleList) {
         String id = a.getId();
-        EmbeddedEditorInstanceHelper.addElementToCompute(a.getName(), id);
-
         AbstractType irType = a.getRepresentedInstance().getAbstractType();
         switch (scenario.getKind()) {
         case DATA_FLOW:

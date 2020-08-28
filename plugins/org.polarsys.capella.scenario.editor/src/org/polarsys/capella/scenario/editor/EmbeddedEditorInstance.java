@@ -12,19 +12,15 @@
  *******************************************************************************/
 package org.polarsys.capella.scenario.editor;
 
-import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
-import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
 import org.polarsys.capella.core.data.interaction.Scenario;
 
 /*
  * EmbeddedEditorInstance class keeps references to both the current embedded editor and the Capella scenario diagram
  */
 public class EmbeddedEditorInstance {
-  private static EmbeddedEditorModelAccess model;
   private static EmbeddedEditor eEditor;
   private static Scenario associatedScenarioDiagram;
-  private static DDiagram associatedDiagram;
 
   private static EmbeddedEditorInstance eINSTANCE;
 
@@ -36,14 +32,6 @@ public class EmbeddedEditorInstance {
       eINSTANCE = new EmbeddedEditorInstance();
     }
     return eINSTANCE;
-  }
-
-  public static EmbeddedEditorModelAccess getModel() {
-    return model;
-  }
-
-  public static void setModel(EmbeddedEditorModelAccess model) {
-    EmbeddedEditorInstance.model = model;
   }
 
   public static EmbeddedEditor geteEditor() {
@@ -60,13 +48,5 @@ public class EmbeddedEditorInstance {
 
   public static void setAssociatedScenarioDiagram(Scenario associatedScenarioDiagram) {
     EmbeddedEditorInstance.associatedScenarioDiagram = associatedScenarioDiagram;
-  }
-
-  public static DDiagram getAssociatedDiagram() {
-    return associatedDiagram;
-  }
-
-  public static void setAssociatedDiagram(DDiagram associatedDiagram) {
-    EmbeddedEditorInstance.associatedDiagram = associatedDiagram;
   }
 }

@@ -12,16 +12,11 @@
  *******************************************************************************/
 package org.polarsys.capella.scenario.editor.embeddededitor.listener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManagerListener;
-import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
-import org.eclipse.sirius.ui.business.api.dialect.DialectEditor;
 import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.ui.ISelectionListener;
@@ -29,7 +24,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.polarsys.capella.core.data.interaction.InstanceRole;
 import org.polarsys.capella.core.data.interaction.Scenario;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
@@ -37,10 +31,11 @@ import org.polarsys.capella.scenario.editor.embeddededitor.commands.XtextEditorC
 import org.polarsys.capella.scenario.editor.embeddededitor.helper.XtextEditorHelper;
 import org.polarsys.capella.scenario.editor.embeddededitor.views.EmbeddedEditorView;
 
+/*
+ * Listener to session change events, to control when the embedded editor is displayed and linked to a diagram
+ */
 public class EmbeddedEditorSessionListener implements SessionManagerListener {
-  private ISelectionListener selectionListener;
-  private static List<InstanceRole> instanceRoleList;
-  static int i;
+  private static ISelectionListener selectionListener;
   static Object currentSelected;
 
   @Override
@@ -76,12 +71,14 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
     return (part, selection) -> {
       if (part instanceof DDiagramEditor) {
         Object newInput = handleSelection(part, selection, false);
+
+        /*
+         * when a new diagram of type scenario is opened, we use the class EmbeddedEditorInstance to save the current
+         * scenario and we update the content of the embedded xtext editor
+         */
         if (newInput instanceof DRepresentationDescriptor) {
           if (currentSelected == null || !newInput.equals(currentSelected)) {
             currentSelected = newInput;
-            DialectEditor dEditor = (DialectEditor) part;
-            DDiagram diagram = (DDiagram) dEditor.getRepresentation();
-
             DRepresentationDescriptor desc = (DRepresentationDescriptor) currentSelected;
             if (desc.getTarget() instanceof Scenario) {
               Scenario sc = (Scenario) desc.getTarget();
@@ -96,25 +93,13 @@ public class EmbeddedEditorSessionListener implements SessionManagerListener {
                 }
                 activePage.activate(eeView);
               }
-              EmbeddedEditorInstance.setAssociatedScenarioDiagram(sc);
-              EmbeddedEditorInstance.setAssociatedDiagram(diagram);
-              XtextEditorCommands.diagramToXtext(sc, eeView);
+              EmbeddedEditorInstance.setAssociatedScenarioDiagram(sc); // save the current scenario
+              XtextEditorCommands.diagramToXtext(sc, eeView); // update the embedded editor text view
             }
           }
         }
       }
     };
-  }
-
-  public static List<String> getInstanceRoleNameList() {
-    List<String> instRoleNameList = new ArrayList<String>();
-    for (InstanceRole inst : instanceRoleList) {
-      instRoleNameList.add(inst.getName());
-    }
-    if (instRoleNameList.isEmpty()) {
-      return null;
-    }
-    return instRoleNameList;
   }
 
   private EmbeddedEditorView getActiveEmbeddedEditorView() {
