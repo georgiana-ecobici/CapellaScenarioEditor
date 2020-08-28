@@ -278,9 +278,8 @@ public class XtextEditorCommands {
       EList<EObject> content = resource.getContents();
 
       DslFactory factory = new DslFactoryImpl();
-      Model domainModel = getModel(embeddedEditorViewPart, factory, scenario.getName());
+      Model domainModel = getModel(embeddedEditorViewPart);
       if (domainModel != null) {
-        // domainModel.getScenarioType().setName(scenario.getName());
         clearModel(domainModel);
 
         // Generate Participants
@@ -541,7 +540,7 @@ public class XtextEditorCommands {
     return seqMessage;
   }
 
-  private static Model getModel(EmbeddedEditorView embeddedEditorViewPart, DslFactory factory, String scenarioName) {
+  private static Model getModel(EmbeddedEditorView embeddedEditorViewPart) {
     DslscenarioProvider p = embeddedEditorViewPart.getProvider();
     XtextResource resource = p.getResource();
     EList<EObject> content = resource.getContents();
@@ -549,13 +548,8 @@ public class XtextEditorCommands {
     if (!content.isEmpty() && content.get(0) instanceof Model) {
       domainModel = (Model) resource.getContents().get(0);
     } else {
-      // domainModel = factory.createModel();
-      // System.out.println(domainModel);
-      // domainModel.setBegin("{");
-      // domainModel.setEnd("}");
       EmbeddedEditorInstance.geteEditor().getDocument().set("scenario {}");
       EList<EObject> content1 = resource.getContents();
-      System.out.println("conetnr1");
       if (!content1.isEmpty() && content1.get(0) instanceof Model) {
         domainModel = (Model) resource.getContents().get(0);
       }
