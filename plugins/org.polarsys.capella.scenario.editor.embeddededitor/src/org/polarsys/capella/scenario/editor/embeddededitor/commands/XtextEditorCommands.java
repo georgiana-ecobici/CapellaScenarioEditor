@@ -13,6 +13,7 @@
 package org.polarsys.capella.scenario.editor.embeddededitor.commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +39,7 @@ import org.polarsys.capella.core.data.epbs.impl.EPBSArchitectureImpl;
 import org.polarsys.capella.core.data.fa.AbstractFunction;
 import org.polarsys.capella.core.data.helpers.interaction.services.ExecutionEndExt;
 import org.polarsys.capella.core.data.information.AbstractEventOperation;
+import org.polarsys.capella.core.data.information.AbstractInstance;
 import org.polarsys.capella.core.data.interaction.EventReceiptOperation;
 import org.polarsys.capella.core.data.interaction.EventSentOperation;
 import org.polarsys.capella.core.data.interaction.Execution;
@@ -128,10 +130,6 @@ public class XtextEditorCommands {
       @Override
       protected void doExecute() {
         InstanceRole instanceRole;
-        Component instance = null;
-        org.polarsys.capella.core.data.oa.Role role = null;
-        AbstractFunction function = null;
-        
         EList<InstanceRole> instanceRoles = scenario.getOwnedInstanceRoles();
 
         for (Iterator<Participant> iterator = participants.iterator(); iterator.hasNext();) {
@@ -144,151 +142,19 @@ public class XtextEditorCommands {
             instanceRole = InteractionFactory.eINSTANCE.createInstanceRole();
             instanceRole.setName(instanceName);
 
-            List<Component> components;
-
             Type archLevel = BlockArchitectureExt.getBlockArchitectureType(blockArchitecture);
             String keyword = ((Participant) participant).getKeyword();
-            if(archLevel.equals(Type.SA) && keyword.equals(KEYWORD_FUNCTION)) {
-              List<AbstractFunction> functions = ((SystemFunctionPkg) ((SystemAnalysis) blockArchitecture).getOwnedFunctionPkg())
-                .getOwnedSystemFunctions().get(0)
-                .getOwnedFunctions()
-                .stream().filter(f -> f.getName().equals(instanceName)).collect(Collectors.toList());            
-              if (functions.size() > 0) {
-                function = functions.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.SA) && (keyword.equals(KEYWORD_COMPONENT) || (keyword.equals(KEYWORD_ACTOR)))) {
-              components = ((SystemAnalysis) blockArchitecture).getOwnedSystemComponentPkg().getOwnedSystemComponents()
-                  .stream().filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
-              if(components.size() > 0) {
-                instance = components.get(0);
-              }
+            
+            EObject capellaParticipant = null;
+            
+            List<? extends EObject> capellaParticipants = EmbeddedEditorInstanceHelper.getAvailableElements(keyword)
+                .stream().filter(f -> ((AbstractInstance) f).getName().equals(instanceName)).collect(Collectors.toList());
+            if(capellaParticipants.size() > 0) {
+              capellaParticipant = capellaParticipants.get(0);
             }
             
-            else if(archLevel.equals(Type.PA) && keyword.equals(KEYWORD_FUNCTION)) {
-              // Physical Function
-              List<AbstractFunction> functions = ((PhysicalFunctionPkg) ((PhysicalArchitecture) blockArchitecture).getOwnedFunctionPkg())
-                  .getOwnedPhysicalFunctions().get(0)
-                  .getOwnedFunctions()
-                  .stream().filter(f -> f.getName().equals(instanceName)).collect(Collectors.toList());
-                
-              if (functions.size() > 0) {
-                function = functions.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.PA) && keyword.equals(KEYWORD_COMPONENT)) {
-              // Physical Component located under Physical System level
-              components = ((PhysicalArchitecture) blockArchitecture).getOwnedPhysicalComponentPkg()
-                .getOwnedPhysicalComponents().stream().filter(comp -> comp.getName().equals(COMPONENT_NAME_PHYSICAL_SYSTEM))
-                .collect(Collectors.toList());
-              
-              //go one level down and search for a component, by name       
-              components = ((PhysicalComponent) components.get(0)).getOwnedPhysicalComponents().stream()
-                  .filter(lc -> lc.getName().equals(instanceName)).collect(Collectors.toList());
-              
-              if(components.size() > 0) {
-                instance = components.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.PA) && keyword.equals(KEYWORD_ACTOR)) {
-              components = ((PhysicalArchitecture) blockArchitecture).getOwnedPhysicalComponentPkg()
-                  .getOwnedPhysicalComponents().stream().filter(comp -> comp.getName().equals(instanceName))
-                  .collect(Collectors.toList());
-              if(components.size() > 0) {
-                instance = components.get(0);
-              }
-            }
-            
-            else if(archLevel.equals(Type.LA) && keyword.equals(KEYWORD_FUNCTION)) {
-              List<AbstractFunction> functions = ((LogicalFunctionPkg) ((LogicalArchitecture) blockArchitecture).getOwnedFunctionPkg())
-                  .getOwnedLogicalFunctions().get(0)
-                  .getOwnedFunctions()
-                  .stream().filter(f -> f.getName().equals(instanceName)).collect(Collectors.toList());
-                
-              if (functions.size() > 0) {
-                function = functions.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.LA) && keyword.equals(KEYWORD_COMPONENT)) {
-              // Logical Component under Logical System level
-              components = ((LogicalArchitecture) blockArchitecture).getOwnedLogicalComponentPkg()
-                .getOwnedLogicalComponents().stream().filter(comp -> comp.getName().equals(COMPONENT_NAME_LOGICAL_SYSTEM))
-                .collect(Collectors.toList());
-              
-              //go one level down and search for a component, by name
-              components = ((LogicalComponent) components.get(0)).getOwnedLogicalComponents().stream()
-                  .filter(lc -> lc.getName().equals(instanceName)).collect(Collectors.toList());
-              if (components.size() > 0) {
-                instance = components.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.LA) && keyword.equals(KEYWORD_ACTOR)) {
-              components = ((LogicalArchitecture) blockArchitecture).getOwnedLogicalComponentPkg()
-                  .getOwnedLogicalComponents().stream().filter(comp -> comp.getName().equals(instanceName))
-                  .collect(Collectors.toList());
-              if (components.size() > 0) {
-                instance = components.get(0);
-              }
-            }
-            
-            else if(archLevel.equals(Type.OA) && keyword.equals(KEYWORD_ACTIVITY)) {
-             // Activity under Operational Activities level
-             List<AbstractFunction> activities = 
-                  ((OperationalActivityPkg) ((OperationalAnalysis) blockArchitecture).getOwnedFunctionPkg())
-                  .getOwnedOperationalActivities().get(0)
-                  .getOwnedFunctions()
-                  .stream().filter(e -> e.getName().equals(instanceName)).collect(Collectors.toList());
-              
-              if (activities.size() > 0) {
-                function = activities.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.OA) && keyword.equals(KEYWORD_ROLE)) {
-              // Role under the Roles level
-              List<org.polarsys.capella.core.data.oa.Role> roles = ((OperationalAnalysis) blockArchitecture).getOwnedRolePkg().getOwnedRoles().stream()
-                  .filter(r -> r.getName().equals(instanceName)).collect(Collectors.toList());
-              
-              if(roles.size() > 0) {
-                role = roles.get(0);
-              }
-            }
-            else if(archLevel.equals(Type.OA) && (keyword.equals(KEYWORD_ENTITY) || keyword.equals(KEYWORD_ACTOR))) {
-              components = ((OperationalAnalysis) blockArchitecture).getOwnedEntityPkg().getOwnedEntities().stream()
-                  .filter(comp -> comp.getName().equals(instanceName)).collect(Collectors.toList());
-              if(components.size() > 0) {
-                instance = components.get(0);
-              }
-            }
-            
-            else if(archLevel.equals(Type.EPBS) && keyword.equals(KEYWORD_CONFIGURATION_ITEM)) {
-             // Configuration item under System configuration item, one level down
-             components = ((EPBSArchitecture) blockArchitecture).getOwnedConfigurationItemPkg()
-                  .getOwnedConfigurationItems().stream().filter(comp -> comp.getName().equals(COMPONENT_NAME_SYSTEM))
-                  .collect(Collectors.toList());
-              
-              List<ConfigurationItem> configurationItems = ((ConfigurationItem) components.get(0)).getOwnedConfigurationItems().stream()
-                  .filter(ci -> ci.getName().equals(instanceName)).collect(Collectors.toList());
-              if (configurationItems.size() > 0) {
-                instance = configurationItems.get(0);
-              }
-            }
-
-            //set represented instance
-            if (instance != null) {
-              Part part = instance.getRepresentingParts().get(0);
-              instanceRole.setRepresentedInstance(part);
-            } else if (function != null) {
-              instanceRole.setRepresentedInstance(function);
-            } else {
-              instanceRole.setRepresentedInstance(role);
-            }
-
+            instanceRole.setRepresentedInstance((AbstractInstance) capellaParticipant);              
             instanceRoles.add(instanceRole);
-            
-            //reset
-            instance = null;
-            role = null;
-            function = null;
           }
         }
       }

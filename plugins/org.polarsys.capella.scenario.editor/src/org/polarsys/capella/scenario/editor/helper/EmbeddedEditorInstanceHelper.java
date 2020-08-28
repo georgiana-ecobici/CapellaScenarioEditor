@@ -228,12 +228,11 @@ public class EmbeddedEditorInstanceHelper {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     switch (currentScenario.getKind()) {
     case INTERACTION:
-      if (SequenceDiagramServices.isValidActivityScenario(currentScenario)) {
-        elements = FaServices.getFaServices()
+      Collection<EObject> elements3 = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
+      Collection<AbstractFunction> elements4 = FaServices.getFaServices()
             .getAllAbstractFunctions(BlockArchitectureExt.getRootBlockArchitecture(currentScenario));
-      } else {
-        elements = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
-      }
+      elements3.addAll(elements4);
+      elements = elements3;
       break;
     case DATA_FLOW:
     case INTERFACE:
