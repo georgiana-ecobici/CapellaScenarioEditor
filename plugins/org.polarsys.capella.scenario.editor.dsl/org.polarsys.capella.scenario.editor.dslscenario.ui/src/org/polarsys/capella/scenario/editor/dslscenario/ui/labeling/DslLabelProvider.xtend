@@ -32,9 +32,9 @@ class DslLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate);
 	}
 	
-	def text(Participant participant) {
-		participant.getName() + " : " participant.getId()
-	}
+//	def text(Participant participant) {
+//		participant.getName() + " : " participant.getId()
+//	}
 //
 //	def image(Greeting ele) {
 //		'Greeting.gif'

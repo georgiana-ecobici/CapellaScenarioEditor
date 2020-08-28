@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,6 +32,9 @@ import org.polarsys.capella.scenario.editor.embeddededitor.actions.XtextEditorAc
 
 import com.google.inject.Injector;
 
+/*
+ * EmbeddedEditorView will embed the xtext editor of the scenario
+ */
 public class EmbeddedEditorView extends ViewPart {
 
   /**
@@ -43,9 +45,7 @@ public class EmbeddedEditorView extends ViewPart {
   @Inject
   IWorkbench workbench;
 
-  private TableViewer viewer;
   DslscenarioProvider provider;
-  Composite top;
 
   class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
     @Override
@@ -68,7 +68,7 @@ public class EmbeddedEditorView extends ViewPart {
   public void createPartControl(Composite parent) {
     makeActions();
 
-    top = new Composite(parent, SWT.NONE);
+    Composite top = new Composite(parent, SWT.NONE);
     top.setLayout(new GridLayout());
 
     DslscenarioActivator activator = DslscenarioActivator.getInstance();
@@ -79,7 +79,7 @@ public class EmbeddedEditorView extends ViewPart {
     EmbeddedEditorFactory factory = injector.getInstance(EmbeddedEditorFactory.class);
 
     EmbeddedEditor editor = factory.newEditor(provider).withParent(top);
-    EmbeddedEditorInstance.setModel(editor.createPartialEditor());
+    editor.createPartialEditor();
     EmbeddedEditorInstance.seteEditor(editor);
   }
 
@@ -95,6 +95,5 @@ public class EmbeddedEditorView extends ViewPart {
 
   @Override
   public void setFocus() {
-    // TODO Auto-generated method stub
   }
 }

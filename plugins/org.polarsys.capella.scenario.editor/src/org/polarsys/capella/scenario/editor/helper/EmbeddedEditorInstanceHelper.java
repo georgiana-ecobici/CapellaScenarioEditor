@@ -14,10 +14,8 @@ package org.polarsys.capella.scenario.editor.helper;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
@@ -49,19 +47,6 @@ import org.polarsys.capella.core.sirius.analysis.SequenceDiagramServices;
 import org.polarsys.capella.scenario.editor.EmbeddedEditorInstance;
 
 public class EmbeddedEditorInstanceHelper {
-
-  private static Map<String, String> elementsToCompute = new HashMap();
-
-  public static void addElementToCompute(String name, String label) {
-    elementsToCompute.put(name, label);
-  }
-
-  public static String getIdOfElementToCompute(String name) {
-    String id = elementsToCompute.get(name);
-    elementsToCompute.remove(name);
-    return id;
-  }
-
   public static EList<InstanceRole> getAvailableInstanceRoles() {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     return currentScenario.getOwnedInstanceRoles();
@@ -75,26 +60,20 @@ public class EmbeddedEditorInstanceHelper {
     return name;
   }
 
-  public static String getId(EObject element) {
-    String name = "";
-    if (element instanceof AbstractNamedElement) {
-      name = ((AbstractNamedElement) element).getId();
-    }
-    return name;
-  }
-
-  public static String getLabel(EObject element) {
-    String label = "";
-    if (element instanceof AbstractNamedElement) {
-      label = ((AbstractNamedElement) element).getName() + " : " + ((AbstractNamedElement) element).getId();
-    }
-    return label;
-  }
-
-  public static List<String> getMessageSequenceName(String source, String target) {
+  /**
+   * get the names of the available exchanges
+   * 
+   * @param source
+   *          - the name of the source element
+   * @param target
+   *          - the name of the target element
+   * @return list of exchanges
+   *
+   */
+  public static List<String> getExchangeNames(String source, String target) {
     List<String> messages = new ArrayList<String>();
 
-    List<AbstractEvent> exchanges = getAvailableSequenceMessages(source, target);
+    List<AbstractEvent> exchanges = getAvailableExchanges(source, target);
     for (AbstractEvent exchange : exchanges) {
       messages.add(exchange.getName());
     }
@@ -103,16 +82,16 @@ public class EmbeddedEditorInstanceHelper {
   }
 
   /**
-   * returns the list of available messages possible to be inserted between source and target
+   * returns the list of available exchanges possible to be inserted between source and target
    * 
    * @param source
-   *          - the id of the source element
+   *          - the name of the source element
    * @param target
-   *          - the id of the target element
+   *          - the name of the target element
    * @return list of exchanges
    *
    */
-  public static List<AbstractEvent> getAvailableSequenceMessages(String source, String target) {
+  public static List<AbstractEvent> getAvailableExchanges(String source, String target) {
     List<AbstractEvent> exchangesAvailable = new ArrayList();
     InstanceRole sourceIr = EmbeddedEditorInstanceHelper.getInstanceRole(source);
     InstanceRole targetIr = EmbeddedEditorInstanceHelper.getInstanceRole(target);
@@ -197,7 +176,7 @@ public class EmbeddedEditorInstanceHelper {
   }
 
   /**
-   * returns instance role associated to the params
+   * returns instance role associated to the source (source is the name of the instance role)
    * 
    * @param soruce
    *          (name of the instance role)
@@ -228,18 +207,18 @@ public class EmbeddedEditorInstanceHelper {
     Scenario currentScenario = EmbeddedEditorInstance.getAssociatedScenarioDiagram();
     switch (currentScenario.getKind()) {
     case INTERACTION:
-      Collection<EObject> elements3 = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
-      Collection<AbstractFunction> elements4 = FaServices.getFaServices()
-            .getAllAbstractFunctions(BlockArchitectureExt.getRootBlockArchitecture(currentScenario));
-      elements3.addAll(elements4);
-      elements = elements3;
+      Collection<EObject> elements1 = OAServices.getService().getOESScopeInsertEntitiesRoles(currentScenario);
+      Collection<AbstractFunction> elements2 = FaServices.getFaServices()
+          .getAllAbstractFunctions(BlockArchitectureExt.getRootBlockArchitecture(currentScenario));
+      elements1.addAll(elements2);
+      elements = elements1;
       break;
     case DATA_FLOW:
     case INTERFACE:
-      List<Part> elements1 = (new InteractionServices()).getESScopeInsertComponents(currentScenario);
-      List<Part> elements2 = (new InteractionServices()).getESScopeInsertActors(currentScenario);
-      elements1.addAll(elements2);
-      elements = elements1;
+      List<Part> elements3 = (new InteractionServices()).getESScopeInsertComponents(currentScenario);
+      List<Part> elements4 = (new InteractionServices()).getESScopeInsertActors(currentScenario);
+      elements3.addAll(elements4);
+      elements = elements3;
       break;
     case FUNCTIONAL:
       elements = FaServices.getFaServices()

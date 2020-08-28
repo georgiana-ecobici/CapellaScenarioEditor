@@ -65,7 +65,7 @@ public class DslValidator extends AbstractDslValidator {
   
   @Check
   public void checkMessagesExist(final SequenceMessage message) {
-    boolean _contains = EmbeddedEditorInstanceHelper.getMessageSequenceName(message.getSource(), message.getTarget()).contains(message.getName());
+    boolean _contains = EmbeddedEditorInstanceHelper.getExchangeNames(message.getSource(), message.getTarget()).contains(message.getName());
     boolean _not = (!_contains);
     if (_not) {
       this.error("Message does not exist", DslPackage.Literals.MESSAGE__NAME);
